@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "file": "inverters",
+  "items": [
+    {
+      "id": "inv-offgrid-500w-12v",
+      "category": "inverter-offgrid",
+      "name": "Inverter 500W 12V",
+      "packages": ["min"],
+      "electrical": {
+        "ratedAcPowerW": 500, "surgeMultiple": 3, "surgeDurationS": 5, "noLoadPowerW": 8,
+        "efficiencyAtHalfLoad": 0.9, "efficiencyAtFullLoad": 0.88, "nominalDcV": 12,
+        "dcVoltageLowAlarmV": 11.0, "dcVoltageLvdV": 10.5, "dcVoltageLvrV": 12.5,
+        "dcVoltageHvdV": 15.5, "lvdDelayS": 10, "acOutputVoltageV": 220, "acOutputFrequencyHz": 50,
+        "waveform": "pure-sine"
+      },
+      "terminals": [
+        {"id": "dc-pos", "label": "DC+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "dc-neg", "label": "DC−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "ac-l", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "ac-n", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {
+        "overloadCurve": [[1.1, 600], [1.25, 60], [1.5, 10], [2.0, 1], [3.0, 0.1]],
+        "hasInternalFuse": false, "hasReversePolarityProtection": false,
+        "reversePolarityDamages": true
+      },
+      "image": "src/assets/components/inv-offgrid-500w-12v.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.ratedAcPowerW", "electrical.surgeMultiple", "electrical.surgeDurationS",
+          "electrical.noLoadPowerW", "electrical.efficiencyAtHalfLoad",
+          "electrical.efficiencyAtFullLoad", "electrical.nominalDcV",
+          "electrical.dcVoltageLowAlarmV", "electrical.dcVoltageLvdV", "electrical.dcVoltageLvrV",
+          "electrical.dcVoltageHvdV", "electrical.lvdDelayS", "electrical.acOutputVoltageV",
+          "electrical.acOutputFrequencyHz", "electrical.waveform", "protection.overloadCurve",
+          "protection.hasInternalFuse", "protection.hasReversePolarityProtection",
+          "protection.reversePolarityDamages"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Tidak ada datasheet inverter (MODEL_FISIKA.md §5). Tegangan keluaran 220 V mengikuti nominal PLN (MODEL_FISIKA.md menyebut awal 230 V). Tanpa fuse atau dioda internal: polaritas DC terbalik merusak inverter."
+    },
+    {
+      "id": "inv-offgrid-1500w-24v",
+      "category": "inverter-offgrid",
+      "name": "Inverter 1.5kW 24V",
+      "packages": ["rek"],
+      "electrical": {
+        "ratedAcPowerW": 1500, "surgeMultiple": 2.5, "surgeDurationS": 5, "noLoadPowerW": 20,
+        "efficiencyAtHalfLoad": 0.92, "efficiencyAtFullLoad": 0.9, "nominalDcV": 24,
+        "dcVoltageLowAlarmV": 22.0, "dcVoltageLvdV": 21.0, "dcVoltageLvrV": 25.0,
+        "dcVoltageHvdV": 31.0, "lvdDelayS": 10, "acOutputVoltageV": 220, "acOutputFrequencyHz": 50,
+        "waveform": "pure-sine"
+      },
+      "terminals": [
+        {"id": "dc-pos", "label": "DC+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "dc-neg", "label": "DC−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "ac-l", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "ac-n", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {
+        "overloadCurve": [[1.1, 600], [1.25, 60], [1.5, 10], [2.0, 1], [2.5, 0.1]],
+        "hasInternalFuse": false, "hasReversePolarityProtection": false,
+        "reversePolarityDamages": true
+      },
+      "image": "src/assets/components/inv-offgrid-1500w-24v.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.ratedAcPowerW", "electrical.surgeMultiple", "electrical.surgeDurationS",
+          "electrical.noLoadPowerW", "electrical.efficiencyAtHalfLoad",
+          "electrical.efficiencyAtFullLoad", "electrical.nominalDcV",
+          "electrical.dcVoltageLowAlarmV", "electrical.dcVoltageLvdV", "electrical.dcVoltageLvrV",
+          "electrical.dcVoltageHvdV", "electrical.lvdDelayS", "electrical.acOutputVoltageV",
+          "electrical.acOutputFrequencyHz", "electrical.waveform", "protection.overloadCurve",
+          "protection.hasInternalFuse", "protection.hasReversePolarityProtection",
+          "protection.reversePolarityDamages"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Tidak ada datasheet inverter (MODEL_FISIKA.md §5). Ambang tegangan DC = dua kali basis 12 V. Arus DC puncak sekitar 75 A pada beban penuh: MCB DC 63 A tidak cukup, pakai MCB DC 100A."
+    },
+    {
+      "id": "inv-gridtie-1000w",
+      "category": "inverter-gridtie",
+      "name": "Inverter Grid-tie 1kW",
+      "packages": ["rek"],
+      "electrical": {
+        "ratedAcPowerW": 1000, "mpptCount": 1, "dcStartV": 80, "mpptMinV": 70, "mpptMaxV": 400,
+        "dcCurrentMaxA": 11, "efficiencyPeak": 0.96, "efficiencyAtHalfLoad": 0.96,
+        "efficiencyAtFullLoad": 0.955, "noLoadPowerW": 3, "standbyPowerW": 1,
+        "dcPowerMaxFactor": 1.3, "gridVoltageMinFactor": 0.85, "gridVoltageMaxFactor": 1.1,
+        "gridFrequencyMinHz": 49, "gridFrequencyMaxHz": 51, "reconnectDelayS": 60,
+        "acOutputVoltageV": 220, "acOutputFrequencyHz": 50
+      },
+      "terminals": [
+        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "ac-l", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "ac-n", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {
+        "dcVocMaxV": 450, "antiIslanding": true, "antiIslandingTimeS": 2,
+        "hasReversePolarityProtection": false, "reversePolarityDamages": true
+      },
+      "image": "src/assets/components/inv-gridtie-1000w.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.ratedAcPowerW", "electrical.mpptCount", "electrical.dcStartV",
+          "electrical.mpptMinV", "electrical.mpptMaxV", "electrical.dcCurrentMaxA",
+          "electrical.efficiencyPeak", "electrical.efficiencyAtHalfLoad",
+          "electrical.efficiencyAtFullLoad", "electrical.noLoadPowerW", "electrical.standbyPowerW",
+          "electrical.dcPowerMaxFactor", "electrical.gridVoltageMinFactor",
+          "electrical.gridVoltageMaxFactor", "electrical.gridFrequencyMinHz",
+          "electrical.gridFrequencyMaxHz", "electrical.reconnectDelayS",
+          "electrical.acOutputVoltageV", "electrical.acOutputFrequencyHz", "protection.dcVocMaxV",
+          "protection.antiIslanding", "protection.antiIslandingTimeS",
+          "protection.hasReversePolarityProtection", "protection.reversePolarityDamages"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Tidak ada datasheet (MODEL_FISIKA.md §6; PRD §13 butir 8). Tanpa jaringan PLN, daya AC = 0 (anti-islanding, < 2 s). Paket Rek. B; jendela MPPT 70–400 V memuat 4S panel 200 Wp (Vmp 104 V pada STC, sekitar 88 V pada 800 W/m² dan sel 55 °C)."
+    },
+    {
+      "id": "inv-hybrid-5000w-48v",
+      "category": "inverter-hybrid",
+      "name": "Inverter Hibrida 5kW",
+      "packages": ["best"],
+      "electrical": {
+        "ratedAcPowerW": 5000, "surgeMultiple": 2.0, "surgeDurationS": 5, "noLoadPowerW": 50,
+        "efficiencyAtHalfLoad": 0.93, "efficiencyAtFullLoad": 0.91, "nominalDcV": 48,
+        "dcVoltageLowAlarmV": 44.0, "dcVoltageLvdV": 42.0, "dcVoltageLvrV": 50.0,
+        "dcVoltageHvdV": 62.0, "lvdDelayS": 10, "acOutputVoltageV": 220, "acOutputFrequencyHz": 50,
+        "waveform": "pure-sine", "mpptCount": 2, "mpptMinV": 120, "mpptMaxV": 450, "pvVocMaxV": 500,
+        "mpptCurrentMaxA": 13, "mpptEfficiency": 0.98, "gridChargeEfficiency": 0.92,
+        "sbuToGridV": 46, "sbuToBatteryV": 52, "gridChargeCurrentMaxA": 60,
+        "gridChargeCurrentDefaultA": 20, "exportAllowedDefault": false, "transferTimeMs": 0,
+        "modes": ["SBU", "SUB", "UTILITY_FIRST"]
+      },
+      "terminals": [
+        {"id": "pv1-pos", "label": "PV1+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pv1-neg", "label": "PV1−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pv2-pos", "label": "PV2+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pv2-neg", "label": "PV2−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "grid-l", "label": "GRID L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "grid-n", "label": "GRID N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "load-l", "label": "BEBAN L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "load-n", "label": "BEBAN N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "data", "label": "DATA", "kind": "data", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {
+        "overloadCurve": [[1.1, 600], [1.25, 60], [1.5, 10], [2.0, 0.1]], "hasInternalFuse": false,
+        "hasReversePolarityProtection": false, "reversePolarityDamages": true, "antiIslanding": true,
+        "antiIslandingTimeS": 2
+      },
+      "image": "src/assets/components/inv-hybrid-5000w-48v.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.ratedAcPowerW", "electrical.surgeMultiple", "electrical.surgeDurationS",
+          "electrical.noLoadPowerW", "electrical.efficiencyAtHalfLoad",
+          "electrical.efficiencyAtFullLoad", "electrical.nominalDcV",
+          "electrical.dcVoltageLowAlarmV", "electrical.dcVoltageLvdV", "electrical.dcVoltageLvrV",
+          "electrical.dcVoltageHvdV", "electrical.lvdDelayS", "electrical.acOutputVoltageV",
+          "electrical.acOutputFrequencyHz", "electrical.waveform", "electrical.mpptCount",
+          "electrical.mpptMinV", "electrical.mpptMaxV", "electrical.pvVocMaxV",
+          "electrical.mpptCurrentMaxA", "electrical.mpptEfficiency",
+          "electrical.gridChargeEfficiency", "electrical.sbuToGridV", "electrical.sbuToBatteryV",
+          "electrical.gridChargeCurrentMaxA", "electrical.gridChargeCurrentDefaultA",
+          "electrical.exportAllowedDefault", "electrical.transferTimeMs", "electrical.modes",
+          "protection.overloadCurve", "protection.hasInternalFuse",
+          "protection.hasReversePolarityProtection", "protection.reversePolarityDamages",
+          "protection.antiIslanding", "protection.antiIslandingTimeS"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Tidak ada datasheet (MODEL_FISIKA.md §7). Dua MPPT; 2 string × 8 panel 200 Wp = 3.2 kWp (PRD §2, jumlah string [PERLU VERIFIKASI]). Beban 5 kW membutuhkan sekitar 107 A DC, melebihi 100 A maks baterai MBL48-100CP."
+    }
+  ]
+}

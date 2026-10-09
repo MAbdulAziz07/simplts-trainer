@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "file": "protection-other",
+  "items": [
+    {
+      "id": "fuse-pv-15a",
+      "category": "fuse",
+      "name": "Fuse PV 15A",
+      "packages": ["min", "rek", "best"],
+      "electrical": {
+        "poles": 2, "ratedCurrentA": 15, "ratedVoltageDcV": 1000, "breakingCapacityKa": 20,
+        "class": "gPV"
+      },
+      "terminals": [
+        {"id": "pos-in", "label": "+ IN", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pos-out", "label": "+ OUT", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg-in", "label": "− IN", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg-out", "label": "− OUT", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {
+        "ratedCurrentA": 15, "ratedVoltageDcV": 1000,
+        "timeCurrentPoints": [[1.13, 36000], [1.45, 3600], [2, 150], [3, 10], [5, 1], [10, 0.05], [20, 0.005]],
+        "blowsPermanently": true
+      },
+      "image": "src/assets/components/fuse-pv-15a.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md); In ≤ rating fuse seri maksimum panel (15 A, datasheet panel)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.poles", "electrical.ratedCurrentA", "electrical.ratedVoltageDcV",
+          "electrical.breakingCapacityKa", "electrical.class", "protection.ratedCurrentA",
+          "protection.ratedVoltageDcV", "protection.timeCurrentPoints",
+          "protection.blowsPermanently"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Titik kurva (x = I/In, t detik) dari MODEL_FISIKA.md §9.2. Fuse putus tidak pulih: harus diganti."
+    },
+    {
+      "id": "fuse-bat-100a",
+      "category": "fuse",
+      "name": "Fuse Baterai 100A",
+      "packages": ["min", "rek"],
+      "electrical": {
+        "poles": 1, "ratedCurrentA": 100, "ratedVoltageDcV": 58, "breakingCapacityKa": 5,
+        "class": "ANL"
+      },
+      "terminals": [
+        {"id": "in", "label": "IN", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "out", "label": "OUT", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {
+        "ratedCurrentA": 100, "ratedVoltageDcV": 58,
+        "timeCurrentPoints": [[1.13, 36000], [1.45, 3600], [2, 150], [3, 10], [5, 1], [10, 0.05], [20, 0.005]],
+        "blowsPermanently": true
+      },
+      "image": "src/assets/components/fuse-bat-100a.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.poles", "electrical.ratedCurrentA", "electrical.ratedVoltageDcV",
+          "electrical.breakingCapacityKa", "electrical.class", "protection.ratedCurrentA",
+          "protection.ratedVoltageDcV", "protection.timeCurrentPoints",
+          "protection.blowsPermanently"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Fuse tunggal-kutub pada jalur positif dekat baterai. Fuse melindungi kabel, tidak menjamin melindungi elektronik (PRD US15)."
+    },
+    {
+      "id": "fuse-bat-125a",
+      "category": "fuse",
+      "name": "Fuse Baterai 125A",
+      "packages": ["best"],
+      "electrical": {
+        "poles": 1, "ratedCurrentA": 125, "ratedVoltageDcV": 80, "breakingCapacityKa": 5,
+        "class": "ANL"
+      },
+      "terminals": [
+        {"id": "in", "label": "IN", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "out", "label": "OUT", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {
+        "ratedCurrentA": 125, "ratedVoltageDcV": 80,
+        "timeCurrentPoints": [[1.13, 36000], [1.45, 3600], [2, 150], [3, 10], [5, 1], [10, 0.05], [20, 0.005]],
+        "blowsPermanently": true
+      },
+      "image": "src/assets/components/fuse-bat-125a.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.poles", "electrical.ratedCurrentA", "electrical.ratedVoltageDcV",
+          "electrical.breakingCapacityKa", "electrical.class", "protection.ratedCurrentA",
+          "protection.ratedVoltageDcV", "protection.timeCurrentPoints",
+          "protection.blowsPermanently"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Fuse tunggal-kutub pada jalur positif dekat baterai. Fuse melindungi kabel, tidak menjamin melindungi elektronik (PRD US15)."
+    },
+    {
+      "id": "spd-pv-600v",
+      "category": "spd",
+      "name": "SPD PV 600V",
+      "packages": ["rek", "best"],
+      "electrical": {
+        "type": 2, "continuousVoltageUcV": 600, "protectionLevelUpKv": 2.0,
+        "nominalDischargeCurrentKa": 20, "maxEvents": 10
+      },
+      "terminals": [
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {
+        "continuousVoltageUcV": 600, "protectionLevelUpKv": 2.0, "nominalDischargeCurrentKa": 20,
+        "maxEvents": 10
+      },
+      "image": "src/assets/components/spd-pv-600v.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.type", "electrical.continuousVoltageUcV", "electrical.protectionLevelUpKv",
+          "electrical.nominalDischargeCurrentKa", "electrical.maxEvents",
+          "protection.continuousVoltageUcV", "protection.protectionLevelUpKv",
+          "protection.nominalDischargeCurrentKa", "protection.maxEvents"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Kejadian lonjakan diskret (MODEL_FISIKA.md §9.3); butuh jalur PE tersambung. Uc harus ≥ 1.2 × Voc dingin string (8S panel 200 Wp = sekitar 310 V)."
+    },
+    {
+      "id": "combiner-pv-2s",
+      "category": "combiner",
+      "name": "Combiner Box PV",
+      "packages": ["rek", "best"],
+      "electrical": {
+        "stringInputs": 2, "ratedVoltageDcV": 1000, "ratedCurrentA": 32, "fusePerStringA": 15,
+        "poles": 2
+      },
+      "terminals": [
+        {"id": "s1-pos", "label": "S1+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "s1-neg", "label": "S1−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "s2-pos", "label": "S2+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "s2-neg", "label": "S2−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "out-pos", "label": "OUT+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "out-neg", "label": "OUT−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"fusePerStringA": 15, "ratedVoltageDcV": 1000, "ratedCurrentA": 32},
+      "image": "src/assets/components/combiner-pv-2s.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.stringInputs", "electrical.ratedVoltageDcV", "electrical.ratedCurrentA",
+          "electrical.fusePerStringA", "electrical.poles", "protection.fusePerStringA",
+          "protection.ratedVoltageDcV", "protection.ratedCurrentA"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Dua input string, fuse tiap string di kedua kutub, dua output. SPD dipasang terpisah (Rek. A memakai SPD diskret)."
+    }
+  ]
+}

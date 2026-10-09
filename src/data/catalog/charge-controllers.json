@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "file": "charge-controllers",
+  "items": [
+    {
+      "id": "scc-pwm-rbl-20a",
+      "category": "scc-pwm",
+      "name": "SCC PWM 20A",
+      "packages": ["min"],
+      "electrical": {
+        "batteryVoltagesV": [12, 24], "chargeStages": 4, "chargeCurrentMaxA": 20,
+        "loadCurrentMaxA": 10, "pvPowerMax12VW": 240, "pvPowerMax24VW": 480, "pvVocMax12VV": 24,
+        "pvVocMax24VV": 48, "absorptionV": {"sealed": 14.4, "gel": 14.2, "flooded": 14.6},
+        "floatV": 13.7, "rechargeV": 13.0, "loadDisconnectV": 10.7, "loadReconnectV": 12.6,
+        "voltageScale24V": 2, "selfConsumptionMa": 10, "switchDropV": 0.3,
+        "absorptionDurationMin": 120, "tempOpMinC": -35, "tempOpMaxC": 60,
+        "installOrder": ["battery", "pv", "load"]
+      },
+      "terminals": [
+        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "load-pos", "label": "BEBAN+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "load-neg", "label": "BEBAN−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {
+        "vocFaultFactor": 1.2, "loadOverloadCurve": [[1.25, 60], [1.5, 5]],
+        "features": ["short-circuit", "open-circuit", "reverse-polarity", "overload", "reverse-current"],
+        "reversePolarityDamages": false
+      },
+      "image": "src/assets/components/scc-pwm-rbl-20a.webp",
+      "datasheet": {
+        "source": "Datasheet_SCC_PWM.xlsx › Datasheet RBL › kolom C (RBL-20A)",
+        "coverage": "partial",
+        "verify": [
+          "electrical.voltageScale24V", "electrical.switchDropV", "electrical.absorptionDurationMin",
+          "protection.vocFaultFactor", "protection.loadOverloadCurve",
+          "protection.reversePolarityDamages"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Nilai 24 V 'tidak dirinci' di datasheet (skala ×2 adalah asumsi); kolom RBL dipakai, bukan sheet BL915. selfConsumptionMa: datasheet '<10 mA'. Urutan pasang: baterai → PV → beban; PV dipasang sebelum baterai membuat deteksi 12/24 V salah (MODEL_FISIKA.md §2.3). Inverter dihubungkan ke baterai/busbar, bukan ke terminal BEBAN."
+    },
+    {
+      "id": "scc-mppt-600w-24v",
+      "category": "scc-mppt",
+      "name": "SCC MPPT 600W/24V",
+      "packages": ["rek"],
+      "electrical": {
+        "batteryNominalV": 24, "mpptMinV": 30, "mpptMaxV": 66, "pvVocMaxV": 75, "pvPowerMaxW": 600,
+        "inputCurrentMaxA": 18, "chargeCurrentMaxA": 25, "efficiencyMax": 0.98,
+        "trackingEfficiency": 0.99, "standbyPowerW": 2, "startDeltaV": 5, "bulkV": 28.6,
+        "floatV": {"vented": 26.4, "sealed": 26.8, "gel": 27.4, "nicd": 28.0},
+        "lowBatteryAlarmV": 21, "autoDetectBattery": true, "batteryTempSensor": false,
+        "absorptionDurationMin": 120, "tempOpMinC": -20, "tempOpMaxC": 55
+      },
+      "terminals": [
+        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {
+        "vocMaxV": 75, "vocFaultFactor": 1.1, "overloadAlarmPct": 110,
+        "features": ["reverse-polarity", "overcharge", "overload"]
+      },
+      "image": "src/assets/components/scc-mppt-600w-24v.webp",
+      "datasheet": {
+        "source": "Datasheet_SCC_MPPT_ID.xlsx › Spesifikasi › kolom E (600W/24V); sheet Pengisian",
+        "coverage": "partial",
+        "verify": [
+          "electrical.trackingEfficiency", "electrical.absorptionDurationMin",
+          "protection.vocFaultFactor"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Alternatif bersumber datasheet untuk MPPT 40 A (tidak ada; terdekat 25 A). Voc dingin 2S panel 240W-60P = 75.4 V > 75 V."
+    },
+    {
+      "id": "scc-mppt-3kw-24v",
+      "category": "scc-mppt",
+      "name": "SCC MPPT 3KW/24V",
+      "packages": ["rek"],
+      "electrical": {
+        "batteryNominalV": 24, "mpptMinV": 60, "mpptMaxV": 115, "pvVocMaxV": 145,
+        "pvPowerMaxW": 1600, "inputCurrentMaxA": 50, "chargeCurrentMaxA": 60, "efficiencyMax": 0.98,
+        "trackingEfficiency": 0.99, "standbyPowerW": 2, "startDeltaV": 5, "bulkV": 28.6,
+        "floatV": {"vented": 26.4, "sealed": 26.8, "gel": 27.4, "nicd": 28.0},
+        "lowBatteryAlarmV": 21, "autoDetectBattery": true, "batteryTempSensor": true,
+        "absorptionDurationMin": 120, "tempOpMinC": 0, "tempOpMaxC": 55
+      },
+      "terminals": [
+        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {
+        "vocMaxV": 145, "vocFaultFactor": 1.1, "overloadAlarmPct": 110,
+        "features": ["reverse-polarity", "overcharge", "overload"]
+      },
+      "image": "src/assets/components/scc-mppt-3kw-24v.webp",
+      "datasheet": {
+        "source": "Datasheet_SCC_MPPT_ID.xlsx › Spesifikasi › kolom H (3KW/24V); sheet Pengisian",
+        "coverage": "partial",
+        "verify": [
+          "electrical.trackingEfficiency", "electrical.standbyPowerW", "electrical.startDeltaV",
+          "electrical.bulkV", "electrical.floatV", "electrical.lowBatteryAlarmV",
+          "electrical.absorptionDurationMin", "protection.vocFaultFactor",
+          "protection.overloadAlarmPct"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Sheet 'Pengisian' hanya mencakup seri 300W/600W; profil pengisian, standby, selisih mulai, dan alarm diasumsikan sama. Jendela MPPT 60–115 V menuntut minimal 2S panel 310 Wp."
+    },
+    {
+      "id": "scc-mppt-generic-40a-24v",
+      "category": "scc-mppt",
+      "name": "SCC MPPT 40A",
+      "packages": ["rek"],
+      "electrical": {
+        "batteryNominalV": 24, "mpptMinV": 35, "mpptMaxV": 85, "pvVocMaxV": 100, "pvPowerMaxW": 1040,
+        "inputCurrentMaxA": 30, "chargeCurrentMaxA": 40, "efficiencyMax": 0.98,
+        "trackingEfficiency": 0.99, "standbyPowerW": 2, "startDeltaV": 5, "bulkV": 28.6,
+        "floatV": {"vented": 26.4, "sealed": 26.8, "gel": 27.4, "nicd": 28.0},
+        "lowBatteryAlarmV": 21, "autoDetectBattery": false, "batteryTempSensor": false,
+        "absorptionDurationMin": 120, "tempOpMinC": -20, "tempOpMaxC": 55
+      },
+      "terminals": [
+        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {
+        "vocMaxV": 100, "vocFaultFactor": 1.1, "overloadAlarmPct": 110,
+        "features": ["reverse-polarity", "overcharge", "overload"]
+      },
+      "image": "src/assets/components/scc-mppt-generic-40a-24v.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.batteryNominalV", "electrical.mpptMinV", "electrical.mpptMaxV",
+          "electrical.pvVocMaxV", "electrical.pvPowerMaxW", "electrical.inputCurrentMaxA",
+          "electrical.chargeCurrentMaxA", "electrical.efficiencyMax",
+          "electrical.trackingEfficiency", "electrical.standbyPowerW", "electrical.startDeltaV",
+          "electrical.bulkV", "electrical.floatV", "electrical.lowBatteryAlarmV",
+          "electrical.autoDetectBattery", "electrical.batteryTempSensor",
+          "electrical.absorptionDurationMin", "electrical.tempOpMinC", "electrical.tempOpMaxC",
+          "protection.vocMaxV", "protection.vocFaultFactor", "protection.overloadAlarmPct",
+          "protection.features"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] MPPT 40 A tidak ada di datasheet (MODEL_FISIKA.md §13 butir 3). Profil pengisian mengikuti sheet 'Pengisian' seri 600W/24V."
+    }
+  ]
+}

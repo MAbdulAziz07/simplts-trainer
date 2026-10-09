@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "file": "loads",
+  "items": [
+    {
+      "id": "load-dc-12v-200w",
+      "category": "load-dc",
+      "name": "Beban DC 12V",
+      "packages": ["min"],
+      "electrical": {
+        "kind": "resistive", "ratedVoltageV": 12, "maxPowerW": 200, "minPowerW": 0, "stepW": 10,
+        "resistanceAtMaxOhm": 0.72
+      },
+      "terminals": [
+        {"id": "a", "label": "+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "b", "label": "−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {},
+      "image": "src/assets/components/load-dc.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.kind", "electrical.ratedVoltageV", "electrical.maxPowerW",
+          "electrical.minPowerW", "electrical.stepW", "electrical.resistanceAtMaxOhm"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Beban resistif yang dapat diatur 0–200 W (kontrol beban PRD F8); tanpa arus lonjakan awal (PRD §7)."
+    },
+    {
+      "id": "load-dc-24v-400w",
+      "category": "load-dc",
+      "name": "Beban DC 24V",
+      "packages": ["rek"],
+      "electrical": {
+        "kind": "resistive", "ratedVoltageV": 24, "maxPowerW": 400, "minPowerW": 0, "stepW": 10,
+        "resistanceAtMaxOhm": 1.44
+      },
+      "terminals": [
+        {"id": "a", "label": "+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "b", "label": "−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {},
+      "image": "src/assets/components/load-dc.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.kind", "electrical.ratedVoltageV", "electrical.maxPowerW",
+          "electrical.minPowerW", "electrical.stepW", "electrical.resistanceAtMaxOhm"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Beban resistif yang dapat diatur 0–400 W (kontrol beban PRD F8); tanpa arus lonjakan awal (PRD §7)."
+    },
+    {
+      "id": "load-ac-500w",
+      "category": "load-ac",
+      "name": "Beban AC 500W",
+      "packages": ["min"],
+      "electrical": {
+        "kind": "resistive", "ratedVoltageV": 220, "maxPowerW": 500, "minPowerW": 0, "stepW": 10,
+        "resistanceAtMaxOhm": 96.8
+      },
+      "terminals": [
+        {"id": "a", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "b", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {},
+      "image": "src/assets/components/load-ac.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.kind", "electrical.ratedVoltageV", "electrical.maxPowerW",
+          "electrical.minPowerW", "electrical.stepW", "electrical.resistanceAtMaxOhm"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Beban resistif yang dapat diatur 0–500 W (kontrol beban PRD F8); tanpa arus lonjakan awal (PRD §7)."
+    },
+    {
+      "id": "load-ac-1500w",
+      "category": "load-ac",
+      "name": "Beban AC 1.5kW",
+      "packages": ["rek"],
+      "electrical": {
+        "kind": "resistive", "ratedVoltageV": 220, "maxPowerW": 1500, "minPowerW": 0, "stepW": 50,
+        "resistanceAtMaxOhm": 32.267
+      },
+      "terminals": [
+        {"id": "a", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "b", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {},
+      "image": "src/assets/components/load-ac.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.kind", "electrical.ratedVoltageV", "electrical.maxPowerW",
+          "electrical.minPowerW", "electrical.stepW", "electrical.resistanceAtMaxOhm"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Beban resistif yang dapat diatur 0–1500 W (kontrol beban PRD F8); tanpa arus lonjakan awal (PRD §7)."
+    },
+    {
+      "id": "load-ac-2000w",
+      "category": "load-ac",
+      "name": "Beban AC 2kW",
+      "packages": ["rek"],
+      "electrical": {
+        "kind": "resistive", "ratedVoltageV": 220, "maxPowerW": 2000, "minPowerW": 0, "stepW": 50,
+        "resistanceAtMaxOhm": 24.2
+      },
+      "terminals": [
+        {"id": "a", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "b", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {},
+      "image": "src/assets/components/load-ac.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.kind", "electrical.ratedVoltageV", "electrical.maxPowerW",
+          "electrical.minPowerW", "electrical.stepW", "electrical.resistanceAtMaxOhm"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Beban resistif yang dapat diatur 0–2000 W (kontrol beban PRD F8); tanpa arus lonjakan awal (PRD §7)."
+    },
+    {
+      "id": "load-ac-5000w",
+      "category": "load-ac",
+      "name": "Beban AC 5kW",
+      "packages": ["best"],
+      "electrical": {
+        "kind": "resistive", "ratedVoltageV": 220, "maxPowerW": 5000, "minPowerW": 0, "stepW": 100,
+        "resistanceAtMaxOhm": 9.68
+      },
+      "terminals": [
+        {"id": "a", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "b", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {},
+      "image": "src/assets/components/load-ac.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.kind", "electrical.ratedVoltageV", "electrical.maxPowerW",
+          "electrical.minPowerW", "electrical.stepW", "electrical.resistanceAtMaxOhm"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Beban resistif yang dapat diatur 0–5000 W (kontrol beban PRD F8); tanpa arus lonjakan awal (PRD §7)."
+    }
+  ]
+}

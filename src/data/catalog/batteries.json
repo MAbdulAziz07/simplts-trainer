@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "file": "batteries",
+  "items": [
+    {
+      "id": "bat-vrla-agm-12v-100ah",
+      "category": "battery",
+      "name": "VRLA AGM 100Ah",
+      "packages": ["min"],
+      "electrical": {
+        "chemistry": "vrla-agm",
+        "nominalVoltageV": 12,
+        "cellCount": 6,
+        "capacityAh": 100,
+        "capacityBasisHours": 20,
+        "internalResistanceMohm": 4.5,
+        "floatVPerCell": 2.275,
+        "cycleVPerCell": 2.425,
+        "tempCoeffFloatMvPerCPerCell": -3,
+        "tempCoeffCycleMvPerCPerCell": -5,
+        "chargeCurrentMaxA": 30,
+        "dischargeCutoffVPerCell": 1.75,
+        "capacityTempPoints": [[0, 0.86], [25, 1.0], [40, 1.05]],
+        "selfDischargePctPerMonth": 3,
+        "chargeTempMinC": 0,
+        "chargeTempMaxC": 40,
+        "dischargeTempMinC": -20,
+        "dischargeTempMaxC": 55,
+        "trainingDodLimitPct": 50,
+        "designLifeYears": 12,
+        "modelParams": {
+          "ocvSoc": [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+          "ocvV": [11.6, 11.8, 11.95, 12.05, 12.2, 12.3, 12.4, 12.5, 12.65, 12.75, 12.85],
+          "overVoltageSoc": [0, 0.5, 0.75, 0.9, 1.0], "overVoltageV": [0.3, 0.3, 0.6, 1.3, 1.6],
+          "resistanceSocFactor": 1.5, "sagVoltageV": 2.0, "sagSocScale": 0.05,
+          "peukertExponent": 1.2, "peukertRefHours": 20, "chargeEfficiency": 0.95,
+          "chargeEfficiencyKneeSoc": 0.8, "chargeEfficiencyAtFull": 0.7, "acceptancePerHour": 1.0,
+          "selfDischargePctPerDay": 0.1
+        }
+      },
+      "terminals": [
+        {"id": "pos", "label": "+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 2},
+        {"id": "neg", "label": "−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 2}
+      ],
+      "protection": {"internalBms": false, "externalBmsRequired": false},
+      "image": "src/assets/components/bat-vrla-agm-12v-100ah.webp",
+      "datasheet": {
+        "source": "Datasheet_Battery.xlsx › LFP12100 (FirstPower, AGM VRLA.pdf hlm. 1); parameter isi dari 6-FM-20 (Aokly)",
+        "coverage": "partial",
+        "verify": [
+          "electrical.capacityBasisHours", "electrical.floatVPerCell", "electrical.cycleVPerCell",
+          "electrical.tempCoeffFloatMvPerCPerCell", "electrical.tempCoeffCycleMvPerCPerCell",
+          "electrical.chargeCurrentMaxA", "electrical.dischargeCutoffVPerCell",
+          "electrical.capacityTempPoints", "electrical.selfDischargePctPerMonth",
+          "electrical.chargeTempMinC", "electrical.chargeTempMaxC", "electrical.dischargeTempMinC",
+          "electrical.dischargeTempMaxC", "electrical.trainingDodLimitPct", "electrical.modelParams"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Hanya resistansi internal (4.5 mΩ), kapasitas, dan umur float yang ada di datasheet FirstPower LFP12100; tegangan isi, koefisien suhu, kapasitas-suhu, dan batas suhu dipinjam dari Aokly 6-FM-20 (V/sel) dan dianggap berlaku umum. Arus isi maks 0.3C generik. LFP adalah kode seri FirstPower; kimia baterai ini VRLA AGM. Kurva OCV, kalibrasi, dan DoD latihan 50% dari MODEL_FISIKA.md §4."
+    },
+    {
+      "id": "bat-vrla-gel-12v-100ah",
+      "category": "battery",
+      "name": "VRLA Gel 100Ah",
+      "packages": ["min"],
+      "electrical": {
+        "chemistry": "vrla-gel",
+        "nominalVoltageV": 12,
+        "cellCount": 6,
+        "capacityAh": 100,
+        "capacityBasisHours": 20,
+        "internalResistanceMohm": 5.0,
+        "floatVPerCell": 2.275,
+        "cycleVPerCell": 2.425,
+        "tempCoeffFloatMvPerCPerCell": -3,
+        "tempCoeffCycleMvPerCPerCell": -5,
+        "chargeCurrentMaxA": 30,
+        "dischargeCutoffVPerCell": 1.75,
+        "capacityTempPoints": [[0, 0.86], [25, 1.0], [40, 1.05]],
+        "selfDischargePctPerMonth": 3,
+        "chargeTempMinC": 0,
+        "chargeTempMaxC": 40,
+        "dischargeTempMinC": -20,
+        "dischargeTempMaxC": 55,
+        "trainingDodLimitPct": 50,
+        "capacityC5Ah": 85,
+        "capacityC2Ah": 80,
+        "cycleLife100DodMin": 400,
+        "cycleLife100DodMax": 600,
+        "modelParams": {
+          "ocvSoc": [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+          "ocvV": [11.6, 11.8, 11.95, 12.05, 12.2, 12.3, 12.4, 12.5, 12.65, 12.75, 12.85],
+          "overVoltageSoc": [0, 0.5, 0.75, 0.9, 1.0], "overVoltageV": [0.3, 0.3, 0.6, 1.3, 1.6],
+          "resistanceSocFactor": 1.5, "sagVoltageV": 2.0, "sagSocScale": 0.05,
+          "peukertExponent": 1.2, "peukertRefHours": 20, "chargeEfficiency": 0.95,
+          "chargeEfficiencyKneeSoc": 0.8, "chargeEfficiencyAtFull": 0.7, "acceptancePerHour": 1.0,
+          "selfDischargePctPerDay": 0.1
+        }
+      },
+      "terminals": [
+        {"id": "pos", "label": "+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 2},
+        {"id": "neg", "label": "−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 2}
+      ],
+      "protection": {"internalBms": false, "externalBmsRequired": false},
+      "image": "src/assets/components/bat-vrla-gel-12v-100ah.webp",
+      "datasheet": {
+        "source": "Datasheet_Battery.xlsx › TNE12-100 (Tianneng, Tianneng TNE Series.pdf hlm. 1); parameter isi dari 6-FM-20 (Aokly)",
+        "coverage": "partial",
+        "verify": [
+          "electrical.internalResistanceMohm", "electrical.floatVPerCell",
+          "electrical.cycleVPerCell", "electrical.tempCoeffFloatMvPerCPerCell",
+          "electrical.tempCoeffCycleMvPerCPerCell", "electrical.chargeCurrentMaxA",
+          "electrical.dischargeCutoffVPerCell", "electrical.capacityTempPoints",
+          "electrical.selfDischargePctPerMonth", "electrical.chargeTempMinC",
+          "electrical.chargeTempMaxC", "electrical.dischargeTempMinC",
+          "electrical.dischargeTempMaxC", "electrical.trainingDodLimitPct", "electrical.modelParams"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Datasheet TNE12-100: kapasitas C20 100 Ah (1.80 V/sel), C5 85 Ah, C2/C3 80 Ah, siklus 400–600 pada 100% DoD, tanpa resistansi internal dan tanpa tegangan isi. Resistansi 5.0 mΩ dan parameter isi generik/dipinjam dari Aokly."
+    },
+    {
+      "id": "bat-lfp-25v6-100ah",
+      "category": "battery",
+      "name": "LiFePO4 24V 100Ah",
+      "packages": ["rek"],
+      "electrical": {
+        "chemistry": "lifepo4",
+        "nominalVoltageV": 25.6,
+        "cellCount": 8,
+        "capacityAh": 100,
+        "energyWh": 2560,
+        "internalResistanceMohm": 1.6,
+        "chargeVoltageMinV": 28.0,
+        "chargeVoltageMaxV": 28.8,
+        "chargeVoltageRecommendedV": 28.4,
+        "floatV": 27.0,
+        "tailCurrentFractionC": 0.02,
+        "chargeCurrentRecommendedA": 50,
+        "chargeCurrentMaxA": 200,
+        "dischargeCurrentRecommendedA": 100,
+        "dischargeCurrentMaxA": 200,
+        "dischargeCutoffV": 22.4,
+        "roundTripEfficiency": 0.92,
+        "capacityTempPoints": [[-20, 0.5], [0, 0.8], [25, 1.0]],
+        "cycleLife80Dod": 2500,
+        "cycleLife70Dod": 3000,
+        "cycleLife50Dod": 5000,
+        "chargeTempMinC": 5,
+        "chargeTempMaxC": 50,
+        "dischargeTempMinC": -20,
+        "dischargeTempMaxC": 50,
+        "trainingDodLimitPct": 80,
+        "modelParams": {
+          "ocvSoc": [0, 0.05, 0.1, 0.2, 0.3, 0.5, 0.7, 0.9, 0.95, 1.0],
+          "ocvV": [22.4, 24.0, 25.6, 26.0, 26.16, 26.32, 26.48, 26.72, 27.04, 27.2],
+          "overVoltageSoc": [0, 0.9, 0.95, 0.98, 1.0], "overVoltageV": [0.4, 0.4, 0.96, 1.6, 2.0],
+          "resistanceSocFactor": 0, "sagVoltageV": 0, "sagSocScale": 0.05, "peukertExponent": 1.0,
+          "peukertRefHours": 1, "chargeEfficiency": 0.96, "chargeEfficiencyKneeSoc": 1.0,
+          "chargeEfficiencyAtFull": 0.96, "acceptancePerHour": 5.0, "selfDischargePctPerDay": 0.1
+        }
+      },
+      "terminals": [
+        {"id": "pos", "label": "+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 2},
+        {"id": "neg", "label": "−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 2},
+        {"id": "bms", "label": "BMS", "kind": "data", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"internalBms": false, "externalBmsRequired": true, "overCurrentDischargeA": 200},
+      "image": "src/assets/components/bat-lfp-25v6-100ah.webp",
+      "datasheet": {
+        "source": "Datasheet_Battery.xlsx › LFP-Smart 25.6-100 (Victron, Datasheet-12,8-&-25,6-Volt-lithium-iron-phosphate-batteries-Smart-EN.pdf hlm. 1–2)",
+        "coverage": "partial",
+        "verify": [
+          "electrical.tailCurrentFractionC", "electrical.trainingDodLimitPct",
+          "electrical.modelParams"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] BMS eksternal wajib (MODEL_FISIKA.md §13 butir 6): hubungkan ke BMS Eksternal 24V lewat terminal BMS. Arus ekor CV 0.02C diambil dari baterai LiFePO4 lain di datasheet. Kurva OCV per sel (×8) dan kalibrasi isi: asumsi."
+    },
+    {
+      "id": "bat-lfp-51v2-100ah",
+      "category": "battery",
+      "name": "LiFePO4 48V 100Ah",
+      "packages": ["best"],
+      "electrical": {
+        "chemistry": "lifepo4",
+        "nominalVoltageV": 51.2,
+        "cellCount": 16,
+        "capacityAh": 100,
+        "capacityBasisHours": 5,
+        "energyWh": 5120,
+        "internalResistanceMohm": 10,
+        "chargeVoltageV": 58.4,
+        "chargeVoltageToleranceV": 0.2,
+        "floatV": 54.0,
+        "tailCurrentFractionC": 0.02,
+        "chargeCurrentRecommendedA": 50,
+        "chargeCurrentMaxA": 100,
+        "dischargeCurrentRecommendedA": 50,
+        "dischargeCurrentMaxA": 100,
+        "pulseCurrentMaxA": 300,
+        "pulseDurationS": 3,
+        "dischargeCutoffV": 40,
+        "roundTripEfficiency": 0.92,
+        "capacityTempPoints": [[-20, 0.5], [0, 0.8], [25, 1.0]],
+        "cycleLife70Dod": 3500,
+        "chargeTempMinC": 0,
+        "chargeTempMaxC": 45,
+        "dischargeTempMinC": -20,
+        "dischargeTempMaxC": 60,
+        "trainingDodLimitPct": 80,
+        "modelParams": {
+          "ocvSoc": [0, 0.05, 0.1, 0.2, 0.3, 0.5, 0.7, 0.9, 0.95, 1.0],
+          "ocvV": [44.8, 48.0, 51.2, 52.0, 52.32, 52.64, 52.96, 53.44, 54.08, 54.4],
+          "overVoltageSoc": [0, 0.9, 0.95, 0.98, 1.0], "overVoltageV": [0.8, 0.8, 1.92, 3.2, 4.0],
+          "resistanceSocFactor": 0, "sagVoltageV": 0, "sagSocScale": 0.05, "peukertExponent": 1.0,
+          "peukertRefHours": 1, "chargeEfficiency": 0.96, "chargeEfficiencyKneeSoc": 1.0,
+          "chargeEfficiencyAtFull": 0.96, "acceptancePerHour": 5.0, "selfDischargePctPerDay": 0.1
+        }
+      },
+      "terminals": [
+        {"id": "pos", "label": "+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 2},
+        {"id": "neg", "label": "−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 2},
+        {"id": "can", "label": "CAN", "kind": "data", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {
+        "internalBms": true, "overVoltageCutoffV": 58.6, "underVoltageCutoffV": 40,
+        "overCurrentDischargeA": 100, "overCurrentDelayS": 10, "shortCircuitFactor": 3,
+        "shortCircuitDelayMs": 1
+      },
+      "image": "src/assets/components/bat-lfp-51v2-100ah.webp",
+      "datasheet": {
+        "source": "Datasheet_Battery.xlsx › MBL48-100CP (Tiger/Centrac, MBL48-100CP.pdf hlm. 1–2)",
+        "coverage": "partial",
+        "verify": [
+          "electrical.floatV", "electrical.roundTripEfficiency", "electrical.capacityTempPoints",
+          "electrical.trainingDodLimitPct", "electrical.modelParams", "protection.overCurrentDelayS",
+          "protection.shortCircuitFactor", "protection.shortCircuitDelayMs"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Konfigurasi BMS di sumber ('4S/4P / Pre-heat') ambigu; diperlakukan sebagai BMS internal (MODEL_FISIKA.md §13 butir 7). Datasheet: efisiensi charge 100% (0.5C) dan discharge 96–99%; model memakai 0.96 per langkah isi. Float, kapasitas-suhu, round-trip, waktu BMS, dan ambang hubung singkat: asumsi."
+    }
+  ]
+}

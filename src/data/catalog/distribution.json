@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "file": "distribution",
+  "items": [
+    {
+      "id": "busbar-dc-pos",
+      "category": "busbar",
+      "name": "Busbar DC+",
+      "packages": ["min", "rek", "best"],
+      "electrical": {"positions": 6, "ratedCurrentA": 100, "ratedVoltageV": 1000},
+      "terminals": [
+        {"id": "t1", "label": "+1", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t2", "label": "+2", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t3", "label": "+3", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t4", "label": "+4", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t5", "label": "+5", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t6", "label": "+6", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 100},
+      "image": "src/assets/components/busbar.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.positions", "electrical.ratedCurrentA", "electrical.ratedVoltageV",
+          "protection.ratedCurrentA"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Busbar 6 posisi untuk kutub positif DC. Satu kabel per posisi (kapasitas terminal 1); percabangan lewat busbar."
+    },
+    {
+      "id": "busbar-dc-neg",
+      "category": "busbar",
+      "name": "Busbar DC−",
+      "packages": ["min", "rek", "best"],
+      "electrical": {"positions": 6, "ratedCurrentA": 100, "ratedVoltageV": 1000},
+      "terminals": [
+        {"id": "t1", "label": "−1", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t2", "label": "−2", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t3", "label": "−3", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t4", "label": "−4", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t5", "label": "−5", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t6", "label": "−6", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 100},
+      "image": "src/assets/components/busbar.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.positions", "electrical.ratedCurrentA", "electrical.ratedVoltageV",
+          "protection.ratedCurrentA"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Busbar 6 posisi untuk kutub negatif DC. Satu kabel per posisi (kapasitas terminal 1); percabangan lewat busbar."
+    },
+    {
+      "id": "busbar-ac-l",
+      "category": "busbar",
+      "name": "Busbar AC L",
+      "packages": ["min", "rek", "best"],
+      "electrical": {"positions": 6, "ratedCurrentA": 100, "ratedVoltageV": 1000},
+      "terminals": [
+        {"id": "t1", "label": "L1", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t2", "label": "L2", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t3", "label": "L3", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t4", "label": "L4", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t5", "label": "L5", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t6", "label": "L6", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 100},
+      "image": "src/assets/components/busbar.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.positions", "electrical.ratedCurrentA", "electrical.ratedVoltageV",
+          "protection.ratedCurrentA"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Busbar 6 posisi untuk fasa (L) 220 V AC. Satu kabel per posisi (kapasitas terminal 1); percabangan lewat busbar."
+    },
+    {
+      "id": "busbar-ac-n",
+      "category": "busbar",
+      "name": "Busbar AC N",
+      "packages": ["min", "rek", "best"],
+      "electrical": {"positions": 6, "ratedCurrentA": 100, "ratedVoltageV": 1000},
+      "terminals": [
+        {"id": "t1", "label": "N1", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t2", "label": "N2", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t3", "label": "N3", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t4", "label": "N4", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t5", "label": "N5", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t6", "label": "N6", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 100},
+      "image": "src/assets/components/busbar.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.positions", "electrical.ratedCurrentA", "electrical.ratedVoltageV",
+          "protection.ratedCurrentA"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Busbar 6 posisi untuk netral (N) AC. Satu kabel per posisi (kapasitas terminal 1); percabangan lewat busbar."
+    },
+    {
+      "id": "busbar-pe",
+      "category": "busbar",
+      "name": "Busbar PE",
+      "packages": ["min", "rek", "best"],
+      "electrical": {"positions": 6, "ratedCurrentA": 100, "ratedVoltageV": 1000},
+      "terminals": [
+        {"id": "t1", "label": "PE1", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t2", "label": "PE2", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t3", "label": "PE3", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t4", "label": "PE4", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t5", "label": "PE5", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "t6", "label": "PE6", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 100},
+      "image": "src/assets/components/busbar.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.positions", "electrical.ratedCurrentA", "electrical.ratedVoltageV",
+          "protection.ratedCurrentA"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Busbar 6 posisi untuk penghantar PE (pembumian). Satu kabel per posisi (kapasitas terminal 1); percabangan lewat busbar."
+    },
+    {
+      "id": "ground-rod",
+      "category": "grounding",
+      "name": "Elektroda Pentanahan",
+      "packages": ["min", "rek", "best"],
+      "electrical": {"earthResistanceOhm": 5},
+      "terminals": [{"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 6}],
+      "protection": {},
+      "image": "src/assets/components/ground-rod.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic", "verify": ["electrical.earthResistanceOhm"]
+      },
+      "notes": "[PERLU VERIFIKASI] Titik akhir semua jalur PE (SPD, rangka, inverter). Tahanan pentanahan 5 Ω generik."
+    },
+    {
+      "id": "load-panel-3c",
+      "category": "load-panel",
+      "name": "Panel Beban",
+      "packages": ["best"],
+      "electrical": {
+        "ratedCurrentA": 32, "circuitCount": 3, "circuitBreakerA": 10, "circuitCurve": "C",
+        "ratedVoltageAcV": 220, "breakingCapacityKa": 6
+      },
+      "terminals": [
+        {"id": "in-l", "label": "IN L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "in-n", "label": "IN N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "c1-l", "label": "C1 L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "c1-n", "label": "C1 N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "c2-l", "label": "C2 L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "c2-n", "label": "C2 N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "c3-l", "label": "C3 L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "c3-n", "label": "C3 N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 32, "circuitBreakerA": 10, "circuitCurve": "C", "breakingCapacityKa": 6},
+      "image": "src/assets/components/load-panel-3c.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md); MCB mengacu CHINT NXB-63 (6 kA)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.ratedCurrentA", "electrical.circuitCount", "electrical.circuitBreakerA",
+          "electrical.circuitCurve", "electrical.ratedVoltageAcV", "electrical.breakingCapacityKa",
+          "protection.ratedCurrentA", "protection.circuitBreakerA", "protection.circuitCurve",
+          "protection.breakingCapacityKa"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Panel distribusi AC: masukan utama 32 A dan tiga sirkuit keluar 10 A kurva C masing-masing dengan MCB internal."
+    }
+  ]
+}

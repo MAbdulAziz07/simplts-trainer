@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "file": "cables",
+  "items": [
+    {
+      "id": "cable-pv-h1z2z2k",
+      "category": "cable",
+      "name": "Kabel PV H1Z2Z2-K",
+      "packages": ["min", "rek", "best"],
+      "electrical": {
+        "conductor": "copper",
+        "resistivityOhmMm2PerM": 0.0175,
+        "tempCoeffPerC": 0.00393,
+        "tinnedFactor": 1.0,
+        "contactResistanceMohm": 0.3,
+        "thermalTimeConstantMin": 10,
+        "ratedVoltageV": 1500,
+        "currentType": "dc",
+        "maxConductorTempC": 90,
+        "ampacityRefAmbientC": 60,
+        "ambientDerating": [[60, 1.0], [70, 0.92], [80, 0.84], [90, 0.75]],
+        "sizes": [
+          {"areaMm2": 2.5, "rMaxOhmPerKm": 8.21, "ampacityAirA": 41, "ampacitySurfaceA": 39, "ampacityTouchingA": 33},
+          {"areaMm2": 4, "rMaxOhmPerKm": 5.09, "ampacityAirA": 55, "ampacitySurfaceA": 52, "ampacityTouchingA": 44},
+          {"areaMm2": 6, "rMaxOhmPerKm": 3.39, "ampacityAirA": 70, "ampacitySurfaceA": 67, "ampacityTouchingA": 57},
+          {"areaMm2": 10, "rMaxOhmPerKm": 1.95, "ampacityAirA": 98, "ampacitySurfaceA": 93, "ampacityTouchingA": 79},
+          {"areaMm2": 16, "rMaxOhmPerKm": 1.24, "ampacityAirA": 132, "ampacitySurfaceA": 125, "ampacityTouchingA": 107},
+          {"areaMm2": 25, "rMaxOhmPerKm": 0.795, "ampacityAirA": 176, "ampacitySurfaceA": 167, "ampacityTouchingA": 142},
+          {"areaMm2": 35, "rMaxOhmPerKm": 0.565, "ampacityAirA": 218, "ampacitySurfaceA": 207, "ampacityTouchingA": 176}
+        ]
+      },
+      "terminals": [],
+      "protection": {"maxConductorTempC": 90, "overheatDamageMarginK": 20, "overheatDamageDelayS": 60},
+      "image": "src/assets/components/cable-pv.webp",
+      "datasheet": {
+        "source": "Datasheet_Kabel_Tembaga.xlsx › Datasheet › LAPP ÖLFLEX SOLAR H1Z2Z2-K (DB38115805EN, versi 04, hlm. 1–4)",
+        "coverage": "partial",
+        "verify": [
+          "electrical.tempCoeffPerC", "electrical.tinnedFactor", "electrical.contactResistanceMohm",
+          "electrical.thermalTimeConstantMin", "protection.overheatDamageMarginK",
+          "protection.overheatDamageDelayS"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Resistivitas 0.0175 Ω·mm²/m dari permintaan pengguna (datasheet LAPP R maks 20 °C 11–17% lebih tinggi: tinnedFactor bisa dinaikkan). KHA menurut EN 50618 Tabel A.3 pada suhu sekitar 60 °C. Katalog kabel dipilih per sambungan (penampang dan panjang), bukan diseret ke meja."
+    },
+    {
+      "id": "cable-nyy-2core",
+      "category": "cable",
+      "name": "Kabel NYY 2-inti",
+      "packages": ["min", "rek", "best"],
+      "electrical": {
+        "conductor": "copper",
+        "resistivityOhmMm2PerM": 0.0175,
+        "tempCoeffPerC": 0.00393,
+        "tinnedFactor": 1.0,
+        "contactResistanceMohm": 0.3,
+        "thermalTimeConstantMin": 10,
+        "ratedVoltageV": 1000,
+        "currentType": "ac-dc",
+        "maxConductorTempC": 70,
+        "ampacityRefAmbientC": 30,
+        "sizes": [
+          {"areaMm2": 1.5, "ampacityGround20A": 30, "ampacityGround30A": 27, "ampacityAir20A": 21, "ampacityAir30A": 18},
+          {"areaMm2": 2.5, "ampacityGround20A": 41, "ampacityGround30A": 36, "ampacityAir20A": 29, "ampacityAir30A": 25},
+          {"areaMm2": 4, "ampacityGround20A": 53, "ampacityGround30A": 47, "ampacityAir20A": 38, "ampacityAir30A": 33},
+          {"areaMm2": 6, "ampacityGround20A": 66, "ampacityGround30A": 59, "ampacityAir20A": 48, "ampacityAir30A": 42},
+          {"areaMm2": 10, "ampacityGround20A": 88, "ampacityGround30A": 78, "ampacityAir20A": 66, "ampacityAir30A": 57},
+          {"areaMm2": 16, "ampacityGround20A": 115, "ampacityGround30A": 102, "ampacityAir20A": 90, "ampacityAir30A": 78},
+          {"areaMm2": 25, "ampacityGround20A": 150, "ampacityGround30A": 134, "ampacityAir20A": 120, "ampacityAir30A": 104},
+          {"areaMm2": 35, "ampacityGround20A": 180, "ampacityGround30A": 160, "ampacityAir20A": 150, "ampacityAir30A": 131}
+        ]
+      },
+      "terminals": [],
+      "protection": {"maxConductorTempC": 70, "overheatDamageMarginK": 20, "overheatDamageDelayS": 60},
+      "image": "src/assets/components/cable-nyy.webp",
+      "datasheet": {
+        "source": "Datasheet_Kabel_Tembaga.xlsx › Datasheet › KITANI NYY 2 inti (Katalog-NYY.pdf hlm. 1)",
+        "coverage": "partial",
+        "verify": [
+          "electrical.tempCoeffPerC", "electrical.tinnedFactor", "electrical.contactResistanceMohm",
+          "electrical.thermalTimeConstantMin", "electrical.maxConductorTempC",
+          "protection.maxConductorTempC", "protection.overheatDamageMarginK",
+          "protection.overheatDamageDelayS"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Suhu konduktor maksimum PVC 70 °C adalah praktik umum, tidak ada di datasheet. Resistansi dihitung dari ρ (datasheet tidak memuat R maks)."
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "file": "pv-modules",
+  "items": [
+    {
+      "id": "pv-generic-100wp",
+      "category": "pv-module",
+      "name": "Panel 100 Wp",
+      "packages": ["min"],
+      "electrical": {
+        "cellCount": 36, "pmaxW": 100, "vmpV": 18.0, "impA": 5.56, "vocV": 22.0, "iscA": 5.97,
+        "tempCoeffIscPerC": 0.0005, "tempCoeffVocPerC": -0.0032, "tempCoeffPmaxPerC": -0.004,
+        "noctC": 45, "systemVoltageMaxV": 1000, "bypassDiodeCount": 2, "tempOpMinC": -40,
+        "tempOpMaxC": 85
+      },
+      "terminals": [
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 15},
+      "image": "src/assets/components/pv-generic-100wp.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.cellCount", "electrical.pmaxW", "electrical.vmpV", "electrical.impA",
+          "electrical.vocV", "electrical.iscA", "electrical.tempCoeffIscPerC",
+          "electrical.tempCoeffVocPerC", "electrical.tempCoeffPmaxPerC", "electrical.noctC",
+          "electrical.systemVoltageMaxV", "electrical.bypassDiodeCount", "electrical.tempOpMinC",
+          "electrical.tempOpMaxC", "protection.seriesFuseMaxA", "protection.reverseCurrentMaxA"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Panel 100 Wp tidak ada di datasheet (MODEL_FISIKA.md §13 butir 1). Voc 22 V sengaja di bawah batas 24 V SCC PWM 12 V. Alternatif bersumber datasheet: Panel JS185CB-48P."
+    },
+    {
+      "id": "pv-generic-200wp",
+      "category": "pv-module",
+      "name": "Panel 200 Wp",
+      "packages": ["rek", "best"],
+      "electrical": {
+        "cellCount": 54, "pmaxW": 200, "vmpV": 26.0, "impA": 7.69, "vocV": 31.8, "iscA": 8.2,
+        "tempCoeffIscPerC": 0.0005, "tempCoeffVocPerC": -0.003, "tempCoeffPmaxPerC": -0.0042,
+        "noctC": 45, "systemVoltageMaxV": 1000, "bypassDiodeCount": 3, "tempOpMinC": -40,
+        "tempOpMaxC": 85
+      },
+      "terminals": [
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 15},
+      "image": "src/assets/components/pv-generic-200wp.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.cellCount", "electrical.pmaxW", "electrical.vmpV", "electrical.impA",
+          "electrical.vocV", "electrical.iscA", "electrical.tempCoeffIscPerC",
+          "electrical.tempCoeffVocPerC", "electrical.tempCoeffPmaxPerC", "electrical.noctC",
+          "electrical.systemVoltageMaxV", "electrical.bypassDiodeCount", "electrical.tempOpMinC",
+          "electrical.tempOpMaxC", "protection.seriesFuseMaxA", "protection.reverseCurrentMaxA"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Panel 200 Wp tidak ada di datasheet (MODEL_FISIKA.md §13 butir 2). Nilai dipilih agar 2S (Rek. A), 4S (Rek. B) dan 8S (Terbaik) tetap di dalam jendela MPPT perangkatnya, juga pada suhu sel 55 °C."
+    },
+    {
+      "id": "pv-js185cb-48p",
+      "category": "pv-module",
+      "name": "Panel JS185CB-48P",
+      "packages": ["min"],
+      "electrical": {
+        "cellCount": 48, "pmaxW": 185, "vmpV": 15.1, "impA": 12.3, "vocV": 17.7, "iscA": 13.1,
+        "tempCoeffIscPerC": 0.0005, "tempCoeffVocPerC": -0.003, "tempCoeffPmaxPerC": -0.0036,
+        "noctC": 45, "systemVoltageMaxV": 1500, "bypassDiodeCount": 3, "tempOpMinC": -40,
+        "tempOpMaxC": 85
+      },
+      "terminals": [
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"seriesFuseMaxA": 20, "reverseCurrentMaxA": 20},
+      "image": "src/assets/components/pv-js185cb-48p.webp",
+      "datasheet": {
+        "source": "Datasheet_Panel_Surya_Update.xlsx › Datasheet PV › kolom R (JS185CB-48P); sumber S7 hlm. 1",
+        "coverage": "partial",
+        "verify": ["electrical.bypassDiodeCount", "protection.reverseCurrentMaxA"]
+      },
+      "notes": "[PERLU VERIFIKASI] Jumlah dioda bypass dan arus balik maksimum 'tidak tercantum' di datasheet; diisi generik. Kelas 12 V (Voc 17.7 V ≤ 24 V). 2 paralel = 370 Wp melebihi batas PV RBL-20A 12 V (240 W)."
+    },
+    {
+      "id": "pv-240w-60p",
+      "category": "pv-module",
+      "name": "Panel 240W-60P",
+      "packages": ["rek", "best"],
+      "electrical": {
+        "cellCount": 60, "pmaxW": 240, "vmpV": 30.0, "impA": 8.01, "vocV": 37.2, "iscA": 8.56,
+        "tempCoeffIscPerC": 0.0005, "tempCoeffVocPerC": -0.0027, "tempCoeffPmaxPerC": -0.0045,
+        "noctC": 45, "systemVoltageMaxV": 1000, "bypassDiodeCount": 3, "tempOpMinC": -40,
+        "tempOpMaxC": 85
+      },
+      "terminals": [
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 15},
+      "image": "src/assets/components/pv-240w-60p.webp",
+      "datasheet": {
+        "source": "Datasheet_Panel_Surya_Update.xlsx › Datasheet PV › kolom C (240W-60P); sumber S1 hlm. 1–2",
+        "coverage": "partial",
+        "verify": ["electrical.bypassDiodeCount", "protection.reverseCurrentMaxA"]
+      },
+      "notes": "[PERLU VERIFIKASI] Dioda bypass dan arus balik maksimum 'tidak tercantum'; diisi generik. Pendekatan terdekat panel 200 Wp."
+    },
+    {
+      "id": "pv-mjt245gb",
+      "category": "pv-module",
+      "name": "Panel PV-MJT245GB",
+      "packages": ["rek", "best"],
+      "electrical": {
+        "cellCount": 60, "pmaxW": 245, "vmpV": 30.0, "impA": 8.17, "vocV": 37.2, "iscA": 8.69,
+        "tempCoeffIscPerC": 0.00056, "tempCoeffVocPerC": -0.0035, "tempCoeffPmaxPerC": -0.0045,
+        "noctC": 47, "systemVoltageMaxV": 1000, "bypassDiodeCount": 3, "tempOpMinC": -40,
+        "tempOpMaxC": 85
+      },
+      "terminals": [
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 15},
+      "image": "src/assets/components/pv-mjt245gb.webp",
+      "datasheet": {
+        "source": "Datasheet_Panel_Surya_Update.xlsx › Datasheet PV › kolom E (PV-MJT245GB); sumber S2 hlm. 1–2",
+        "coverage": "partial",
+        "verify": [
+          "electrical.bypassDiodeCount", "electrical.tempOpMinC", "electrical.tempOpMaxC",
+          "protection.reverseCurrentMaxA"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Suhu operasi, dioda bypass, dan arus balik maksimum 'tidak tercantum'; diisi generik."
+    },
+    {
+      "id": "pv-sw240-poly",
+      "category": "pv-module",
+      "name": "Panel SW240",
+      "packages": ["rek", "best"],
+      "electrical": {
+        "cellCount": 60, "pmaxW": 240, "vmpV": 30.2, "impA": 7.96, "vocV": 37.2, "iscA": 8.44,
+        "tempCoeffIscPerC": 0.00034, "tempCoeffVocPerC": -0.0034, "tempCoeffPmaxPerC": -0.0048,
+        "noctC": 46, "systemVoltageMaxV": 1000, "bypassDiodeCount": 3, "tempOpMinC": -40,
+        "tempOpMaxC": 90
+      },
+      "terminals": [
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 16},
+      "image": "src/assets/components/pv-sw240-poly.webp",
+      "datasheet": {
+        "source": "Datasheet_Panel_Surya_Update.xlsx › Datasheet PV › kolom G (SW 240 poly); sumber S3 hlm. 1–2",
+        "coverage": "partial", "verify": ["protection.seriesFuseMaxA"]
+      },
+      "notes": "[PERLU VERIFIKASI] Rating fuse seri 'tidak tercantum' (16 A di datasheet adalah arus balik maksimum, bukan rating fuse); diisi generik 15 A."
+    },
+    {
+      "id": "pv-js310cb-80p",
+      "category": "pv-module",
+      "name": "Panel JS310CB-80P",
+      "packages": ["rek", "best"],
+      "electrical": {
+        "cellCount": 80, "pmaxW": 310, "vmpV": 25.3, "impA": 12.3, "vocV": 29.5, "iscA": 12.9,
+        "tempCoeffIscPerC": 0.0005, "tempCoeffVocPerC": -0.003, "tempCoeffPmaxPerC": -0.0036,
+        "noctC": 45, "systemVoltageMaxV": 1500, "bypassDiodeCount": 3, "tempOpMinC": -40,
+        "tempOpMaxC": 85
+      },
+      "terminals": [
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"seriesFuseMaxA": 20, "reverseCurrentMaxA": 20},
+      "image": "src/assets/components/pv-js310cb-80p.webp",
+      "datasheet": {
+        "source": "Datasheet_Panel_Surya_Update.xlsx › Datasheet PV › kolom S (JS310CB-80P); sumber S7 hlm. 2",
+        "coverage": "partial",
+        "verify": ["electrical.bypassDiodeCount", "protection.reverseCurrentMaxA"]
+      },
+      "notes": "[PERLU VERIFIKASI] Kode model 310 W perlu dikonfirmasi ke pemasok (S7: JS310CB-80P atau S310CB-80P). Dioda bypass dan arus balik maksimum 'tidak tercantum'; diisi generik."
+    }
+  ]
+}

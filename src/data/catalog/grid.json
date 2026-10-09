@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "file": "grid",
+  "items": [
+    {
+      "id": "grid-pln",
+      "category": "grid",
+      "name": "Jaringan PLN",
+      "packages": ["rek", "best"],
+      "electrical": {
+        "nominalVoltageV": 220, "voltageToleranceUpPct": 5, "voltageToleranceDownPct": 10,
+        "frequencyHz": 50, "availableDefault": true
+      },
+      "terminals": [
+        {"id": "l", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "n", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {},
+      "image": "src/assets/components/grid-pln.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.nominalVoltageV", "electrical.voltageToleranceUpPct",
+          "electrical.voltageToleranceDownPct", "electrical.frequencyHz",
+          "electrical.availableDefault"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Sumber jaringan: hanya tegangan/frekuensi nominal dan padam/menyala (PRD §7). Toleransi tegangan +5%/−10% dan nominal 220 V (bukan 230 V) perlu diverifikasi."
+    }
+  ]
+}

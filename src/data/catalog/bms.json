@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "file": "bms",
+  "items": [
+    {
+      "id": "bms-ext-24v",
+      "category": "bms",
+      "name": "BMS Eksternal 24V",
+      "packages": ["rek"],
+      "electrical": {
+        "nominalVoltageV": 25.6, "cellCount": 8, "chargeCurrentMaxA": 200,
+        "dischargeCurrentMaxA": 200, "overVoltageCellV": 3.65, "underVoltageCellV": 2.8,
+        "maxBatteriesParallel": 20, "balancing": true
+      },
+      "terminals": [
+        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 2},
+        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 2},
+        {"id": "sys-pos", "label": "SIS+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 2},
+        {"id": "sys-neg", "label": "SIS−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 2},
+        {"id": "cell", "label": "SEL", "kind": "data", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {
+        "overCurrentDischargeA": 200, "overCurrentDelayS": 10, "shortCircuitFactor": 3,
+        "shortCircuitDelayMs": 1, "chargeTempMinC": 5, "chargeTempMaxC": 50
+      },
+      "image": "src/assets/components/bms-ext-24v.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md); mengacu LFP-Smart 25.6-100 (baterai Victron wajib BMS eksternal)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.nominalVoltageV", "electrical.cellCount", "electrical.chargeCurrentMaxA",
+          "electrical.dischargeCurrentMaxA", "electrical.overVoltageCellV",
+          "electrical.underVoltageCellV", "electrical.maxBatteriesParallel", "electrical.balancing",
+          "protection.overCurrentDischargeA", "protection.overCurrentDelayS",
+          "protection.shortCircuitFactor", "protection.shortCircuitDelayMs",
+          "protection.chargeTempMinC", "protection.chargeTempMaxC"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Tidak ada datasheet BMS. Dimodelkan sebagai pemutus seri antara baterai dan sistem pada kedua kutub (MODEL_FISIKA.md §4.5); ambang per sel mengikuti Victron (cut-off 2.8 V/sel). Hubungkan terminal SEL ke terminal BMS baterai."
+    }
+  ]
+}

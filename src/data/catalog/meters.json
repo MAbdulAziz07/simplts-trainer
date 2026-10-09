@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "file": "meters",
+  "items": [
+    {
+      "id": "kwh-meter-sdm230",
+      "category": "kwh-meter",
+      "name": "kWh Meter Exim",
+      "packages": ["rek", "best"],
+      "electrical": {
+        "network": "1P2W", "directConnection": true, "currentMinA": 0.5, "currentRefA": 10,
+        "currentMaxA": 100, "voltageMinV": 176, "voltageMaxV": 276, "frequencyHz": 50,
+        "accuracyClass": 1, "energyAccuracyPct": 1, "lowCurrentErrorPct": 5,
+        "displayMaxKwh": 99999.99, "displayResolutionKwh": 0.01, "pulseKwhPerPulse": 0.001,
+        "gainErrorMaxPct": 1, "terminalMaxMm2": 19, "tempOpMinC": -25, "tempOpMaxC": 55
+      },
+      "terminals": [
+        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "mbus", "label": "M-BUS", "kind": "data", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pulse", "label": "PULSA", "kind": "data", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"currentMaxA": 100, "overCurrentDamageA": 100, "ipRating": "IP51"},
+      "image": "src/assets/components/kwh-meter-sdm230.webp",
+      "datasheet": {
+        "source": "Datasheet_kWh_Meter_EXIM.xlsx › Eastron SDM230-MBus (SDM230_Mbus_MID_Datasheet.pdf hlm. 1–4)",
+        "coverage": "partial",
+        "verify": [
+          "electrical.lowCurrentErrorPct", "electrical.displayResolutionKwh",
+          "electrical.gainErrorMaxPct", "protection.overCurrentDamageA"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Model 1 fasa langsung; RS PRO 871-8305 dan CHINT DTSU666-G (CT) belum dimasukkan karena tidak dipakai paket mana pun (MODEL_FISIKA.md §13 butir 15). Galat di bawah Imin (±5%), resolusi tampilan, dan galat penguatan acak (±1%) adalah asumsi. L IN/L OUT tertukar menukar impor dan ekspor."
+    }
+  ]
+}

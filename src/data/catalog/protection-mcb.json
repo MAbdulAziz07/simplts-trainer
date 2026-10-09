@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "file": "protection-mcb",
+  "items": [
+    {
+      "id": "mcb-dc-16a",
+      "category": "mcb-dc",
+      "name": "MCB DC 16A",
+      "packages": ["min", "rek", "best"],
+      "electrical": {
+        "poles": 2, "ratedCurrentA": 16, "curve": "C", "ratedVoltageDcV": 440, "maxVoltageDcV": 500,
+        "breakingCapacityKa": 10, "refTempC": 55, "polarized": true, "minOperatingVoltageV": 12
+      },
+      "terminals": [
+        {"id": "pos-in", "label": "+ IN", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pos-out", "label": "+ OUT", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg-in", "label": "− IN", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg-out", "label": "− OUT", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 16, "curve": "C", "ratedVoltageDcV": 440, "breakingCapacityKa": 10},
+      "image": "src/assets/components/mcb-dc-2p.webp",
+      "datasheet": {
+        "source": "Datasheet_MCB_AC_DC.xlsx › MCB DC › ABB S200 M UC (2CDC002142D0207.pdf hlm. 2–3)",
+        "coverage": "partial", "verify": []
+      },
+      "notes": "[PERLU VERIFIKASI] Datasheet memuat rentang In 0.2–63 A dan kurva B, C, K, Z; In 16 A dan kurva C dipilih untuk katalog. Kurva waktu-arus tidak ada di datasheet; domain memakai model sederhana (MODEL_FISIKA.md §9.1). Ikuti polaritas pada perangkat."
+    },
+    {
+      "id": "mcb-dc-20a",
+      "category": "mcb-dc",
+      "name": "MCB DC 20A",
+      "packages": ["min", "rek", "best"],
+      "electrical": {
+        "poles": 2, "ratedCurrentA": 20, "curve": "C", "ratedVoltageDcV": 440, "maxVoltageDcV": 500,
+        "breakingCapacityKa": 10, "refTempC": 55, "polarized": true, "minOperatingVoltageV": 12
+      },
+      "terminals": [
+        {"id": "pos-in", "label": "+ IN", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pos-out", "label": "+ OUT", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg-in", "label": "− IN", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg-out", "label": "− OUT", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 20, "curve": "C", "ratedVoltageDcV": 440, "breakingCapacityKa": 10},
+      "image": "src/assets/components/mcb-dc-2p.webp",
+      "datasheet": {
+        "source": "Datasheet_MCB_AC_DC.xlsx › MCB DC › ABB S200 M UC (2CDC002142D0207.pdf hlm. 2–3)",
+        "coverage": "partial", "verify": []
+      },
+      "notes": "[PERLU VERIFIKASI] Datasheet memuat rentang In 0.2–63 A dan kurva B, C, K, Z; In 20 A dan kurva C dipilih untuk katalog. Kurva waktu-arus tidak ada di datasheet; domain memakai model sederhana (MODEL_FISIKA.md §9.1). Ikuti polaritas pada perangkat."
+    },
+    {
+      "id": "mcb-dc-32a",
+      "category": "mcb-dc",
+      "name": "MCB DC 32A",
+      "packages": ["min", "rek"],
+      "electrical": {
+        "poles": 2, "ratedCurrentA": 32, "curve": "C", "ratedVoltageDcV": 440, "maxVoltageDcV": 500,
+        "breakingCapacityKa": 10, "refTempC": 55, "polarized": true, "minOperatingVoltageV": 12
+      },
+      "terminals": [
+        {"id": "pos-in", "label": "+ IN", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pos-out", "label": "+ OUT", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg-in", "label": "− IN", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg-out", "label": "− OUT", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 32, "curve": "C", "ratedVoltageDcV": 440, "breakingCapacityKa": 10},
+      "image": "src/assets/components/mcb-dc-2p.webp",
+      "datasheet": {
+        "source": "Datasheet_MCB_AC_DC.xlsx › MCB DC › ABB S200 M UC (2CDC002142D0207.pdf hlm. 2–3)",
+        "coverage": "partial", "verify": []
+      },
+      "notes": "[PERLU VERIFIKASI] Datasheet memuat rentang In 0.2–63 A dan kurva B, C, K, Z; In 32 A dan kurva C dipilih untuk katalog. Kurva waktu-arus tidak ada di datasheet; domain memakai model sederhana (MODEL_FISIKA.md §9.1). Ikuti polaritas pada perangkat."
+    },
+    {
+      "id": "mcb-dc-63a",
+      "category": "mcb-dc",
+      "name": "MCB DC 63A",
+      "packages": ["min", "rek"],
+      "electrical": {
+        "poles": 2, "ratedCurrentA": 63, "curve": "C", "ratedVoltageDcV": 440, "maxVoltageDcV": 500,
+        "breakingCapacityKa": 10, "refTempC": 55, "polarized": true, "minOperatingVoltageV": 12
+      },
+      "terminals": [
+        {"id": "pos-in", "label": "+ IN", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pos-out", "label": "+ OUT", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg-in", "label": "− IN", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg-out", "label": "− OUT", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 63, "curve": "C", "ratedVoltageDcV": 440, "breakingCapacityKa": 10},
+      "image": "src/assets/components/mcb-dc-2p.webp",
+      "datasheet": {
+        "source": "Datasheet_MCB_AC_DC.xlsx › MCB DC › ABB S200 M UC (2CDC002142D0207.pdf hlm. 2–3)",
+        "coverage": "partial", "verify": []
+      },
+      "notes": "[PERLU VERIFIKASI] Datasheet memuat rentang In 0.2–63 A dan kurva B, C, K, Z; In 63 A dan kurva C dipilih untuk katalog. Kurva waktu-arus tidak ada di datasheet; domain memakai model sederhana (MODEL_FISIKA.md §9.1). Ikuti polaritas pada perangkat."
+    },
+    {
+      "id": "mcb-dc-100a",
+      "category": "mcb-dc",
+      "name": "MCB DC 100A",
+      "packages": ["rek"],
+      "electrical": {
+        "poles": 2, "ratedCurrentA": 100, "curve": "C", "ratedVoltageDcV": 250, "maxVoltageDcV": 250,
+        "breakingCapacityKa": 10, "refTempC": 40, "polarized": false, "minOperatingVoltageV": 0
+      },
+      "terminals": [
+        {"id": "pos-in", "label": "1", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "pos-out", "label": "2", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg-in", "label": "3", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "neg-out", "label": "4", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 100, "curve": "C", "ratedVoltageDcV": 250, "breakingCapacityKa": 10},
+      "image": "src/assets/components/mcb-dc-2p-100a.webp",
+      "datasheet": {
+        "source": "Datasheet_MCB_AC_DC.xlsx › MCB DC › Schneider C120N / A9N60734 (PES_Schneider Electric_C120_A9N60734.pdf hlm. 1–2)",
+        "coverage": "partial", "verify": ["electrical.polarized", "electrical.minOperatingVoltageV"]
+      },
+      "notes": "[PERLU VERIFIKASI] Status produk 'discontinued sejak 23 September 2025' di datasheet. Ue DC ≤ 250 V; sistem 24 V aman. Polaritas dan tegangan operasi minimum tidak dinyatakan."
+    },
+    {
+      "id": "mcb-ac-6a",
+      "category": "mcb-ac",
+      "name": "MCB AC 6A",
+      "packages": ["min", "rek"],
+      "electrical": {
+        "poles": 2, "ratedCurrentA": 6, "curve": "C", "ratedVoltageAcV": 240,
+        "ratedVoltageDcV": null, "breakingCapacityKa": 6, "refTempC": 30, "frequencyHz": 50
+      },
+      "terminals": [
+        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 6, "curve": "C", "ratedVoltageAcV": 240, "breakingCapacityKa": 6},
+      "image": "src/assets/components/mcb-ac-2p.webp",
+      "datasheet": {
+        "source": "Datasheet_MCB_AC_DC.xlsx › MCB AC › CHINT NXB-63 (NXB-63-MCB-Catalog.pdf hlm. 3–4)",
+        "coverage": "partial", "verify": ["electrical.frequencyHz"]
+      },
+      "notes": "[PERLU VERIFIKASI] Datasheet NXB-63: In 1–63 A, kurva B/C/D, 240/415 V AC, 6 kA, Tref 30 °C; 1P+N dipilih sebagai 2 terminal L/N. Tanpa rating DC: di sirkuit DC ≥ 48 V atau arus putus > 3×In, tidak padam (MODEL_FISIKA.md §9.1)."
+    },
+    {
+      "id": "mcb-ac-10a",
+      "category": "mcb-ac",
+      "name": "MCB AC 10A",
+      "packages": ["min", "rek", "best"],
+      "electrical": {
+        "poles": 2, "ratedCurrentA": 10, "curve": "C", "ratedVoltageAcV": 240,
+        "ratedVoltageDcV": null, "breakingCapacityKa": 6, "refTempC": 30, "frequencyHz": 50
+      },
+      "terminals": [
+        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 10, "curve": "C", "ratedVoltageAcV": 240, "breakingCapacityKa": 6},
+      "image": "src/assets/components/mcb-ac-2p.webp",
+      "datasheet": {
+        "source": "Datasheet_MCB_AC_DC.xlsx › MCB AC › CHINT NXB-63 (NXB-63-MCB-Catalog.pdf hlm. 3–4)",
+        "coverage": "partial", "verify": ["electrical.frequencyHz"]
+      },
+      "notes": "[PERLU VERIFIKASI] Datasheet NXB-63: In 1–63 A, kurva B/C/D, 240/415 V AC, 6 kA, Tref 30 °C; 1P+N dipilih sebagai 2 terminal L/N. Tanpa rating DC: di sirkuit DC ≥ 48 V atau arus putus > 3×In, tidak padam (MODEL_FISIKA.md §9.1)."
+    },
+    {
+      "id": "mcb-ac-16a",
+      "category": "mcb-ac",
+      "name": "MCB AC 16A",
+      "packages": ["min", "rek", "best"],
+      "electrical": {
+        "poles": 2, "ratedCurrentA": 16, "curve": "C", "ratedVoltageAcV": 240,
+        "ratedVoltageDcV": null, "breakingCapacityKa": 6, "refTempC": 30, "frequencyHz": 50
+      },
+      "terminals": [
+        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 16, "curve": "C", "ratedVoltageAcV": 240, "breakingCapacityKa": 6},
+      "image": "src/assets/components/mcb-ac-2p.webp",
+      "datasheet": {
+        "source": "Datasheet_MCB_AC_DC.xlsx › MCB AC › CHINT NXB-63 (NXB-63-MCB-Catalog.pdf hlm. 3–4)",
+        "coverage": "partial", "verify": ["electrical.frequencyHz"]
+      },
+      "notes": "[PERLU VERIFIKASI] Datasheet NXB-63: In 1–63 A, kurva B/C/D, 240/415 V AC, 6 kA, Tref 30 °C; 1P+N dipilih sebagai 2 terminal L/N. Tanpa rating DC: di sirkuit DC ≥ 48 V atau arus putus > 3×In, tidak padam (MODEL_FISIKA.md §9.1)."
+    },
+    {
+      "id": "mcb-ac-32a",
+      "category": "mcb-ac",
+      "name": "MCB AC 32A",
+      "packages": ["rek", "best"],
+      "electrical": {
+        "poles": 2, "ratedCurrentA": 32, "curve": "C", "ratedVoltageAcV": 240,
+        "ratedVoltageDcV": null, "breakingCapacityKa": 6, "refTempC": 30, "frequencyHz": 50
+      },
+      "terminals": [
+        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
+        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+      ],
+      "protection": {"ratedCurrentA": 32, "curve": "C", "ratedVoltageAcV": 240, "breakingCapacityKa": 6},
+      "image": "src/assets/components/mcb-ac-2p.webp",
+      "datasheet": {
+        "source": "Datasheet_MCB_AC_DC.xlsx › MCB AC › CHINT NXB-63 (NXB-63-MCB-Catalog.pdf hlm. 3–4)",
+        "coverage": "partial", "verify": ["electrical.frequencyHz"]
+      },
+      "notes": "[PERLU VERIFIKASI] Datasheet NXB-63: In 1–63 A, kurva B/C/D, 240/415 V AC, 6 kA, Tref 30 °C; 1P+N dipilih sebagai 2 terminal L/N. Tanpa rating DC: di sirkuit DC ≥ 48 V atau arus putus > 3×In, tidak padam (MODEL_FISIKA.md §9.1)."
+    }
+  ]
+}
