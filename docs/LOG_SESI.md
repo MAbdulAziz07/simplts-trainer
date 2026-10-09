@@ -2,6 +2,14 @@
 
 Entri terbaru di atas.
 
+## 2026-10-09 — Model fisika
+- Sumber: docs/PRD.md dan 7 berkas di docs/datasheet/ (dibaca lewat skrip sementara di luar proyek).
+- Dibuat: docs/MODEL_FISIKA.md (PV C1/C2, PWM, MPPT, VRLA/LiFePO4, inverter off-grid/grid-tie/hibrida, kabel, MCB/fuse/SPD, kWh meter, profil matahari Batam, penyelesaian jaringan, matriks uji). Diubah: docs/LOG_SESI.md.
+- Validasi: model PV dicocokkan ke baris NOCT datasheet (Pmax −1.5…−2.4%, Voc −0.3…+1.4%, Isc ≤ 0.9%); Peukert dicocokkan ke tabel discharge Aokly (±10% untuk laju ≥ 1 jam).
+- Temuan utama (§13): datasheet tidak memuat panel 100 Wp/200 Wp, SCC MPPT 40 A, inverter, SPD, fuse, maupun kurva waktu-arus MCB; KP US8 ("MPPT ≥ PWM") perlu toleransi; BMS Victron eksternal wajib.
+- Perlu keputusan: pilihan model katalog pengganti untuk butir 1–3 §13; apakah toleransi uji §1.4 dan matriks §15 dipakai.
+- npm run check belum dijalankan: belum ada kode/package.json.
+
 ## 2026-10-07 — Perbarui PRD dari review
 - Sumber: docs/review/PRD-codex.md (15 temuan, semua diterapkan).
 - Diubah: docs/PRD.md, docs/LOG_SESI.md.
