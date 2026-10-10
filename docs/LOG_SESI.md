@@ -2,6 +2,17 @@
 
 Entri terbaru di atas.
 
+## 2026-10-11 — Model komponen domain (paket Minimum)
+- Sumber: docs/MODEL_FISIKA.md, src/domain/types.ts dan tipe katalog. Rencana 5 poin disetujui sebelum mulai.
+- Dibuat di src/domain/components/ (masing-masing dengan *.test.ts): pv.ts, pv-array.ts, battery.ts, sun.ts, cable.ts, protection.ts, load.ts, scc.ts, inverter.ts, grid.ts, meter.ts, numeric.ts; data uji test-fixtures.ts dan test-fixtures-bos.ts. Diubah: src/domain/index.ts (ekspor), docs/LOG_SESI.md.
+- Cakupan: PV §1 lengkap (array, bayangan, dioda bypass, titik daya maksimum global); baterai §4.2–4.3 (VRLA dan LiFePO4); matahari §11; kabel §8; MCB dan fuse §9.1–9.2; beban resistif; SCC PWM §2; inverter off-grid §5; jaringan dan kWh meter versi kecil (§6.1, §10.2).
+- Keputusan: semua fungsi murni, menerima `electrical`/`protection` katalog; SoC di antarmuka memakai `socPct` (0–100); pv.ts dipecah dengan pv-array.ts (batas 250 baris); data uji disalin dari katalog karena src/domain dilarang meng-import src/data; satu commit per model (10 commit di master, tanpa push).
+- Validasi: npm run check lolos (lint, 286 test, build). 202 test baru; nilai acuan dari contoh hitung §1.7, §2.4, §3.4, §4.7, §5.4, §6.3, §8.3, §9, §10.3, §11.3 dengan toleransi 2%, ditambah kasus batas (iradiasi 0, SoC 0%/100%, arus di atas rating, 15 °C dan 65 °C).
+- Selisih terhadap dokumen: `I(Vmp)` tidak "persis" `Imp` (§1.4) tetapi lebih besar `Isc·C1` (0.00016 A pada contoh A).
+- [PERLU VERIFIKASI] yang ditetapkan di kode karena tidak ada di katalog: faktor `Rchg` per kimia (3× VRLA, 1× LiFePO4); `L` = 25, `d` = 0.15, `Vf` = 0.6 V; titik kurva termal MCB, ambang magnetik, `kdc`, `τcool`, koefisien suhu MCB; ambang deteksi 24 V SCC PWM (16 V); lokasi dan suhu Batam (`BATAM_SITE`, `BATAM_DAY_TEMP`); jendela frekuensi ±1 Hz; ambang warna jatuh tegangan 3%/5%.
+- Perlu keputusan: (1) kapasitas baterai di atas titik tabel suhu diekstrapolasi 0.0056/°C sesuai §4.3 (VRLA 65 °C = 119%, LiFePO4 juga naik di atas 25 °C) — kemungkinan perlu dibatasi; (2) beban SCC dan inverter antara 1.00× dan titik kurva pertama memakai waktu titik pertama (SCC: 60 s); (3) konstanta asumsi di atas sebaiknya dipindah ke JSON di src/data.
+- Belum dikerjakan: SCC MPPT (§3), inverter grid-tie dan hibrida (§6–7), SPD (§9.3), BMS (§4.5), SoC taksiran (§4.6), galat kWh meter di bawah `Imin`, penyelesaian jaringan dan neraca energi (§12). Uji Playwright tidak dijalankan (tidak ada perubahan tampilan).
+
 ## 2026-10-11 — Perbaikan validasi katalog dari review
 - Sumber: docs/review/2026-10-11-kerangka-proyek.md (7 temuan, semua benar dan dikerjakan). Rencana 5 poin disetujui sebelum mulai.
 - Dibuat: src/data/catalog/rules.test.ts (54 test; 50 gagal pada skema lama, ditulis sebelum perbaikan). Diubah: src/data/catalog/schema.ts, validate.ts, catalog.test.ts, schema/common.ts, sources.ts, inverters.ts, protection.ts, storage.ts, balance.ts; docs/LOG_SESI.md. JSON katalog tidak diubah (51 item tetap lolos).
