@@ -10,3 +10,4 @@ export * from './components/pv-array';
 export * from './components/battery';
 export * from './components/sun';
 export * from './components/cable';
+export * from './components/protection';
