@@ -12,3 +12,4 @@ export * from './components/sun';
 export * from './components/cable';
 export * from './components/protection';
 export * from './components/load';
+export * from './components/scc';
