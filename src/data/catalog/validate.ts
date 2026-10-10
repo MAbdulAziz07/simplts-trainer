@@ -1,6 +1,6 @@
 // Validasi seluruh katalog: tiap berkas terhadap skema, lalu aturan lintas berkas.
 import type { CatalogItem } from '@/domain';
-import { catalogFileSchema } from './schema';
+import { CATALOG_FILE_CATEGORIES, catalogFileSchema } from './schema';
 
 export interface CatalogValidation {
   items: CatalogItem[];
@@ -8,11 +8,24 @@ export interface CatalogValidation {
   issues: string[];
 }
 
+export interface CatalogValidationOptions {
+  /** Hanya untuk memeriksa sebagian berkas; tanpa ini berkas yang hilang menjadi masalah. */
+  allowPartial?: boolean;
+}
+
 /** @param files isi berkas JSON mentah, dengan kunci nama berkas tanpa `.json`. */
-export function validateCatalog(files: Record<string, unknown>): CatalogValidation {
+export function validateCatalog(
+  files: Record<string, unknown>,
+  { allowPartial = false }: CatalogValidationOptions = {},
+): CatalogValidation {
   const items: CatalogItem[] = [];
   const issues: string[] = [];
   const fileOfId = new Map<string, string>();
+
+  // Glob kosong atau berkas terhapus tidak boleh lolos sebagai baki kosong (KATALOG §1).
+  if (!allowPartial)
+    for (const name of Object.keys(CATALOG_FILE_CATEGORIES))
+      if (!Object.hasOwn(files, name)) issues.push(`${name} › file: berkas katalog tidak ada`);
 
   for (const [name, raw] of Object.entries(files)) {
     const result = catalogFileSchema.safeParse(raw);

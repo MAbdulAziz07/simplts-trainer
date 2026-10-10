@@ -1,7 +1,16 @@
 // Skema MCB, fuse, SPD, dan combiner box (docs/KATALOG.md §6.6–6.7).
 import { z } from 'zod';
 import { FUSE_CLASSES } from '@/domain';
-import { bool, count, curve, itemSchema, nonNegative, num, positive, tripCurve } from './common';
+import {
+  bool,
+  count,
+  itemSchema,
+  nonNegative,
+  num,
+  positive,
+  tripCurve,
+  tripTimeCurve,
+} from './common';
 
 export const mcbDcSchema = itemSchema(
   'mcb-dc',
@@ -56,7 +65,7 @@ export const fuseSchema = itemSchema(
   z.strictObject({
     ratedCurrentA: positive,
     ratedVoltageDcV: positive,
-    timeCurrentPoints: curve,
+    timeCurrentPoints: tripTimeCurve,
     blowsPermanently: bool,
   }),
 );

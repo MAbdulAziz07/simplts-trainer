@@ -3,13 +3,13 @@ import { z } from 'zod';
 import {
   bool,
   count,
-  curve,
   itemSchema,
   noProtection,
   nonNegative,
   num,
   pct,
   positive,
+  tempFactorCurve,
   tripCurve,
 } from './common';
 
@@ -42,7 +42,7 @@ export const cableSchema = itemSchema(
     currentType: z.enum(['dc', 'ac-dc']),
     maxConductorTempC: num,
     ampacityRefAmbientC: num,
-    ambientDerating: curve.optional(),
+    ambientDerating: tempFactorCurve.optional(),
     sizes: z.array(z.union([pvCableSize, nyyCableSize])).min(1),
   }),
   z.strictObject({

@@ -2,6 +2,15 @@
 
 Entri terbaru di atas.
 
+## 2026-10-11 — Perbaikan validasi katalog dari review
+- Sumber: docs/review/2026-10-11-kerangka-proyek.md (7 temuan, semua benar dan dikerjakan). Rencana 5 poin disetujui sebelum mulai.
+- Dibuat: src/data/catalog/rules.test.ts (54 test; 50 gagal pada skema lama, ditulis sebelum perbaikan). Diubah: src/data/catalog/schema.ts, validate.ts, catalog.test.ts, schema/common.ts, sources.ts, inverters.ts, protection.ts, storage.ts, balance.ts; docs/LOG_SESI.md. JSON katalog tidak diubah (51 item tetap lolos).
+- Aturan baru: (1) panel `vmpV < vocV`, `impA < iscA`, `pmaxW` dalam ±5% dari `vmpV × impA`; (2) sumbu x kurva naik ketat, kurva proteksi `[rasio, detik]` positif, tabel suhu berfaktor positif (suhu negatif boleh), sumbu SoC baterai naik ketat dari 0 sampai 1; (3) efisiensi inverter dan SCC MPPT `0 < η ≤ 1`; (4) field bernama sama di `protection` dan `electrical` wajib sama, `protection.vocMaxV = electrical.pvVocMaxV`; (5) `mpptMinV < mpptMaxV ≤ batas Voc` (grid-tie: `protection.dcVocMaxV`); (6) `validateCatalog` melaporkan berkas hilang, validasi sebagian hanya lewat opsi `allowPartial`; (7) `installOrder` tepat `battery, pv, load`.
+- Keputusan: aturan lintas `electrical`–`protection` ditaruh di schema.ts (tidak jadi berkas schema/rules.ts); `installOrder` tetap bertipe larik agar tipe domain tidak berubah.
+- Validasi: npm run check lolos (lint, 84 test, build).
+- Perlu keputusan: toleransi Pmax 5% [PERLU VERIFIKASI] (selisih terbesar di katalog 0,4%); docs/KATALOG.md belum memuat aturan baru ini.
+- Belum dikerjakan (catatan reviewer di luar tabel): test negatif untuk duplikasi paket/terminal/verify, `coverage=full`, versi skema; uji Playwright tidak dijalankan sesi ini.
+
 ## 2026-10-10 — Kerangka proyek
 - Sumber: AGENTS.md, docs/KATALOG.md, docs/UX.md, docs/ux/, 12 berkas src/data/catalog/. Rencana 5 poin disetujui sebelum mulai.
 - Dibuat: proyek Vite 8 + React 19 + TypeScript 6 strict (package.json, index.html, vite.config.ts, tsconfig*.json, eslint.config.js, .prettierrc.json, .prettierignore, playwright.config.ts); src/domain (types.ts + catalog/ 6 berkas tipe); src/data/catalog (schema.ts, schema/ 6 berkas zod, validate.ts, index.ts, catalog.test.ts); src/features (top-bar, tray, workbench, inspector, sim-controls berisi kerangka; instruments, scenarios kosong); src/store, src/ui (kosong), src/i18n/id.ts; src/App.tsx, main.tsx, index.css; e2e/layout.spec.ts; docs/ARSITEKTUR.md. Diubah: AGENTS.md (bagian "Perintah"), .gitignore (test-results, playwright-report, ~$*), docs/LOG_SESI.md.

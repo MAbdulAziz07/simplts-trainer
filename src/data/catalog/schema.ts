@@ -72,7 +72,7 @@ const itemUnion = z.discriminatedUnion('category', [
 /** Tipe hasil skema sebelum dicocokkan ke tipe domain; dipakai uji kesetaraan tipe. */
 export type ParsedCatalogItem = z.output<typeof itemUnion>;
 
-// Aturan lintas-field satu item (KATALOG §3 dan §5).
+// Aturan lintas-field satu item (KATALOG §3, §5, dan §6).
 export const catalogItemSchema: z.ZodType<CatalogItem> = itemUnion.check((ctx) => {
   const item = ctx.value;
   const issue = (path: PropertyKey[], message: string) =>
@@ -87,6 +87,16 @@ export const catalogItemSchema: z.ZodType<CatalogItem> = itemUnion.check((ctx) =
     issue(['terminals'], 'Kabel tidak punya terminal');
   if (item.category !== 'cable' && item.terminals.length === 0)
     issue(['terminals'], 'Komponen meja kerja wajib punya terminal');
+
+  // Field bernama sama di `protection` adalah salinan rating `electrical` (KATALOG §6).
+  const electrical: Record<string, unknown> = item.electrical;
+  for (const [key, value] of Object.entries(item.protection))
+    if (Object.hasOwn(electrical, key) && JSON.stringify(value) !== JSON.stringify(electrical[key]))
+      issue(['protection', key], `Harus sama dengan electrical.${key}`);
+  if (item.category === 'scc-mppt' && item.protection.vocMaxV !== item.electrical.pvVocMaxV)
+    issue(['protection', 'vocMaxV'], 'Harus sama dengan electrical.pvVocMaxV');
+  if (item.category === 'inverter-gridtie' && item.electrical.mpptMaxV > item.protection.dcVocMaxV)
+    issue(['electrical', 'mpptMaxV'], 'Tidak boleh melampaui protection.dcVocMaxV');
 
   const { coverage, verify } = item.datasheet;
   for (const path of verify)

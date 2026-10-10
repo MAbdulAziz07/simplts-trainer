@@ -89,10 +89,10 @@ describe('skema item menolak data yang salah', () => {
   });
 
   it('menolak id yang sama di dua berkas dan nama berkas yang tertukar', () => {
-    const { issues } = validateCatalog({
-      grid: rawCatalogFiles.grid,
-      meters: rawCatalogFiles.grid,
-    });
+    const { issues } = validateCatalog(
+      { grid: rawCatalogFiles.grid, meters: rawCatalogFiles.grid },
+      { allowPartial: true },
+    );
     expect(issues).toHaveLength(2);
   });
 });

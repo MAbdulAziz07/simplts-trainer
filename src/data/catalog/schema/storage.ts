@@ -4,22 +4,23 @@ import { BATTERY_CHEMISTRIES } from '@/domain';
 import {
   bool,
   count,
-  curve,
   fraction,
   itemSchema,
   nonNegative,
   num,
   pct,
   positive,
+  socAxis,
+  tempFactorCurve,
 } from './common';
 
 const points = z.array(num).min(2);
 
 const modelParamsSchema = z
   .strictObject({
-    ocvSoc: z.array(fraction).min(2),
+    ocvSoc: socAxis,
     ocvV: z.array(positive).min(2),
-    overVoltageSoc: z.array(fraction).min(2),
+    overVoltageSoc: socAxis,
     overVoltageV: points,
     resistanceSocFactor: nonNegative,
     sagVoltageV: nonNegative,
@@ -72,7 +73,7 @@ export const batterySchema = itemSchema(
     pulseDurationS: positive.optional(),
     dischargeCutoffVPerCell: positive.optional(),
     dischargeCutoffV: positive.optional(),
-    capacityTempPoints: curve,
+    capacityTempPoints: tempFactorCurve,
     roundTripEfficiency: fraction.optional(),
     selfDischargePctPerMonth: pct.optional(),
     chargeTempMinC: num,

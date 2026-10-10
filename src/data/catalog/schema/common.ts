@@ -15,14 +15,51 @@ export const nonNegative = z.number().nonnegative();
 export const count = z.number().int().positive();
 /** Pecahan tanpa satuan, 0–1 (KATALOG §4). */
 export const fraction = z.number().min(0).max(1);
+/** Efisiensi yang menjadi pembagi di model (MODEL_FISIKA §5.2): 0 < η ≤ 1. */
+export const efficiency = z.number().gt(0).max(1);
 export const pct = z.number().min(0).max(100);
 export const bool = z.boolean();
 
-/** Pasangan [x, y]; minimal dua titik agar bisa diinterpolasi. */
-export const curve = z.array(z.tuple([num, num])).min(2);
+export const isStrictlyIncreasing = (values: number[]): boolean =>
+  values.every((value, i) => i === 0 || value > values[i - 1]!);
+
+/** Pasangan [x, y]; minimal dua titik dan x naik ketat agar interpolasi tidak ambigu. */
+const curve = (x: z.ZodNumber, y: z.ZodNumber) =>
+  z
+    .array(z.tuple([x, y]))
+    .min(2)
+    .refine((points) => isStrictlyIncreasing(points.map(([xValue]) => xValue)), {
+      error: 'Sumbu x kurva harus naik ketat tanpa titik berulang',
+    });
+
+/** `[rasio arus atau daya, detik]`; keduanya positif untuk interpolasi log-log (§9.2). */
+export const tripTimeCurve = curve(positive, positive);
+/** `[°C, faktor]`; suhu boleh negatif, faktor harus positif. */
+export const tempFactorCurve = curve(num, positive);
+/** Sumbu SoC sebuah kurva baterai: naik ketat dan mencakup 0–1 (§4.2). */
+export const socAxis = z
+  .array(fraction)
+  .min(2)
+  .refine(isStrictlyIncreasing, { error: 'Titik SoC harus naik ketat tanpa titik berulang' })
+  .refine((soc) => soc[0] === 0 && soc.at(-1) === 1, {
+    error: 'Titik SoC harus mulai dari 0 dan berakhir di 1',
+  });
 export const tripCurve = z.enum(TRIP_CURVES);
 export const protectionFeatures = z.array(z.enum(PROTECTION_FEATURES)).min(1);
 export const noProtection = z.strictObject({});
+
+interface MpptLimits {
+  mpptMinV: number;
+  mpptMaxV: number;
+  pvVocMaxV?: number;
+}
+
+/** Argumen `.refine()`: jendela MPPT tidak kosong dan di bawah batas Voc (MODEL_FISIKA §3.2). */
+export const mpptWindow: [(limits: MpptLimits) => boolean, { error: string; path: string[] }] = [
+  ({ mpptMinV, mpptMaxV, pvVocMaxV = Infinity }: MpptLimits) =>
+    mpptMinV < mpptMaxV && mpptMaxV <= pvVocMaxV,
+  { error: 'Harus mpptMinV < mpptMaxV ≤ batas Voc', path: ['mpptMaxV'] },
+];
 
 const terminalSchema = z.strictObject({
   id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/),
