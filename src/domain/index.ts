@@ -11,3 +11,4 @@ export * from './components/battery';
 export * from './components/sun';
 export * from './components/cable';
 export * from './components/protection';
+export * from './components/load';
