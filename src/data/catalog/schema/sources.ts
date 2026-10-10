@@ -1,0 +1,97 @@
+// Skema modul PV dan SCC (docs/KATALOG.md §6.1–6.3).
+import { z } from 'zod';
+import {
+  bool,
+  count,
+  curve,
+  fraction,
+  itemSchema,
+  nonNegative,
+  num,
+  positive,
+  protectionFeatures,
+} from './common';
+
+export const pvModuleSchema = itemSchema(
+  'pv-module',
+  z.strictObject({
+    cellCount: count,
+    pmaxW: positive,
+    vmpV: positive,
+    impA: positive,
+    vocV: positive,
+    iscA: positive,
+    tempCoeffIscPerC: num,
+    tempCoeffVocPerC: z.number().negative(),
+    tempCoeffPmaxPerC: z.number().negative(),
+    noctC: num,
+    systemVoltageMaxV: positive,
+    bypassDiodeCount: count,
+    tempOpMinC: num,
+    tempOpMaxC: num,
+  }),
+  z.strictObject({ seriesFuseMaxA: positive, reverseCurrentMaxA: positive }),
+);
+
+export const sccPwmSchema = itemSchema(
+  'scc-pwm',
+  z.strictObject({
+    batteryVoltagesV: z.array(positive).min(1),
+    chargeStages: count,
+    chargeCurrentMaxA: positive,
+    loadCurrentMaxA: positive,
+    pvPowerMax12VW: positive,
+    pvPowerMax24VW: positive,
+    pvVocMax12VV: positive,
+    pvVocMax24VV: positive,
+    absorptionV: z.strictObject({ sealed: positive, gel: positive, flooded: positive }),
+    floatV: positive,
+    rechargeV: positive,
+    loadDisconnectV: positive,
+    loadReconnectV: positive,
+    voltageScale24V: positive,
+    selfConsumptionMa: nonNegative,
+    switchDropV: nonNegative,
+    absorptionDurationMin: positive,
+    tempOpMinC: num,
+    tempOpMaxC: num,
+    installOrder: z.array(z.enum(['battery', 'pv', 'load'])).length(3),
+  }),
+  z.strictObject({
+    vocFaultFactor: positive,
+    loadOverloadCurve: curve,
+    features: protectionFeatures,
+    reversePolarityDamages: bool,
+  }),
+);
+
+export const sccMpptSchema = itemSchema(
+  'scc-mppt',
+  z.strictObject({
+    batteryNominalV: positive,
+    mpptMinV: positive,
+    mpptMaxV: positive,
+    pvVocMaxV: positive,
+    pvPowerMaxW: positive,
+    inputCurrentMaxA: positive,
+    chargeCurrentMaxA: positive,
+    efficiencyMax: fraction,
+    trackingEfficiency: fraction,
+    standbyPowerW: nonNegative,
+    startDeltaV: nonNegative,
+    bulkV: positive,
+    floatV: z.strictObject({ vented: positive, sealed: positive, gel: positive, nicd: positive }),
+    lowBatteryAlarmV: positive,
+    autoDetectBattery: bool,
+    batteryTempSensor: bool,
+    absorptionDurationMin: positive,
+    tempOpMinC: num,
+    tempOpMaxC: num,
+  }),
+  z.strictObject({
+    vocMaxV: positive,
+    vocFaultFactor: positive,
+    overloadAlarmPct: positive,
+    features: protectionFeatures,
+  }),
+);

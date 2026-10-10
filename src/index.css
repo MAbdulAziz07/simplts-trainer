@@ -1,0 +1,47 @@
+@import 'tailwindcss';
+
+/* Token desain dari docs/UX.md §2. Warna kabel tidak dipakai untuk hal lain (§2.4). */
+@theme {
+  --color-brand: #0f766e;
+  --color-app: #f8fafa;
+  --color-bench: #eef2f1;
+  --color-bench-dot: #c3cdca;
+  --color-card: #ffffff;
+  --color-ink: #111827;
+  --color-ink-muted: #4b5563;
+  --color-control: #6b7280;
+  --color-line: #d9e0de;
+
+  --color-wire-dc-pos: #dc2626;
+  --color-wire-dc-neg: #1f2937;
+  --color-wire-ac-line: #92400e;
+  --color-wire-ac-neutral: #2563eb;
+  --color-wire-pe: #16a34a;
+  --color-wire-pe-stripe: #facc15;
+
+  --color-status-ok: #0f766e;
+  --color-status-warning: #d97706;
+  --color-status-trip: #6b7280;
+  --color-status-danger: #b91c1c;
+  --color-status-broken: #111827;
+
+  /* Ukuran area (§2.1) dan target sentuh minimal (§2.5). */
+  --spacing-topbar: 56px;
+  --spacing-tray: 216px;
+  --spacing-inspector: 280px;
+  --spacing-simbar: 72px;
+  --spacing-touch: 44px;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-app);
+  color: var(--color-ink);
+  font-size: 14px;
+}

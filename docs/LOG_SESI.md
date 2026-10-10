@@ -2,6 +2,15 @@
 
 Entri terbaru di atas.
 
+## 2026-10-10 — Kerangka proyek
+- Sumber: AGENTS.md, docs/KATALOG.md, docs/UX.md, docs/ux/, 12 berkas src/data/catalog/. Rencana 5 poin disetujui sebelum mulai.
+- Dibuat: proyek Vite 8 + React 19 + TypeScript 6 strict (package.json, index.html, vite.config.ts, tsconfig*.json, eslint.config.js, .prettierrc.json, .prettierignore, playwright.config.ts); src/domain (types.ts + catalog/ 6 berkas tipe); src/data/catalog (schema.ts, schema/ 6 berkas zod, validate.ts, index.ts, catalog.test.ts); src/features (top-bar, tray, workbench, inspector, sim-controls berisi kerangka; instruments, scenarios kosong); src/store, src/ui (kosong), src/i18n/id.ts; src/App.tsx, main.tsx, index.css; e2e/layout.spec.ts; docs/ARSITEKTUR.md. Diubah: AGENTS.md (bagian "Perintah"), .gitignore (test-results, playwright-report, ~$*), docs/LOG_SESI.md.
+- Dependensi pendukung di luar daftar stack (disetujui): @vitejs/plugin-react, @tailwindcss/vite, eslint, typescript-eslint, eslint-plugin-react-hooks, eslint-plugin-react-refresh, prettier, @playwright/test, @types/react, @types/react-dom, @types/node. Tambahan yang belum disebut di rencana: @eslint/js (paket resmi ESLint untuk aturan bawaan). vite-plugin-pwa belum dipasang.
+- Keputusan: skema zod ketat per kategori (field tak dikenal ditolak) dan tipe domain ditulis tangan tanpa zod, kesetaraannya diuji; batas lapisan dijaga `no-restricted-imports` (domain juga dilarang meng-import data dan i18n); Prettier tidak menyentuh *.md, docs/, dan JSON katalog; folder fitur tambahan `top-bar` untuk bilah atas; meja kerja memakai kanvas @xyflow/react kosong (kisi 24 px, zoom 50–200%).
+- Validasi: ke-12 berkas katalog lolos skema tanpa perubahan data (51 item; min 25, rek 38, best 28). npm run check lolos (lint, 30 test, build). npm run test:e2e lolos: 5 area pada 1366x768 berukuran 56 / 216 / 870x640 / 280 / 72 px.
+- Belum dikerjakan: inspektur masih selalu tampil (nanti hanya saat ada komponen terpilih) dan belum menjadi lembar bawah di lebar < 1024 px; PWA; store masih kosong; alur simulasi di ARSITEKTUR.md §2 masih rancangan.
+- Perlu keputusan: kalimat "Belum ada skema zod" di docs/KATALOG.md baris 3 sudah tidak berlaku (belum diubah); apakah `top-bar` dicantumkan di struktur folder AGENTS.md.
+
 ## 2026-10-10 — Kajian UX
 - Sumber: 4 tangkapan layar prototipe di docs/ux/ (1366x768) dan docs/PRD.md.
 - Dibuat: docs/UX.md (ringkasan penilaian, 10 perintah perbaikan untuk Google AI Studio, keputusan tata letak Tahap 5). Diubah: docs/LOG_SESI.md.

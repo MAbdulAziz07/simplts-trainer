@@ -37,6 +37,16 @@ docs/          dokumentasi proyek; docs/review/ laporan reviewer
 - Setiap fungsi di src/domain wajib punya unit test.
 - Bila ada angka atau asumsi teknis yang tidak pasti, tandai [PERLU VERIFIKASI].
  
+## Perintah
+- npm run dev — server pengembangan Vite
+- npm run build — periksa tipe (tsc -b) lalu build produksi ke dist/
+- npm run preview — sajikan hasil build
+- npm run test — unit test Vitest sekali jalan; npm run test:watch untuk mode pantau
+- npm run test:e2e — uji alur Playwright (sekali di awal: npx playwright install chromium)
+- npm run lint — ESLint (termasuk batas import antarlapisan) + pemeriksaan format Prettier
+- npm run format — rapikan format dengan Prettier
+- npm run check — lint + test + build
+ 
 ## Aturan kerja agen
 - Kerjakan hanya tugas yang diminta pada sesi ini.
 - Untuk tugas yang mengubah lebih dari 3 file, jelaskan rencana (maks 5 poin) dan tunggu persetujuan.
