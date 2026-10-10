@@ -5,3 +5,5 @@ export * from './catalog/storage';
 export * from './catalog/inverters';
 export * from './catalog/protection';
 export type * from './catalog/balance';
+export * from './components/pv';
+export * from './components/pv-array';
