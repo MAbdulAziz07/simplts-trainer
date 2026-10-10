@@ -14,3 +14,4 @@ export * from './components/protection';
 export * from './components/load';
 export * from './components/scc';
 export * from './components/inverter';
+export * from './components/grid';
