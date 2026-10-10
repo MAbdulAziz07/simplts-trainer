@@ -2,6 +2,14 @@
 
 Entri terbaru di atas.
 
+## 2026-10-10 — Kajian UX
+- Sumber: 4 tangkapan layar prototipe di docs/ux/ (1366x768) dan docs/PRD.md.
+- Dibuat: docs/UX.md (ringkasan penilaian, 10 perintah perbaikan untuk Google AI Studio, keputusan tata letak Tahap 5). Diubah: docs/LOG_SESI.md.
+- Keputusan utama: bilah atas 56 px, baki 216 px, inspektur 280 px, bilah simulasi 72 px; terminal tampak 24 px / area klik 44 px / jarak 48 px; warna kabel menurut fungsi penghantar (DC+ merah, DC− hitam, L cokelat, N biru, PE hijau-kuning), DC/AC dibedakan lewat bentuk terminal; hijau toska hanya warna merek.
+- Temuan utama: terminal ±16 px tanpa label, SCC hanya 2 terminal, kabel + dan − sama-sama jingga, meja kerja hanya ±59% tinggi layar, mode pilih/kabel tidak perlu.
+- Perlu keputusan: warna kabel vs PUIL/SNI yang dipakai pelatihan [PERLU VERIFIKASI]; tinggi area tampil browser nyata di laptop peserta. Alat ukur, proteksi, keadaan rusak, dan mode terpandu belum ada di prototipe sehingga belum dikaji.
+- npm run check belum dijalankan: belum ada kode/package.json.
+
 ## 2026-10-09 — Katalog komponen
 - Sumber: docs/MODEL_FISIKA.md, docs/PRD.md, 7 berkas di docs/datasheet/ (dibaca lewat skrip sementara di luar proyek; nilai diambil dari datasheet, bukan disalin dari MODEL_FISIKA).
 - Dibuat: docs/KATALOG.md (penjelasan field, satuan, contoh item); src/data/catalog/ berisi 12 berkas JSON, 51 item: pv-modules, charge-controllers, batteries, bms, inverters, protection-mcb, protection-other, cables, meters, distribution, loads, grid. Diubah: docs/LOG_SESI.md.
