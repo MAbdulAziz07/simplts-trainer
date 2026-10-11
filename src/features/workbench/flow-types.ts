@@ -4,6 +4,8 @@ import type { CatalogItem, TerminalKind, Wire } from '@/domain';
 import type { RotationDeg } from '@/data';
 
 export const GRID_PX = 24;
+/** Memaskan seluruh rangkaian ke meja tanpa memperbesar melebihi 100%. */
+export const FIT_VIEW_OPTIONS = { maxZoom: 1, padding: 0.1 };
 
 export type ComponentNodeData = {
   item: CatalogItem;

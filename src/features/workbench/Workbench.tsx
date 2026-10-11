@@ -3,25 +3,28 @@ import {
   BackgroundVariant,
   ConnectionMode,
   ReactFlow,
+  SelectionMode,
   type Connection,
 } from '@xyflow/react';
+import { useState } from 'react';
 import { t } from '@/i18n';
 import { useCircuitStore, useToastStore } from '@/store';
 import { SelectedWirePanel } from './edges/SelectedWirePanel';
 import { WireEdge } from './edges/WireEdge';
-import { GRID_PX, type ComponentFlowNode, type WireFlowEdge } from './flow-types';
+import { FIT_VIEW_OPTIONS, GRID_PX, type ComponentFlowNode, type WireFlowEdge } from './flow-types';
 import { ComponentNode } from './nodes/ComponentNode';
 import { Toast } from './Toast';
 import { useFlowEdges } from './useFlowEdges';
 import { useFlowHandlers } from './useFlowHandlers';
 import { useFlowNodes } from './useFlowNodes';
 import { WORKBENCH_ATTRIBUTE } from './usePlaceComponent';
+import { useWorkbenchShortcuts } from './useWorkbenchShortcuts';
+import { WorkbenchToolbar } from './WorkbenchToolbar';
 import './workbench.css';
 
 // docs/UX.md §2.1: kisi 24 px, zoom 50–200%, awal 100%.
 const SNAP_GRID: [number, number] = [GRID_PX, GRID_PX];
 const DEFAULT_VIEWPORT = { x: 0, y: 0, zoom: 1 };
-const FIT_VIEW = { maxZoom: 1, padding: 0.1 };
 /** Jarak (px meja) dari pusat terminal yang masih dianggap mengenai terminal itu. */
 const CONNECTION_RADIUS_PX = 24;
 
@@ -52,6 +55,10 @@ export function Workbench() {
   const nodes = useFlowNodes();
   const edges = useFlowEdges();
   const handlers = useFlowHandlers();
+  // Mode pilih banyak: menyeret di meja membuat kotak pilih, bukan menggeser meja (untuk layar
+  // sentuh; dengan keyboard cukup Shift+seret atau Ctrl+klik).
+  const [selectMode, setSelectMode] = useState(false);
+  useWorkbenchShortcuts();
   const isEmpty = nodes.length === 0;
 
   return (
@@ -70,11 +77,15 @@ export function Workbench() {
         onSelectionDragStart={handlers.onDragStart}
         onSelectionDragStop={handlers.onDragStop}
         onInit={(instance) => {
-          if (useCircuitStore.getState().doc.components.length > 0) void instance.fitView(FIT_VIEW);
+          if (useCircuitStore.getState().doc.components.length > 0)
+            void instance.fitView(FIT_VIEW_OPTIONS);
         }}
         connectionMode={ConnectionMode.Loose}
         connectionRadius={CONNECTION_RADIUS_PX}
         deleteKeyCode={null}
+        selectionOnDrag={selectMode}
+        panOnDrag={!selectMode}
+        selectionMode={SelectionMode.Partial}
         snapToGrid
         snapGrid={SNAP_GRID}
         minZoom={0.5}
@@ -87,6 +98,10 @@ export function Workbench() {
           size={1.5}
           bgColor="var(--color-bench)"
           color="var(--color-bench-dot)"
+        />
+        <WorkbenchToolbar
+          selectMode={selectMode}
+          onToggleSelectMode={() => setSelectMode((on) => !on)}
         />
         <SelectedWirePanel />
       </ReactFlow>

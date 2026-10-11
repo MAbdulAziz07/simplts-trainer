@@ -45,6 +45,17 @@ export const id = {
     component: (name: string, id: string) => `${name} (${id})`,
     terminal: (label: string) => `Terminal ${label}`,
   },
+  actions: {
+    toolbar: 'Alat meja kerja',
+    undo: 'Urungkan (Ctrl+Z)',
+    redo: 'Ulangi (Ctrl+Y)',
+    rotate: 'Putar 90° (R)',
+    remove: 'Hapus (Delete)',
+    zoomIn: 'Perbesar',
+    zoomOut: 'Perkecil',
+    fit: 'Paskan ke layar',
+    selectMode: 'Pilih banyak: seret kotak di meja',
+  },
   wire: {
     properties: (id: string) => `Kabel ${id}`,
     cableType: 'Jenis kabel',
