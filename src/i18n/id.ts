@@ -27,6 +27,17 @@ export const id = {
     component: (name: string, id: string) => `${name} (${id})`,
     terminal: (label: string) => `Terminal ${label}`,
   },
+  wire: {
+    properties: (id: string) => `Kabel ${id}`,
+    cableType: 'Jenis kabel',
+    area: 'Penampang',
+    areaOption: (areaMm2: number) => `${areaMm2.toLocaleString('id-ID')} mm²`,
+    length: 'Panjang kabel (m)',
+    lengthUnit: 'm',
+    shorter: 'Kurangi panjang',
+    longer: 'Tambah panjang',
+    remove: 'Lepas kabel',
+  },
   // Halaman pengembang /dev/terminal-editor; tidak ikut ke build produksi.
   terminalEditor: {
     title: 'Editor terminal',

@@ -1,8 +1,17 @@
-import { Background, BackgroundVariant, ConnectionMode, ReactFlow } from '@xyflow/react';
+import {
+  Background,
+  BackgroundVariant,
+  ConnectionMode,
+  ReactFlow,
+  type Connection,
+} from '@xyflow/react';
 import { t } from '@/i18n';
 import { useCircuitStore } from '@/store';
+import { SelectedWirePanel } from './edges/SelectedWirePanel';
+import { WireEdge } from './edges/WireEdge';
 import { GRID_PX, type ComponentFlowNode, type WireFlowEdge } from './flow-types';
 import { ComponentNode } from './nodes/ComponentNode';
+import { useFlowEdges } from './useFlowEdges';
 import { useFlowHandlers } from './useFlowHandlers';
 import { useFlowNodes } from './useFlowNodes';
 import { WORKBENCH_ATTRIBUTE } from './usePlaceComponent';
@@ -16,10 +25,27 @@ const FIT_VIEW = { maxZoom: 1, padding: 0.1 };
 const CONNECTION_RADIUS_PX = 24;
 
 const NODE_TYPES = { component: ComponentNode };
-const NO_EDGES: WireFlowEdge[] = [];
+const EDGE_TYPES = { wire: WireEdge };
+const CONNECTION_LINE_STYLE = {
+  stroke: 'var(--color-control)',
+  strokeWidth: 3,
+  strokeDasharray: '6 4',
+};
+
+/** Kabel baru dari terminal asal (tempat tarikan dimulai) ke terminal tujuan. */
+function connect({ source, sourceHandle, target, targetHandle }: Connection): void {
+  if (!sourceHandle || !targetHandle) return;
+  useCircuitStore
+    .getState()
+    .connect(
+      { componentId: source, terminalId: sourceHandle },
+      { componentId: target, terminalId: targetHandle },
+    );
+}
 
 export function Workbench() {
   const nodes = useFlowNodes();
+  const edges = useFlowEdges();
   const handlers = useFlowHandlers();
   const isEmpty = nodes.length === 0;
 
@@ -27,8 +53,11 @@ export function Workbench() {
     <main aria-label={t.areas.workbench} className="relative" {...{ [WORKBENCH_ATTRIBUTE]: '' }}>
       <ReactFlow<ComponentFlowNode, WireFlowEdge>
         nodes={nodes}
-        edges={NO_EDGES}
+        edges={edges}
         nodeTypes={NODE_TYPES}
+        edgeTypes={EDGE_TYPES}
+        onConnect={connect}
+        connectionLineStyle={CONNECTION_LINE_STYLE}
         onNodesChange={handlers.onNodesChange}
         onEdgesChange={handlers.onEdgesChange}
         onNodeDragStart={handlers.onDragStart}
@@ -54,6 +83,7 @@ export function Workbench() {
           bgColor="var(--color-bench)"
           color="var(--color-bench-dot)"
         />
+        <SelectedWirePanel />
       </ReactFlow>
       {isEmpty && (
         <p className="text-ink-muted pointer-events-none absolute inset-0 flex items-center justify-center text-sm">
