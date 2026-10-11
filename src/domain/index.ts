@@ -20,6 +20,7 @@ export * from './components/bms';
 export * from './circuit/types';
 export * from './circuit/graph';
 export * from './circuit/bridges';
+export * from './circuit/connect-rules';
 export { DEFAULT_MIN_CELL_TEMP_C } from './circuit/validate-context';
 export { DEFAULT_AMBIENT_TEMP_C } from './circuit/validate-current';
 export * from './circuit/validate';

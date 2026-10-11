@@ -1,0 +1,135 @@
+{
+  "app": "simplts",
+  "formatVersion": 1,
+  "packageId": "rek",
+  "components": [
+    {
+      "id": "pv1",
+      "catalogId": "pv-generic-200wp",
+      "xPx": 48,
+      "yPx": 48,
+      "rotationDeg": 0
+    },
+    {
+      "id": "pv2",
+      "catalogId": "pv-generic-200wp",
+      "xPx": 216,
+      "yPx": 48,
+      "rotationDeg": 0
+    },
+    {
+      "id": "combiner",
+      "catalogId": "combiner-pv-2s",
+      "xPx": 384,
+      "yPx": 24,
+      "rotationDeg": 0
+    },
+    {
+      "id": "spd",
+      "catalogId": "spd-pv-600v",
+      "xPx": 720,
+      "yPx": 48,
+      "rotationDeg": 0
+    },
+    {
+      "id": "mcb-pv",
+      "catalogId": "mcb-dc-32a",
+      "xPx": 864,
+      "yPx": 72,
+      "rotationDeg": 0
+    },
+    {
+      "id": "scc",
+      "catalogId": "scc-mppt-generic-40a-24v",
+      "xPx": 1008,
+      "yPx": 24,
+      "rotationDeg": 0
+    },
+    {
+      "id": "load-dc",
+      "catalogId": "load-dc-24v-400w",
+      "xPx": 1320,
+      "yPx": 72,
+      "rotationDeg": 0
+    },
+    {
+      "id": "bat",
+      "catalogId": "bat-lfp-25v6-100ah",
+      "xPx": 48,
+      "yPx": 360,
+      "rotationDeg": 0
+    },
+    {
+      "id": "bms",
+      "catalogId": "bms-ext-24v",
+      "xPx": 312,
+      "yPx": 384,
+      "rotationDeg": 0
+    },
+    {
+      "id": "fuse-bat",
+      "catalogId": "fuse-bat-100a",
+      "xPx": 552,
+      "yPx": 384,
+      "rotationDeg": 0
+    },
+    {
+      "id": "bus-pos",
+      "catalogId": "busbar-dc-pos",
+      "xPx": 696,
+      "yPx": 360,
+      "rotationDeg": 0
+    },
+    {
+      "id": "bus-neg",
+      "catalogId": "busbar-dc-neg",
+      "xPx": 696,
+      "yPx": 480,
+      "rotationDeg": 0
+    },
+    {
+      "id": "mcb-inv",
+      "catalogId": "mcb-dc-100a",
+      "xPx": 1032,
+      "yPx": 360,
+      "rotationDeg": 0
+    },
+    {
+      "id": "inv",
+      "catalogId": "inv-offgrid-1500w-24v",
+      "xPx": 1176,
+      "yPx": 312,
+      "rotationDeg": 0
+    },
+    {
+      "id": "mcb-ac",
+      "catalogId": "mcb-ac-10a",
+      "xPx": 1512,
+      "yPx": 336,
+      "rotationDeg": 0
+    },
+    {
+      "id": "load-ac",
+      "catalogId": "load-ac-1500w",
+      "xPx": 1632,
+      "yPx": 336,
+      "rotationDeg": 0
+    },
+    {
+      "id": "bus-pe",
+      "catalogId": "busbar-pe",
+      "xPx": 1176,
+      "yPx": 648,
+      "rotationDeg": 0
+    },
+    {
+      "id": "rod",
+      "catalogId": "ground-rod",
+      "xPx": 1512,
+      "yPx": 648,
+      "rotationDeg": 0
+    }
+  ],
+  "wires": [],
+  "closedSwitchIds": ["fuse-bat"]
+}
