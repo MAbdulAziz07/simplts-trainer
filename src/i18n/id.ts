@@ -10,6 +10,24 @@ export const id = {
   },
   packages: { min: 'Minimum', rek: 'Rekomendasi', best: 'Terbaik' },
   packageLabel: 'Paket alat',
+  levels: { beginner: 'Pemula', expert: 'Mahir' },
+  levelLabel: 'Tingkat validasi sambungan',
+  levelHints: {
+    beginner: 'Pemula: sambungan yang mustahil ditolak',
+    expert: 'Mahir: semua sambungan diizinkan, akibatnya terlihat saat simulasi',
+  },
+  // Kunci = alasan `checkConnection` (src/domain/circuit/connect-rules.ts). Satu kalimat singkat.
+  connectionRejections: {
+    'unknown-terminal': 'Terminal tidak ditemukan',
+    'same-terminal': 'Pilih terminal lain sebagai tujuan',
+    'duplicate-wire': 'Kedua terminal sudah tersambung',
+    'terminal-full': 'Terminal penuh, cabangkan lewat busbar',
+    data: 'Terminal data hanya untuk kabel data',
+    earth: 'PE hanya disambung ke PE',
+    'dc-ac': 'DC tidak disambung ke AC',
+    polarity: 'Kutub + tidak disambung ke kutub −',
+    'line-neutral': 'Fasa (L) tidak disambung ke netral (N)',
+  },
   tray: {
     groups: {
       source: 'Sumber',

@@ -6,11 +6,12 @@ import {
   type Connection,
 } from '@xyflow/react';
 import { t } from '@/i18n';
-import { useCircuitStore } from '@/store';
+import { useCircuitStore, useToastStore } from '@/store';
 import { SelectedWirePanel } from './edges/SelectedWirePanel';
 import { WireEdge } from './edges/WireEdge';
 import { GRID_PX, type ComponentFlowNode, type WireFlowEdge } from './flow-types';
 import { ComponentNode } from './nodes/ComponentNode';
+import { Toast } from './Toast';
 import { useFlowEdges } from './useFlowEdges';
 import { useFlowHandlers } from './useFlowHandlers';
 import { useFlowNodes } from './useFlowNodes';
@@ -32,15 +33,19 @@ const CONNECTION_LINE_STYLE = {
   strokeDasharray: '6 4',
 };
 
-/** Kabel baru dari terminal asal (tempat tarikan dimulai) ke terminal tujuan. */
+/**
+ * Kabel baru dari terminal asal (tempat tarikan dimulai) ke terminal tujuan. Sambungan yang
+ * ditolak aturan memberi petunjuk singkat (docs/PRD.md US3, US27).
+ */
 function connect({ source, sourceHandle, target, targetHandle }: Connection): void {
   if (!sourceHandle || !targetHandle) return;
-  useCircuitStore
+  const check = useCircuitStore
     .getState()
     .connect(
       { componentId: source, terminalId: sourceHandle },
       { componentId: target, terminalId: targetHandle },
     );
+  if (check.reason) useToastStore.getState().show(t.connectionRejections[check.reason], 'warning');
 }
 
 export function Workbench() {
@@ -90,6 +95,7 @@ export function Workbench() {
           {t.workbench.empty}
         </p>
       )}
+      <Toast />
     </main>
   );
 }

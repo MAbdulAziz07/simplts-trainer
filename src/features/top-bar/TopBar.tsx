@@ -1,5 +1,6 @@
 import { Sun } from 'lucide-react';
 import { t } from '@/i18n';
+import { LevelSelect } from './LevelSelect';
 import { PackageSelect } from './PackageSelect';
 
 export function TopBar() {
@@ -15,6 +16,7 @@ export function TopBar() {
       <span className="ml-3">
         <PackageSelect />
       </span>
+      <LevelSelect />
     </header>
   );
 }
