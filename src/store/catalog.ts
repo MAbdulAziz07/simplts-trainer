@@ -15,10 +15,17 @@ export const cableItems: readonly CableItem[] = catalogItems.filter(
   (item): item is CableItem => item.category === 'cable',
 );
 
+const placedByDoc = new WeakMap<CircuitDoc, PlacedComponent[]>();
+
 /** Komponen meja kerja dengan item katalognya, bentuk yang dipakai fungsi domain. */
 export function toPlacedComponents(doc: CircuitDoc): PlacedComponent[] {
-  return doc.components.flatMap((part) => {
-    const item = findCatalogItem(part.catalogId);
-    return item ? [{ id: part.id, item }] : [];
-  });
+  let placed = placedByDoc.get(doc);
+  if (!placed) {
+    placed = doc.components.flatMap((part) => {
+      const item = findCatalogItem(part.catalogId);
+      return item ? [{ id: part.id, item }] : [];
+    });
+    placedByDoc.set(doc, placed);
+  }
+  return placed;
 }

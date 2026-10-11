@@ -8,6 +8,25 @@ export const id = {
     inspector: 'Inspeksi',
     simControls: 'Kendali simulasi',
   },
+  packages: { min: 'Minimum', rek: 'Rekomendasi', best: 'Terbaik' },
+  packageLabel: 'Paket alat',
+  tray: {
+    groups: {
+      source: 'Sumber',
+      control: 'Pengatur',
+      storage: 'Baterai',
+      inverter: 'Inverter',
+      protection: 'Proteksi',
+      distribution: 'Distribusi',
+      load: 'Beban',
+    },
+    add: (name: string) => `Tambah ${name}`,
+  },
+  workbench: {
+    empty: 'Seret komponen dari baki ke sini',
+    component: (name: string, id: string) => `${name} (${id})`,
+    terminal: (label: string) => `Terminal ${label}`,
+  },
   severities: {
     info: 'Info',
     warning: 'Peringatan',

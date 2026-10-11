@@ -1,0 +1,130 @@
+/* Tampilan node, terminal, dan kabel di meja kerja (docs/UX.md §2.2–2.3). */
+
+.react-flow__node-component {
+  cursor: grab;
+}
+
+.component-node[data-selected]::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border: 3px solid var(--color-brand);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.component-name {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-bottom: 10px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  pointer-events: none;
+}
+
+/* Handle sebesar titik di pusat terminal; area sentuhnya `.terminal-hit`. */
+.react-flow__handle.terminal {
+  width: 2px;
+  height: 2px;
+  min-width: 0;
+  min-height: 0;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  border: 0;
+  background: transparent;
+  z-index: 1;
+}
+
+.terminal-hit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%);
+  cursor: crosshair;
+}
+
+.terminal-dot {
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 3px rgb(17 24 39 / 0.45);
+  transition:
+    transform 120ms,
+    opacity 120ms;
+}
+
+.terminal-glyph-pe {
+  color: var(--color-ink);
+  text-shadow:
+    0 0 2px #fff,
+    0 0 2px #fff;
+}
+
+.terminal:hover .terminal-dot {
+  transform: scale(1.15);
+}
+
+.terminal-label {
+  position: absolute;
+  padding: 1px 6px;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: var(--color-card);
+  color: var(--color-ink);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 120ms;
+}
+
+/* Saat kabel ditarik: asal dan tujuan sah menonjol, tujuan yang ditolak meredup (§2.3). */
+.terminal[data-role='origin'] .terminal-dot {
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 5px var(--color-brand);
+}
+
+.terminal[data-role='allowed'] .terminal-dot {
+  animation: terminal-pulse 1s ease-in-out infinite;
+}
+
+.terminal[data-role='blocked'] .terminal-dot,
+.terminal[data-role='blocked'] .terminal-label {
+  opacity: 0.4;
+}
+
+@keyframes terminal-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 2px #fff,
+      0 0 0 3px var(--color-brand);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px #fff,
+      0 0 0 8px rgb(15 118 110 / 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal[data-role='allowed'] .terminal-dot {
+    animation: none;
+    box-shadow:
+      0 0 0 2px #fff,
+      0 0 0 5px var(--color-brand);
+  }
+}

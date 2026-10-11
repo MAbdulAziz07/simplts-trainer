@@ -1,2 +1,6 @@
-// Komponen UI kecil yang dipakai ulang oleh beberapa fitur. Belum ada isi.
-export {};
+// Komponen UI kecil yang dipakai ulang oleh beberapa fitur.
+export * from './category-icon';
+export * from './component-image';
+export * from './component-size';
+export * from './ComponentPicture';
+export * from './terminal-style';
