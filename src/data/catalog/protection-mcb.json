@@ -110,7 +110,7 @@
         {"id": "neg-out", "label": "4", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 100, "curve": "C", "ratedVoltageDcV": 250, "breakingCapacityKa": 10},
-      "image": "src/assets/components/mcb-dc-2p-100a.webp",
+      "image": "src/assets/components/mcb-dc-2p.webp",
       "datasheet": {
         "source": "Datasheet_MCB_AC_DC.xlsx › MCB DC › Schneider C120N / A9N60734 (PES_Schneider Electric_C120_A9N60734.pdf hlm. 1–2)",
         "coverage": "partial", "verify": ["electrical.polarized", "electrical.minOperatingVoltageV"]
@@ -133,7 +133,7 @@
         {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 6, "curve": "C", "ratedVoltageAcV": 240, "breakingCapacityKa": 6},
-      "image": "src/assets/components/mcb-ac-2p.webp",
+      "image": "src/assets/components/mcb-ac-1p.webp",
       "datasheet": {
         "source": "Datasheet_MCB_AC_DC.xlsx › MCB AC › CHINT NXB-63 (NXB-63-MCB-Catalog.pdf hlm. 3–4)",
         "coverage": "partial", "verify": ["electrical.frequencyHz"]
@@ -156,7 +156,7 @@
         {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 10, "curve": "C", "ratedVoltageAcV": 240, "breakingCapacityKa": 6},
-      "image": "src/assets/components/mcb-ac-2p.webp",
+      "image": "src/assets/components/mcb-ac-1p.webp",
       "datasheet": {
         "source": "Datasheet_MCB_AC_DC.xlsx › MCB AC › CHINT NXB-63 (NXB-63-MCB-Catalog.pdf hlm. 3–4)",
         "coverage": "partial", "verify": ["electrical.frequencyHz"]
@@ -179,7 +179,7 @@
         {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 16, "curve": "C", "ratedVoltageAcV": 240, "breakingCapacityKa": 6},
-      "image": "src/assets/components/mcb-ac-2p.webp",
+      "image": "src/assets/components/mcb-ac-1p.webp",
       "datasheet": {
         "source": "Datasheet_MCB_AC_DC.xlsx › MCB AC › CHINT NXB-63 (NXB-63-MCB-Catalog.pdf hlm. 3–4)",
         "coverage": "partial", "verify": ["electrical.frequencyHz"]
@@ -202,7 +202,7 @@
         {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 32, "curve": "C", "ratedVoltageAcV": 240, "breakingCapacityKa": 6},
-      "image": "src/assets/components/mcb-ac-2p.webp",
+      "image": "src/assets/components/mcb-ac-1p.webp",
       "datasheet": {
         "source": "Datasheet_MCB_AC_DC.xlsx › MCB AC › CHINT NXB-63 (NXB-63-MCB-Catalog.pdf hlm. 3–4)",
         "coverage": "partial", "verify": ["electrical.frequencyHz"]

@@ -18,7 +18,7 @@
         {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
       ],
       "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 15},
-      "image": "src/assets/components/pv-generic-100wp.webp",
+      "image": "src/assets/components/pv-module.webp",
       "datasheet": {
         "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
         "coverage": "generic",
@@ -48,7 +48,7 @@
         {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
       ],
       "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 15},
-      "image": "src/assets/components/pv-generic-200wp.webp",
+      "image": "src/assets/components/pv-module.webp",
       "datasheet": {
         "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
         "coverage": "generic",
@@ -78,7 +78,7 @@
         {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
       ],
       "protection": {"seriesFuseMaxA": 20, "reverseCurrentMaxA": 20},
-      "image": "src/assets/components/pv-js185cb-48p.webp",
+      "image": "src/assets/components/pv-module.webp",
       "datasheet": {
         "source": "Datasheet_Panel_Surya_Update.xlsx › Datasheet PV › kolom R (JS185CB-48P); sumber S7 hlm. 1",
         "coverage": "partial",
@@ -102,7 +102,7 @@
         {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
       ],
       "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 15},
-      "image": "src/assets/components/pv-240w-60p.webp",
+      "image": "src/assets/components/pv-module.webp",
       "datasheet": {
         "source": "Datasheet_Panel_Surya_Update.xlsx › Datasheet PV › kolom C (240W-60P); sumber S1 hlm. 1–2",
         "coverage": "partial",
@@ -126,7 +126,7 @@
         {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
       ],
       "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 15},
-      "image": "src/assets/components/pv-mjt245gb.webp",
+      "image": "src/assets/components/pv-module.webp",
       "datasheet": {
         "source": "Datasheet_Panel_Surya_Update.xlsx › Datasheet PV › kolom E (PV-MJT245GB); sumber S2 hlm. 1–2",
         "coverage": "partial",
@@ -153,7 +153,7 @@
         {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
       ],
       "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 16},
-      "image": "src/assets/components/pv-sw240-poly.webp",
+      "image": "src/assets/components/pv-module.webp",
       "datasheet": {
         "source": "Datasheet_Panel_Surya_Update.xlsx › Datasheet PV › kolom G (SW 240 poly); sumber S3 hlm. 1–2",
         "coverage": "partial", "verify": ["protection.seriesFuseMaxA"]
@@ -176,7 +176,7 @@
         {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
       ],
       "protection": {"seriesFuseMaxA": 20, "reverseCurrentMaxA": 20},
-      "image": "src/assets/components/pv-js310cb-80p.webp",
+      "image": "src/assets/components/pv-module.webp",
       "datasheet": {
         "source": "Datasheet_Panel_Surya_Update.xlsx › Datasheet PV › kolom S (JS310CB-80P); sumber S7 hlm. 2",
         "coverage": "partial",

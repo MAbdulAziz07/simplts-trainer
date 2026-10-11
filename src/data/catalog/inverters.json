@@ -26,7 +26,7 @@
         "hasInternalFuse": false, "hasReversePolarityProtection": false,
         "reversePolarityDamages": true
       },
-      "image": "src/assets/components/inv-offgrid-500w-12v.webp",
+      "image": "src/assets/components/inverter-offgrid.webp",
       "datasheet": {
         "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
         "coverage": "generic",
@@ -67,7 +67,7 @@
         "hasInternalFuse": false, "hasReversePolarityProtection": false,
         "reversePolarityDamages": true
       },
-      "image": "src/assets/components/inv-offgrid-1500w-24v.webp",
+      "image": "src/assets/components/inverter-offgrid.webp",
       "datasheet": {
         "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
         "coverage": "generic",
@@ -108,7 +108,7 @@
         "dcVocMaxV": 450, "antiIslanding": true, "antiIslandingTimeS": 2,
         "hasReversePolarityProtection": false, "reversePolarityDamages": true
       },
-      "image": "src/assets/components/inv-gridtie-1000w.webp",
+      "image": "src/assets/components/inverter-gridtie.webp",
       "datasheet": {
         "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
         "coverage": "generic",
@@ -162,7 +162,7 @@
         "hasReversePolarityProtection": false, "reversePolarityDamages": true, "antiIslanding": true,
         "antiIslandingTimeS": 2
       },
-      "image": "src/assets/components/inv-hybrid-5000w-48v.webp",
+      "image": "src/assets/components/inverter-hybrid.webp",
       "datasheet": {
         "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
         "coverage": "generic",

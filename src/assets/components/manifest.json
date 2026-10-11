@@ -1,0 +1,82 @@
+{
+  "battery-lfp": {
+    "heightPx": 488,
+    "widthPx": 512
+  },
+  "battery-vrla": {
+    "heightPx": 457,
+    "widthPx": 512
+  },
+  "combiner-pv-2s": {
+    "heightPx": 505,
+    "widthPx": 512
+  },
+  "instrument-clamp-meter": {
+    "heightPx": 512,
+    "widthPx": 250
+  },
+  "instrument-multimeter": {
+    "heightPx": 512,
+    "widthPx": 507
+  },
+  "instrument-solar-meter": {
+    "heightPx": 512,
+    "widthPx": 301
+  },
+  "inverter-gridtie": {
+    "heightPx": 509,
+    "widthPx": 512
+  },
+  "inverter-hybrid": {
+    "heightPx": 509,
+    "widthPx": 512
+  },
+  "inverter-offgrid": {
+    "heightPx": 508,
+    "widthPx": 512
+  },
+  "kwh-meter-sdm230": {
+    "heightPx": 475,
+    "widthPx": 512
+  },
+  "load-ac": {
+    "heightPx": 512,
+    "widthPx": 295
+  },
+  "load-ac-fan": {
+    "heightPx": 512,
+    "widthPx": 386
+  },
+  "load-ac-pump": {
+    "heightPx": 407,
+    "widthPx": 512
+  },
+  "load-ac-tv": {
+    "heightPx": 390,
+    "widthPx": 512
+  },
+  "load-dc": {
+    "heightPx": 512,
+    "widthPx": 314
+  },
+  "mcb-ac-1p": {
+    "heightPx": 512,
+    "widthPx": 132
+  },
+  "mcb-dc-2p": {
+    "heightPx": 512,
+    "widthPx": 341
+  },
+  "pv-module": {
+    "heightPx": 512,
+    "widthPx": 296
+  },
+  "scc-mppt": {
+    "heightPx": 439,
+    "widthPx": 512
+  },
+  "scc-pwm": {
+    "heightPx": 509,
+    "widthPx": 512
+  }
+}

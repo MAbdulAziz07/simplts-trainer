@@ -29,7 +29,7 @@
         "features": ["short-circuit", "open-circuit", "reverse-polarity", "overload", "reverse-current"],
         "reversePolarityDamages": false
       },
-      "image": "src/assets/components/scc-pwm-rbl-20a.webp",
+      "image": "src/assets/components/scc-pwm.webp",
       "datasheet": {
         "source": "Datasheet_SCC_PWM.xlsx › Datasheet RBL › kolom C (RBL-20A)",
         "coverage": "partial",
@@ -64,7 +64,7 @@
         "vocMaxV": 75, "vocFaultFactor": 1.1, "overloadAlarmPct": 110,
         "features": ["reverse-polarity", "overcharge", "overload"]
       },
-      "image": "src/assets/components/scc-mppt-600w-24v.webp",
+      "image": "src/assets/components/scc-mppt.webp",
       "datasheet": {
         "source": "Datasheet_SCC_MPPT_ID.xlsx › Spesifikasi › kolom E (600W/24V); sheet Pengisian",
         "coverage": "partial",
@@ -98,7 +98,7 @@
         "vocMaxV": 145, "vocFaultFactor": 1.1, "overloadAlarmPct": 110,
         "features": ["reverse-polarity", "overcharge", "overload"]
       },
-      "image": "src/assets/components/scc-mppt-3kw-24v.webp",
+      "image": "src/assets/components/scc-mppt.webp",
       "datasheet": {
         "source": "Datasheet_SCC_MPPT_ID.xlsx › Spesifikasi › kolom H (3KW/24V); sheet Pengisian",
         "coverage": "partial",
@@ -134,7 +134,7 @@
         "vocMaxV": 100, "vocFaultFactor": 1.1, "overloadAlarmPct": 110,
         "features": ["reverse-polarity", "overcharge", "overload"]
       },
-      "image": "src/assets/components/scc-mppt-generic-40a-24v.webp",
+      "image": "src/assets/components/scc-mppt.webp",
       "datasheet": {
         "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
         "coverage": "generic",

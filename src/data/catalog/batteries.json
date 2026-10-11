@@ -43,7 +43,7 @@
         {"id": "neg", "label": "−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 2}
       ],
       "protection": {"internalBms": false, "externalBmsRequired": false},
-      "image": "src/assets/components/bat-vrla-agm-12v-100ah.webp",
+      "image": "src/assets/components/battery-vrla.webp",
       "datasheet": {
         "source": "Datasheet_Battery.xlsx › LFP12100 (FirstPower, AGM VRLA.pdf hlm. 1); parameter isi dari 6-FM-20 (Aokly)",
         "coverage": "partial",
@@ -102,7 +102,7 @@
         {"id": "neg", "label": "−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 2}
       ],
       "protection": {"internalBms": false, "externalBmsRequired": false},
-      "image": "src/assets/components/bat-vrla-gel-12v-100ah.webp",
+      "image": "src/assets/components/battery-vrla.webp",
       "datasheet": {
         "source": "Datasheet_Battery.xlsx › TNE12-100 (Tianneng, Tianneng TNE Series.pdf hlm. 1); parameter isi dari 6-FM-20 (Aokly)",
         "coverage": "partial",
@@ -165,7 +165,7 @@
         {"id": "bms", "label": "BMS", "kind": "data", "xPct": 0, "yPct": 0, "maxWires": 1}
       ],
       "protection": {"internalBms": false, "externalBmsRequired": true, "overCurrentDischargeA": 200},
-      "image": "src/assets/components/bat-lfp-25v6-100ah.webp",
+      "image": "src/assets/components/battery-lfp.webp",
       "datasheet": {
         "source": "Datasheet_Battery.xlsx › LFP-Smart 25.6-100 (Victron, Datasheet-12,8-&-25,6-Volt-lithium-iron-phosphate-batteries-Smart-EN.pdf hlm. 1–2)",
         "coverage": "partial",
@@ -227,7 +227,7 @@
         "overCurrentDischargeA": 100, "overCurrentDelayS": 10, "shortCircuitFactor": 3,
         "shortCircuitDelayMs": 1
       },
-      "image": "src/assets/components/bat-lfp-51v2-100ah.webp",
+      "image": "src/assets/components/battery-lfp.webp",
       "datasheet": {
         "source": "Datasheet_Battery.xlsx › MBL48-100CP (Tiger/Centrac, MBL48-100CP.pdf hlm. 1–2)",
         "coverage": "partial",
