@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { OFFGRID_COMPONENTS, OFFGRID_WIRES, place } from '../circuit/validate-fixtures';
 import { INVERTER_COMPONENTS, inverterWires, NOON } from './engine-fixtures';
-import { buildSnapshot, componentStatus } from './snapshot';
+import { buildSnapshot, componentStatus, wireStatuses } from './snapshot';
 import {
   BREAKER_COMPONENTS,
   BREAKER_WIRES,
@@ -58,11 +58,12 @@ describe('componentStatus', () => {
 
   it('inverter: tanpa DC = `off`, LVD = `lvd`, HVD = `hvd`, runtuh = `collapsed`', () => {
     expect(breakerStatus('inv1', { closedSwitchIds: [] }).condition).toBe('off');
-    const off = (offReason: 'lvd' | 'hvd') => ({
+    const off = (offReason: 'lvd' | 'hvd' | 'overload') => ({
       inverterById: { inv1: { on: false, lowVoltageS: 0, offReason } },
     });
     expect(breakerStatus('inv1', off('lvd')).condition).toBe('lvd');
     expect(breakerStatus('inv1', off('hvd')).condition).toBe('hvd');
+    expect(breakerStatus('inv1', off('overload')).condition).toBe('overload');
     const [, inverter] = INVERTER_COMPONENTS;
     if (!inverter) throw new Error('inverter uji tidak ada');
     const collapsed = frameOf(INVERTER_COMPONENTS, inverterWires(5, 2.5), {
@@ -93,10 +94,68 @@ describe('componentStatus', () => {
     });
   });
 
+  it('SCC dengan terminal beban putus karena arus lebih = `overload`', () => {
+    const [, , scc] = OFFGRID_COMPONENTS;
+    if (!scc) throw new Error('SCC uji tidak ada');
+    const scc1 = {
+      stage: 'bulk' as const,
+      absorptionElapsedS: 0,
+      loadConnected: false,
+      loadOverloaded: true,
+    };
+    const { frame, state } = frameOf(OFFGRID_COMPONENTS, OFFGRID_WIRES, {
+      state: { sccById: { scc1 } },
+    });
+    expect(componentStatus(scc, frame, state)).toEqual({
+      condition: 'overload',
+      chargeStage: 'bulk',
+      loadConnected: false,
+    });
+  });
+
   it('alat yang belum dimodelkan = `unsupported`', () => {
     const mppt = place('scc1', 'scc-mppt');
     const { frame, state } = frameOf([mppt], []);
     expect(componentStatus(mppt, frame, state)).toEqual({ condition: 'unsupported' });
+  });
+});
+
+describe('wireStatuses', () => {
+  const DC_WIRE = 'bat1.pos>mcb1.pos-in';
+  const AC_WIRE = 'inv1.ac-l>lamp1.a';
+
+  it('kabel berarus: suhu dari keadaan (bawaan suhu sekitar), arus dan jatuh tegangan', () => {
+    const { frame, state } = frameOf(BREAKER_COMPONENTS, BREAKER_WIRES, {
+      state: { conductorTempCByWireId: { [DC_WIRE]: 45 } },
+    });
+    const wires = wireStatuses(frame, state);
+    expect(Object.keys(wires).sort()).toEqual(BREAKER_WIRES.map((wire) => wire.id).sort());
+    expect(wires[DC_WIRE]).toEqual({
+      condition: 'ok',
+      conductorTempC: 45,
+      currentA: frame.point.currentAByWireId[DC_WIRE],
+      voltageDropV: frame.point.voltageDropVByWireId[DC_WIRE],
+    });
+    expect(wires[DC_WIRE]?.currentA).toBeGreaterThan(40);
+    expect(wires[AC_WIRE]?.conductorTempC).toBe(frame.environment.ambientTempC);
+  });
+
+  it('kabel di zona rusak = `overheating`; kabel rusak = `damaged` tanpa arus', () => {
+    const { frame, state } = frameOf(BREAKER_COMPONENTS, BREAKER_WIRES, {
+      state: {
+        overheatSByWireId: { [DC_WIRE]: 12 },
+        conductorTempCByWireId: { [AC_WIRE]: 96 },
+        damagedWireIds: [AC_WIRE],
+      },
+    });
+    const wires = wireStatuses(frame, state);
+    expect(wires[DC_WIRE]?.condition).toBe('overheating');
+    expect(wires[AC_WIRE]).toEqual({
+      condition: 'damaged',
+      conductorTempC: 96,
+      currentA: 0,
+      voltageDropV: 0,
+    });
   });
 });
 
@@ -111,6 +170,7 @@ describe('buildSnapshot', () => {
     expect(Object.keys(snapshot.components).sort()).toEqual(['bat1', 'inv1', 'lamp1', 'mcb1']);
     expect(snapshot.nets).toBe(frame.potentials.nets);
     expect(snapshot.terminals['bat1.pos']?.voltageV).toBeGreaterThan(12);
+    expect(snapshot.wires).toEqual(wireStatuses(frame, state));
     expect(snapshot.energy).toBe(state.energy);
     expect(snapshot.events).toEqual(events);
     expect(snapshot.events).not.toBe(events);

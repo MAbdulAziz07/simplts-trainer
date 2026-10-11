@@ -9,6 +9,7 @@ import type {
   SimFrame,
   SimState,
   Snapshot,
+  WireStatus,
 } from './step-types';
 
 function switchStatus(id: string, isFuse: boolean, state: SimState): ComponentStatus {
@@ -51,7 +52,12 @@ export function componentStatus(
       const status = frame.point.sccs[id]?.status;
       const scc = state.sccById[id];
       return {
-        condition: status === 'fault' || status === 'damaged' ? 'fault' : 'ok',
+        condition:
+          status === 'fault' || status === 'damaged'
+            ? 'fault'
+            : scc?.loadOverloaded
+              ? 'overload'
+              : 'ok',
         chargeStage: scc?.stage ?? 'bulk',
         loadConnected: scc?.loadConnected ?? true,
       };
@@ -61,6 +67,35 @@ export function componentStatus(
     default:
       return { condition: 'ok' };
   }
+}
+
+/**
+ * Status tiap kabel: yang masih di rangkaian, yang rusak, dan yang suhunya pernah dihitung. Kabel
+ * di luar tabel katalog dilaporkan pada suhu sekitar.
+ */
+export function wireStatuses(frame: SimFrame, state: SimState): Record<string, WireStatus> {
+  const { point } = frame;
+  const damaged = new Set(state.damagedWireIds);
+  const ids = [
+    ...frame.topology.netlist.wires.map((wire) => wire.id),
+    ...Object.keys(state.conductorTempCByWireId),
+    ...state.damagedWireIds,
+  ];
+  const wires: Record<string, WireStatus> = {};
+  for (const id of ids) {
+    const isDamaged = damaged.has(id);
+    wires[id] = {
+      condition: isDamaged
+        ? 'damaged'
+        : (state.overheatSByWireId[id] ?? 0) > 0
+          ? 'overheating'
+          : 'ok',
+      conductorTempC: state.conductorTempCByWireId[id] ?? frame.environment.ambientTempC,
+      currentA: isDamaged ? 0 : (point.currentAByWireId[id] ?? 0),
+      voltageDropV: isDamaged ? 0 : (point.voltageDropVByWireId[id] ?? 0),
+    };
+  }
+  return wires;
 }
 
 /** Snapshot pada akhir langkah; `events` = kejadian selama panggilan `stepSimulation` ini. */
@@ -78,6 +113,7 @@ export function buildSnapshot(
     nets: frame.potentials.nets,
     terminals: frame.potentials.terminals,
     components,
+    wires: wireStatuses(frame, state),
     energy: state.energy,
     events: [...events],
     operatingPoint: frame.point,

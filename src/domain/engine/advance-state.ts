@@ -21,7 +21,11 @@ import type { OperatingPoint } from './types';
 
 const SECONDS_PER_HOUR = 3600;
 const DEFAULT_SOC_PCT = 100;
-const INITIAL_SCC: SccSimState = { stage: 'bulk', absorptionElapsedS: 0, loadConnected: true };
+export const INITIAL_SCC: SccSimState = {
+  stage: 'bulk',
+  absorptionElapsedS: 0,
+  loadConnected: true,
+};
 const INITIAL_INVERTER: InverterSimState = { on: true, lowVoltageS: 0 };
 
 /** SoC tiap baterai setelah `dtS` pada arus titik kerja; suhu baterai = suhu sekitar. */
@@ -86,13 +90,17 @@ function advanceSccs(frame: SimFrame, state: SimState, dtS: number) {
       : batteryVoltageV;
     const elapsedS = previous.absorptionElapsedS + (previous.stage === 'absorption' ? dtS : 0);
     const stage = pwmNextStage(item.electrical, setpoints, previous.stage, stageVoltageV, elapsedS);
-    const loadConnected = pwmLoadConnected(setpoints, previous.loadConnected, batteryVoltageV);
+    // Putus karena arus lebih terkunci sampai direset.
+    const loadConnected =
+      !previous.loadOverloaded &&
+      pwmLoadConnected(setpoints, previous.loadConnected, batteryVoltageV);
     transition ||= stage !== previous.stage || loadConnected !== previous.loadConnected;
     sccById[id] = {
       stage,
       absorptionElapsedS: stage === 'absorption' ? elapsedS : 0,
       loadConnected,
       voltageScale,
+      ...(previous.loadOverloaded && { loadOverloaded: true }),
     };
   }
   return { sccById, transition };
@@ -106,6 +114,8 @@ function advanceInverters(frame: SimFrame, state: SimState, dtS: number) {
     const item = frame.solved.itemOf(id, 'inverter-offgrid');
     if (!item || reading.status === 'no-dc') continue;
     const previous = inverterById[id] ?? INITIAL_INVERTER;
+    // Mati karena beban lebih terkunci sampai direset.
+    if (previous.offReason === 'overload') continue;
     // Daya tidak tersedia = tegangan masukan runtuh.
     const dcVoltageV = reading.status === 'collapsed' ? 0 : reading.dcVoltageV;
     const next = inverterStepDcState(item.electrical, previous, dcVoltageV, dtS);
@@ -121,19 +131,17 @@ function advanceInverters(frame: SimFrame, state: SimState, dtS: number) {
     }
     const offReason = dcVoltageV > item.electrical.dcVoltageHvdV ? 'hvd' : 'lvd';
     inverterById[id] = { ...next, offReason };
-    if (offReason === 'lvd') {
-      events.push({
-        kind: 'inverter-lvd',
-        timeS: state.timeS + dtS,
-        componentId: id,
-        params: { voltageV: dcVoltageV },
-      });
-    }
+    events.push({
+      kind: offReason === 'lvd' ? 'inverter-lvd' : 'inverter-hvd',
+      timeS: state.timeS + dtS,
+      componentId: id,
+      params: { voltageV: dcVoltageV },
+    });
   }
   return { inverterById, events, transition };
 }
 
-/** SoC, SCC, inverter, dan energi setelah `dtS`; kejadian: LVD inverter. */
+/** SoC, SCC, inverter, dan energi setelah `dtS`; kejadian: LVD dan HVD inverter. */
 export function advanceDevices(frame: SimFrame, state: SimState, dtS: number): StepOutcome {
   const sccs = advanceSccs(frame, state, dtS);
   const inverters = advanceInverters(frame, state, dtS);

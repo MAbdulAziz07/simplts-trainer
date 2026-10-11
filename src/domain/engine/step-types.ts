@@ -15,13 +15,15 @@ export interface SccSimState {
   absorptionElapsedS: number;
   /** Terminal beban tersambung (belum diputus LVD SCC). */
   loadConnected: boolean;
+  /** Terminal beban diputus karena arus lebih; terkunci sampai direset. */
+  loadOverloaded?: boolean;
   /** Skala tegangan sistem; terkunci saat SCC pertama melihat baterai. */
   voltageScale?: number;
 }
 
 export interface InverterSimState extends InverterDcState {
-  /** Sebab mati terakhir; kosong selama hidup. */
-  offReason?: 'lvd' | 'hvd';
+  /** Sebab mati terakhir; kosong selama hidup. `overload` terkunci sampai direset. */
+  offReason?: 'lvd' | 'hvd' | 'overload';
 }
 
 /** Energi kumulatif di terminal alat; rugi di dalam baterai tidak termasuk `lossWh`. */
@@ -52,6 +54,8 @@ export interface SimState {
   bmsById: Record<string, BmsState>;
   /** Dosis termal MCB/fuse; trip saat ≥ 1. */
   thermalDoseBySwitchId: Record<string, number>;
+  /** Dosis beban lebih inverter dan terminal beban SCC; mati saat ≥ 1. */
+  overloadDoseById: Record<string, number>;
   conductorTempCByWireId: Record<string, number>;
   /** Lama suhu konduktor di zona rusak. */
   overheatSByWireId: Record<string, number>;
@@ -73,6 +77,9 @@ export const SIM_EVENT_KINDS = [
   'fuse-blown',
   'bms-cutoff',
   'inverter-lvd',
+  'inverter-hvd',
+  'inverter-overload',
+  'scc-load-overload',
   'component-damaged',
 ] as const;
 export type SimEventKind = (typeof SIM_EVENT_KINDS)[number];
@@ -150,6 +157,7 @@ export const COMPONENT_CONDITIONS = [
   'cutoff',
   'lvd',
   'hvd',
+  'overload',
   'fault',
   'collapsed',
   'damaged',
@@ -165,11 +173,23 @@ export interface ComponentStatus {
   loadConnected?: boolean;
 }
 
+export type WireCondition = 'ok' | 'overheating' | 'damaged';
+
+/** `overheating` = suhu konduktor di zona rusak, penghitung tunda berjalan. */
+export interface WireStatus {
+  condition: WireCondition;
+  conductorTempC: number;
+  currentA: number;
+  voltageDropV: number;
+}
+
 export interface Snapshot {
   timeS: number;
   nets: Record<string, Reading>;
   terminals: Record<string, TerminalReading>;
   components: Record<string, ComponentStatus>;
+  /** Kunci = id kabel; kabel rusak berarus 0. */
+  wires: Record<string, WireStatus>;
   energy: EnergyTotals;
   /** Kejadian selama panggilan ini, urut waktu. */
   events: SimEvent[];

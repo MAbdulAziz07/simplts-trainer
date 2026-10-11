@@ -6,6 +6,8 @@ import { advanceDevices } from './advance-state';
 import { advanceWiring } from './advance-wiring';
 import { stepBms, stepDeviceDamage } from './device-events';
 import { solveFrame } from './frame';
+import { overloadLoads, stepOverloads } from './overload-events';
+import type { OverloadLoad } from './overload-events';
 import { stepSwitches, switchLoads } from './protection-events';
 import type { SwitchLoad } from './protection-events';
 import { hasPendingTimers } from './sim-state';
@@ -27,20 +29,22 @@ const TIME_EPSILON_S = 1e-9;
 const RETRY_DIVISOR = 4;
 
 /**
- * Keadaan setelah satu sub-langkah `dtS` pada titik kerja `frame`: alat, kabel, MCB/fuse, BMS, lalu
- * kerusakan. Waktu simulasi ikut maju.
+ * Keadaan setelah satu sub-langkah `dtS` pada titik kerja `frame`: alat, kabel, MCB/fuse, BMS, beban
+ * lebih, lalu kerusakan. Waktu simulasi ikut maju.
  */
 export function advanceSubstep(
   frame: SimFrame,
   loads: readonly SwitchLoad[],
   state: SimState,
   dtS: number,
+  overloads: readonly OverloadLoad[] = overloadLoads(frame),
 ): StepOutcome {
   const parts: ((current: SimState) => StepOutcome)[] = [
     (current) => advanceDevices(frame, current, dtS),
     (current) => advanceWiring(frame, current, dtS),
     (current) => stepSwitches(frame, loads, current, dtS),
     (current) => stepBms(frame, current, dtS),
+    (current) => stepOverloads(overloads, current, dtS),
     (current) => stepDeviceDamage(frame, current, dtS),
   ];
   const events: SimEvent[] = [];
@@ -73,13 +77,16 @@ export function stepSimulation(input: StepInput): StepResult {
 
   for (let n = 0; n < maxSubsteps && targetS - simulatedS > TIME_EPSILON_S; n += 1) {
     const loads = switchLoads(frame);
-    let dtS = chooseDtS(loads, hasPendingTimers(state), targetS - simulatedS);
-    let outcome = advanceSubstep(frame, loads, state, dtS);
+    const overloads = overloadLoads(frame);
+    // Alat yang tidak sedang beban lebih tidak memendekkan langkah.
+    const tripping = overloads.filter((load) => Number.isFinite(load.tripTimeS));
+    let dtS = chooseDtS([...loads, ...tripping], hasPendingTimers(state), targetS - simulatedS);
+    let outcome = advanceSubstep(frame, loads, state, dtS, overloads);
     for (;;) {
       const floorS = outcome.instant ? MCB_MAGNETIC_TRIP_TIME_S : BASE_DT_S;
       if (!outcome.transition || dtS <= floorS) break;
       dtS = outcome.instant ? floorS : Math.max(dtS / RETRY_DIVISOR, floorS);
-      outcome = advanceSubstep(frame, loads, state, dtS);
+      outcome = advanceSubstep(frame, loads, state, dtS, overloads);
     }
     state = outcome.state;
     events.push(...outcome.events);

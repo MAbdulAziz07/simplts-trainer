@@ -35,6 +35,7 @@ export function createSimState(
     inverterById: {},
     bmsById: {},
     thermalDoseBySwitchId: {},
+    overloadDoseById: {},
     conductorTempCByWireId: {},
     overheatSByWireId: {},
     meterEnergyById: {},

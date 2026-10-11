@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { batteryStepSocPct } from '../components/battery';
-import { BATTERY_VRLA_100AH } from '../components/test-fixtures';
+import { place } from '../circuit/validate-fixtures';
+import { BATTERY_LFP_24V_100AH, BATTERY_VRLA_100AH } from '../components/test-fixtures';
 import { advanceDevices, advanceEnergy, advanceSoc } from './advance-state';
 import {
   CHARGE_COMPONENTS,
@@ -192,6 +193,26 @@ describe('advanceDevices: inverter', () => {
     const outcome = advanceDevices(frame, state, 1);
     expect(outcome.state.inverterById.inv1).toEqual({ on: true, lowVoltageS: 0 });
     expect(outcome.transition).toBe(true);
+  });
+
+  it('tegangan di atas Vhvd: mati seketika dengan kejadian `inverter-hvd`', () => {
+    const components = [
+      place('bat1', 'battery', BATTERY_LFP_24V_100AH),
+      place('inv1', 'inverter-offgrid'),
+      place('lamp1', 'load-ac'),
+    ];
+    const { frame, state } = frameOf(components, inverterWires());
+    const dcVoltageV = frame.point.inverters.inv1?.dcVoltageV ?? 0;
+    expect(dcVoltageV).toBeGreaterThan(15.5);
+    const outcome = advanceDevices(frame, state, 1);
+    expect(outcome.state.inverterById.inv1).toEqual({
+      on: false,
+      lowVoltageS: 0,
+      offReason: 'hvd',
+    });
+    expect(outcome.events).toEqual([
+      { kind: 'inverter-hvd', timeS: 1, componentId: 'inv1', params: { voltageV: dcVoltageV } },
+    ]);
   });
 
   it('daya tidak tersedia (runtuh) dihitung sebagai tegangan rendah', () => {

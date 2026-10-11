@@ -32,3 +32,4 @@ export { COMPONENT_CONDITIONS, SIM_EVENT_KINDS } from './engine/step-types';
 export { createSimState } from './engine/sim-state';
 export { BASE_DT_S, MAX_DT_S, MIN_DT_S } from './engine/time-step';
 export { DEFAULT_MAX_SUBSTEPS, stepSimulation } from './engine/stepper';
+export * from './engine/reset';

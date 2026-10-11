@@ -1,11 +1,11 @@
 // Rangkaian dan pembantu uji untuk langkah waktu (stepper dan bagian-bagiannya). Hanya dipakai
 // berkas *.test.ts.
 import type { PlacedComponent, Wire } from '../circuit/types';
-import { CABLES, place, wire } from '../circuit/validate-fixtures';
+import { CABLES, OFFGRID_COMPONENTS, place, wire } from '../circuit/validate-fixtures';
 import { BATTERY_LFP_24V_100AH } from '../components/test-fixtures';
 import { FUSE_POINTS, GRID_PLN, KWH_METER_SDM230 } from '../components/test-fixtures-bos';
 import type { CableItem, CatalogItem } from '../types';
-import { NIGHT } from './engine-fixtures';
+import { INVERTER_COMPONENTS, NIGHT } from './engine-fixtures';
 import { solveFrame } from './frame';
 import { createSimState } from './sim-state';
 import type { SimEvent, SimFrame, SimState, StepInput, StepResult } from './step-types';
@@ -84,6 +84,25 @@ export const BREAKER_WIRES: Wire[] = [
   wire('inv1.ac-l', 'lamp1.a', 2.5, 'cable-nyy'),
   wire('inv1.ac-n', 'lamp1.b', 2.5, 'cable-nyy'),
 ];
+
+function swap(
+  components: readonly PlacedComponent[],
+  replacement: PlacedComponent,
+): PlacedComponent[] {
+  return components.map((component) => (component.id === replacement.id ? replacement : component));
+}
+
+/** Baterai → inverter 500 W → beban AC 600 W (P/Pr = 1,2). */
+export const OVERLOAD_INVERTER_COMPONENTS: PlacedComponent[] = swap(
+  INVERTER_COMPONENTS,
+  place('lamp1', 'load-ac', { maxPowerW: 600 }),
+);
+
+/** Off-grid kecil dengan beban DC 160 W (sekitar 13,5 A) di terminal beban SCC 10 A. */
+export const OVERLOAD_SCC_COMPONENTS: PlacedComponent[] = swap(
+  OFFGRID_COMPONENTS,
+  place('load1', 'load-dc', { maxPowerW: 160 }),
+);
 
 /** Jaringan → kWh meter → beban AC 500 W. */
 export const METER_COMPONENTS: PlacedComponent[] = [
