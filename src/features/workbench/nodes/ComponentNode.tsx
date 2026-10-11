@@ -3,6 +3,7 @@ import { memo, useEffect, useMemo } from 'react';
 import { ComponentPicture, itemSizePx } from '@/ui';
 import type { ComponentFlowNode } from '../flow-types';
 import { layoutTerminals, rotatedSizePx } from './geometry';
+import { SwitchToggle } from './SwitchToggle';
 import { TerminalHandle } from './TerminalHandle';
 import { useTerminalRoles } from './useTerminalRoles';
 
@@ -42,6 +43,12 @@ export const ComponentNode = memo(function ComponentNode({
       >
         <ComponentPicture item={item} />
       </div>
+      <SwitchToggle
+        componentId={id}
+        category={item.category}
+        name={item.name}
+        closed={data.closed}
+      />
       {spots.map((spot, index) => (
         <TerminalHandle
           key={spot.terminal.id}

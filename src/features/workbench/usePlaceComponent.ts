@@ -1,8 +1,10 @@
 import { useReactFlow } from '@xyflow/react';
 import { useCallback } from 'react';
-import { findCatalogItem, useCircuitStore } from '@/store';
+import { findCatalogItem, useCircuitStore, type CircuitDoc } from '@/store';
 import { itemSizePx } from '@/ui';
-import { GRID_PX, snapToGridPx } from './flow-types';
+import { snapToGridPx } from './flow-types';
+import { rotatedSizePx } from './nodes/geometry';
+import { findFreeSpot, type BoxPx } from './placement';
 
 export interface ClientPoint {
   x: number;
@@ -11,6 +13,14 @@ export interface ClientPoint {
 
 /** Penanda elemen meja kerja; dipakai untuk mengetahui apakah sebuah titik layar ada di meja. */
 export const WORKBENCH_ATTRIBUTE = 'data-workbench';
+
+function occupiedBoxes(doc: CircuitDoc): BoxPx[] {
+  return doc.components.flatMap((part) => {
+    const item = findCatalogItem(part.catalogId);
+    if (!item) return [];
+    return [{ xPx: part.xPx, yPx: part.yPx, ...rotatedSizePx(itemSizePx(item), part.rotationDeg) }];
+  });
+}
 
 /**
  * Menaruh komponen katalog di meja kerja dengan pusatnya di titik layar yang diberikan, atau di
@@ -34,15 +44,15 @@ export function usePlaceComponent() {
         { snapToGrid: false },
       );
       const size = itemSizePx(item);
-      let xPx = snapToGridPx(center.x - size.widthPx / 2);
-      let yPx = snapToGridPx(center.y - size.heightPx / 2);
+      const wanted = {
+        ...size,
+        xPx: snapToGridPx(center.x - size.widthPx / 2),
+        yPx: snapToGridPx(center.y - size.heightPx / 2),
+      };
       const { doc, addComponent } = useCircuitStore.getState();
-      // Komponen baru tidak menutupi persis komponen yang sudah ada di titik itu.
-      while (doc.components.some((part) => part.xPx === xPx && part.yPx === yPx)) {
-        xPx += GRID_PX;
-        yPx += GRID_PX;
-      }
-      return addComponent(catalogId, { xPx, yPx }) !== undefined;
+      // Diseret: tepat di tempat dilepas. Diketuk: di tempat kosong terdekat dari tengah meja.
+      const spot = at ? wanted : findFreeSpot(wanted, occupiedBoxes(doc));
+      return addComponent(catalogId, { xPx: spot.xPx, yPx: spot.yPx }) !== undefined;
     },
     [screenToFlowPosition],
   );

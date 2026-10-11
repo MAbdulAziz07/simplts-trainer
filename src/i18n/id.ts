@@ -45,6 +45,11 @@ export const id = {
     component: (name: string, id: string) => `${name} (${id})`,
     terminal: (label: string) => `Terminal ${label}`,
   },
+  switch: {
+    on: 'ON',
+    off: 'OFF',
+    label: (name: string) => `Tuas ${name}`,
+  },
   actions: {
     toolbar: 'Alat meja kerja',
     undo: 'Urungkan (Ctrl+Z)',
