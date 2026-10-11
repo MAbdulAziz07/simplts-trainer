@@ -1,5 +1,6 @@
 import { Sun } from 'lucide-react';
 import { t } from '@/i18n';
+import { PackageSelect } from './PackageSelect';
 
 export function TopBar() {
   return (
@@ -11,6 +12,9 @@ export function TopBar() {
         <Sun aria-hidden size={20} />
       </span>
       <span className="text-base font-semibold">{t.appName}</span>
+      <span className="ml-3">
+        <PackageSelect />
+      </span>
     </header>
   );
 }
