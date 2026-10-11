@@ -11,7 +11,8 @@ import { t } from '@/i18n';
 import { useCircuitStore, useToastStore } from '@/store';
 import { SelectedWirePanel } from './edges/SelectedWirePanel';
 import { WireEdge } from './edges/WireEdge';
-import { FIT_VIEW_OPTIONS, GRID_PX, type ComponentFlowNode, type WireFlowEdge } from './flow-types';
+import { FitOnLoad } from './FitOnLoad';
+import { GRID_PX, type ComponentFlowNode, type WireFlowEdge } from './flow-types';
 import { ComponentNode } from './nodes/ComponentNode';
 import { Toast } from './Toast';
 import { useFlowEdges } from './useFlowEdges';
@@ -22,7 +23,10 @@ import { useWorkbenchShortcuts } from './useWorkbenchShortcuts';
 import { WorkbenchToolbar } from './WorkbenchToolbar';
 import './workbench.css';
 
-// docs/UX.md §2.1: kisi 24 px, zoom 50–200%, awal 100%.
+// docs/UX.md §2.1: kisi 24 px, zoom awal 100%, paling besar 200%. Zoom terkecil 40% (UX.md
+// menyebut 50%) agar preset Terbaik dengan 16 panel muat di meja 870x640 px.
+const MIN_ZOOM = 0.4;
+const MAX_ZOOM = 2;
 const SNAP_GRID: [number, number] = [GRID_PX, GRID_PX];
 const DEFAULT_VIEWPORT = { x: 0, y: 0, zoom: 1 };
 /** Jarak (px meja) dari pusat terminal yang masih dianggap mengenai terminal itu. */
@@ -76,10 +80,6 @@ export function Workbench() {
         onNodeDragStop={handlers.onDragStop}
         onSelectionDragStart={handlers.onDragStart}
         onSelectionDragStop={handlers.onDragStop}
-        onInit={(instance) => {
-          if (useCircuitStore.getState().doc.components.length > 0)
-            void instance.fitView(FIT_VIEW_OPTIONS);
-        }}
         connectionMode={ConnectionMode.Loose}
         connectionRadius={CONNECTION_RADIUS_PX}
         deleteKeyCode={null}
@@ -88,8 +88,8 @@ export function Workbench() {
         selectionMode={SelectionMode.Partial}
         snapToGrid
         snapGrid={SNAP_GRID}
-        minZoom={0.5}
-        maxZoom={2}
+        minZoom={MIN_ZOOM}
+        maxZoom={MAX_ZOOM}
         defaultViewport={DEFAULT_VIEWPORT}
       >
         <Background
@@ -104,6 +104,7 @@ export function Workbench() {
           onToggleSelectMode={() => setSelectMode((on) => !on)}
         />
         <SelectedWirePanel />
+        <FitOnLoad />
       </ReactFlow>
       {isEmpty && (
         <p className="text-ink-muted pointer-events-none absolute inset-0 flex items-center justify-center text-sm">

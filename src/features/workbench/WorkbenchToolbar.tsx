@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import { t } from '@/i18n';
 import { useCircuitStore } from '@/store';
-import { FIT_VIEW_OPTIONS } from './flow-types';
+import { useFitWorkbench } from './useFitWorkbench';
 
 interface ToolButtonProps {
   icon: LucideIcon;
@@ -50,7 +50,8 @@ interface WorkbenchToolbarProps {
 
 /** Bilah alat mengambang: tiap aksi keyboard juga punya tombol (docs/PRD.md US25). */
 export function WorkbenchToolbar({ selectMode, onToggleSelectMode }: WorkbenchToolbarProps) {
-  const { zoomIn, zoomOut, fitView } = useReactFlow();
+  const { zoomIn, zoomOut } = useReactFlow();
+  const fit = useFitWorkbench();
   const canUndo = useCircuitStore((state) => state.history.past.length > 0);
   const canRedo = useCircuitStore((state) => state.history.future.length > 0);
   const hasComponent = useCircuitStore((state) => state.selectedComponentIds.length > 0);
@@ -101,11 +102,7 @@ export function WorkbenchToolbar({ selectMode, onToggleSelectMode }: WorkbenchTo
         <Divider />
         <ToolButton icon={ZoomIn} label={t.actions.zoomIn} onClick={() => void zoomIn()} />
         <ToolButton icon={ZoomOut} label={t.actions.zoomOut} onClick={() => void zoomOut()} />
-        <ToolButton
-          icon={Maximize}
-          label={t.actions.fit}
-          onClick={() => void fitView(FIT_VIEW_OPTIONS)}
-        />
+        <ToolButton icon={Maximize} label={t.actions.fit} onClick={fit} />
       </div>
     </Panel>
   );

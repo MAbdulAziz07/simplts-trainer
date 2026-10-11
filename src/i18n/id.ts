@@ -45,6 +45,23 @@ export const id = {
     component: (name: string, id: string) => `${name} (${id})`,
     terminal: (label: string) => `Terminal ${label}`,
   },
+  file: {
+    save: 'Simpan',
+    open: 'Buka',
+    preset: 'Preset',
+    saveHint: 'Simpan rangkaian ke berkas .json',
+    openHint: 'Buka rangkaian dari berkas .json',
+    presetHint: 'Muat preset: komponen paket tertata di meja, belum dirangkai',
+    saved: 'Rangkaian disimpan ke berkas',
+    opened: 'Rangkaian dibuka',
+    presetLoaded: (name: string) => `Preset ${name} dimuat`,
+    // Kunci = `ProjectRejection` (src/data/project/validate.ts).
+    rejections: {
+      'not-project': 'Bukan berkas rangkaian SimPLTS',
+      'unsupported-version': 'Versi berkas tidak didukung',
+      invalid: 'Isi berkas tidak sah',
+    },
+  },
   switch: {
     on: 'ON',
     off: 'OFF',

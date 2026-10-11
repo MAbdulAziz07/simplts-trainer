@@ -24,6 +24,7 @@ beforeEach(() => {
     gestureStart: undefined,
     selectedComponentIds: [],
     selectedWireIds: [],
+    loadCount: 0,
   });
 });
 
@@ -141,6 +142,7 @@ describe('circuitStore — proyek', () => {
     const preset = loadPreset('rek', catalogItems);
     store().loadProject(preset);
     expect(store().packageId).toBe('rek');
+    expect(store().loadCount).toBe(1);
     expect(store().doc.components).toEqual(preset.components);
     expect(store().selectedComponentIds).toEqual([]);
 

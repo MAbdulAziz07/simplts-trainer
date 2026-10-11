@@ -7,6 +7,7 @@ import {
 } from '@/domain';
 import {
   PROJECT_APP_ID,
+  PROJECT_FILE_EXTENSION,
   PROJECT_FORMAT_VERSION,
   validateProject,
   type ProjectFile,
@@ -38,6 +39,14 @@ export function projectToDoc(project: ProjectFile): CircuitDoc {
 /** Isi berkas `.json` yang diunduh pengguna. */
 export function serializeProject(doc: CircuitDoc, packageId: PackageId): string {
   return `${JSON.stringify(docToProject(doc, packageId), null, 2)}\n`;
+}
+
+/** Nama berkas unduhan, mis. `rangkaian-min-20261011-2130.simplts.json` (waktu setempat). */
+export function projectFileName(packageId: PackageId, savedAt: Date): string {
+  const two = (value: number): string => String(value).padStart(2, '0');
+  const date = `${savedAt.getFullYear()}${two(savedAt.getMonth() + 1)}${two(savedAt.getDate())}`;
+  const time = `${two(savedAt.getHours())}${two(savedAt.getMinutes())}`;
+  return `rangkaian-${packageId}-${date}-${time}${PROJECT_FILE_EXTENSION}`;
 }
 
 /** Membaca teks berkas proyek; JSON rusak dilaporkan sebagai bukan proyek. */

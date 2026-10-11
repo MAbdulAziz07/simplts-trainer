@@ -5,6 +5,7 @@ import {
   AUTOSAVE_KEY,
   docToProject,
   parseProjectText,
+  projectFileName,
   projectToDoc,
   readAutosave,
   serializeProject,
@@ -44,6 +45,15 @@ describe('berkas proyek', () => {
 
   it('memuat nomor versi format', () => {
     expect(docToProject(EMPTY_DOC, 'min')).toMatchObject({ app: 'simplts', formatVersion: 1 });
+  });
+
+  it('nama berkas memuat paket dan waktu simpan, berakhiran .json', () => {
+    expect(projectFileName('min', new Date(2026, 9, 11, 21, 5))).toBe(
+      'rangkaian-min-20261011-2105.simplts.json',
+    );
+    expect(projectFileName('best', new Date(2027, 0, 2, 3, 4))).toBe(
+      'rangkaian-best-20270102-0304.simplts.json',
+    );
   });
 
   it('menolak teks yang bukan JSON atau bukan proyek', () => {

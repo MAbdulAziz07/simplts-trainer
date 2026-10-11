@@ -45,6 +45,8 @@ export interface CircuitState {
   gestureStart?: CircuitDoc;
   selectedComponentIds: string[];
   selectedWireIds: string[];
+  /** Naik tiap kali rangkaian lain dimuat; meja kerja memaskan tampilan saat nilainya berubah. */
+  loadCount: number;
 
   setPackage: (packageId: PackageId) => void;
   setLevel: (level: ConnectionLevel) => void;
@@ -94,6 +96,7 @@ export const useCircuitStore = create<CircuitState>()((set, get) => {
     history: emptyHistory(),
     selectedComponentIds: [],
     selectedWireIds: [],
+    loadCount: saved ? 1 : 0,
 
     setPackage: (packageId) => set({ packageId }),
     setLevel: (level) => set({ level }),
@@ -170,7 +173,7 @@ export const useCircuitStore = create<CircuitState>()((set, get) => {
     loadProject: (project) => {
       set({ packageId: project.packageId, gestureStart: undefined });
       commit(projectToDoc(project));
-      set(NO_SELECTION);
+      set({ ...NO_SELECTION, loadCount: get().loadCount + 1 });
     },
     clear: () => commit(EMPTY_DOC),
   };

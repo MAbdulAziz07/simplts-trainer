@@ -1,6 +1,9 @@
 // Mencari tempat kosong untuk komponen baru yang ditambah tanpa diseret (ketuk ubin baki), supaya
 // kartu tidak saling menimpa (docs/UX.md §2.2).
+import { findCatalogItem, type CircuitDoc } from '@/store';
+import { itemSizePx } from '@/ui';
 import { GRID_PX, snapToGridPx } from './flow-types';
+import { rotatedSizePx } from './nodes/geometry';
 
 export interface BoxPx {
   xPx: number;
@@ -9,8 +12,17 @@ export interface BoxPx {
   heightPx: number;
 }
 
+/** Kotak tiap komponen di meja kerja, sesudah diputar. */
+export function occupiedBoxes(doc: CircuitDoc): BoxPx[] {
+  return doc.components.flatMap((part) => {
+    const item = findCatalogItem(part.catalogId);
+    if (!item) return [];
+    return [{ xPx: part.xPx, yPx: part.yPx, ...rotatedSizePx(itemSizePx(item), part.rotationDeg) }];
+  });
+}
+
 /** Ruang di sekeliling komponen untuk label, tuas MCB, dan jajaran terminal di bawahnya. */
-export const CLEARANCE_X_PX = 2 * GRID_PX;
+export const CLEARANCE_X_PX = 3 * GRID_PX;
 export const CLEARANCE_Y_PX = 3 * GRID_PX;
 const STEP_PX = 2 * GRID_PX;
 const MAX_STEPS = 12;

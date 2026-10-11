@@ -13,99 +13,99 @@
     {
       "id": "pv2",
       "catalogId": "pv-generic-100wp",
-      "xPx": 216,
+      "xPx": 264,
       "yPx": 48,
       "rotationDeg": 0
     },
     {
       "id": "mcb-pv",
       "catalogId": "mcb-dc-16a",
-      "xPx": 408,
-      "yPx": 72,
+      "xPx": 480,
+      "yPx": 48,
       "rotationDeg": 0
     },
     {
       "id": "scc",
       "catalogId": "scc-pwm-rbl-20a",
-      "xPx": 552,
-      "yPx": 24,
+      "xPx": 648,
+      "yPx": 48,
       "rotationDeg": 0
     },
     {
       "id": "load-dc",
       "catalogId": "load-dc-12v-200w",
-      "xPx": 864,
-      "yPx": 72,
+      "xPx": 984,
+      "yPx": 48,
       "rotationDeg": 0
     },
     {
       "id": "bat",
       "catalogId": "bat-vrla-agm-12v-100ah",
       "xPx": 48,
-      "yPx": 360,
+      "yPx": 384,
       "rotationDeg": 0
     },
     {
       "id": "fuse-bat",
       "catalogId": "fuse-bat-100a",
-      "xPx": 312,
+      "xPx": 336,
       "yPx": 384,
       "rotationDeg": 0
     },
     {
       "id": "bus-pos",
       "catalogId": "busbar-dc-pos",
-      "xPx": 552,
-      "yPx": 360,
-      "rotationDeg": 0
-    },
-    {
-      "id": "bus-neg",
-      "catalogId": "busbar-dc-neg",
-      "xPx": 552,
-      "yPx": 480,
+      "xPx": 528,
+      "yPx": 384,
       "rotationDeg": 0
     },
     {
       "id": "mcb-inv",
       "catalogId": "mcb-dc-63a",
       "xPx": 888,
-      "yPx": 360,
+      "yPx": 384,
       "rotationDeg": 0
     },
     {
       "id": "inv",
       "catalogId": "inv-offgrid-500w-12v",
-      "xPx": 1032,
-      "yPx": 312,
+      "xPx": 1056,
+      "yPx": 384,
       "rotationDeg": 0
     },
     {
       "id": "mcb-ac",
       "catalogId": "mcb-ac-6a",
-      "xPx": 1368,
-      "yPx": 336,
+      "xPx": 1416,
+      "yPx": 384,
       "rotationDeg": 0
     },
     {
       "id": "load-ac",
       "catalogId": "load-ac-500w",
-      "xPx": 1488,
-      "yPx": 336,
+      "xPx": 1536,
+      "yPx": 384,
+      "rotationDeg": 0
+    },
+    {
+      "id": "bus-neg",
+      "catalogId": "busbar-dc-neg",
+      "xPx": 48,
+      "yPx": 744,
       "rotationDeg": 0
     },
     {
       "id": "bus-pe",
       "catalogId": "busbar-pe",
-      "xPx": 1032,
-      "yPx": 648,
+      "xPx": 408,
+      "yPx": 744,
       "rotationDeg": 0
     },
     {
       "id": "rod",
       "catalogId": "ground-rod",
-      "xPx": 1368,
-      "yPx": 648,
+      "xPx": 768,
+      "yPx": 744,
       "rotationDeg": 0
     }
   ],

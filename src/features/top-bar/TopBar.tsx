@@ -1,5 +1,6 @@
 import { Sun } from 'lucide-react';
 import { t } from '@/i18n';
+import { FileActions } from './FileActions';
 import { LevelSelect } from './LevelSelect';
 import { PackageSelect } from './PackageSelect';
 
@@ -17,6 +18,7 @@ export function TopBar() {
         <PackageSelect />
       </span>
       <LevelSelect />
+      <FileActions />
     </header>
   );
 }

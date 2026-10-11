@@ -13,49 +13,49 @@
     {
       "id": "pv2",
       "catalogId": "pv-generic-200wp",
-      "xPx": 216,
+      "xPx": 264,
       "yPx": 48,
       "rotationDeg": 0
     },
     {
       "id": "pv3",
       "catalogId": "pv-generic-200wp",
-      "xPx": 384,
+      "xPx": 480,
       "yPx": 48,
       "rotationDeg": 0
     },
     {
       "id": "pv4",
       "catalogId": "pv-generic-200wp",
-      "xPx": 552,
+      "xPx": 696,
       "yPx": 48,
       "rotationDeg": 0
     },
     {
       "id": "pv5",
       "catalogId": "pv-generic-200wp",
-      "xPx": 720,
+      "xPx": 912,
       "yPx": 48,
       "rotationDeg": 0
     },
     {
       "id": "pv6",
       "catalogId": "pv-generic-200wp",
-      "xPx": 888,
+      "xPx": 1128,
       "yPx": 48,
       "rotationDeg": 0
     },
     {
       "id": "pv7",
       "catalogId": "pv-generic-200wp",
-      "xPx": 1056,
+      "xPx": 1344,
       "yPx": 48,
       "rotationDeg": 0
     },
     {
       "id": "pv8",
       "catalogId": "pv-generic-200wp",
-      "xPx": 1224,
+      "xPx": 1560,
       "yPx": 48,
       "rotationDeg": 0
     },
@@ -63,154 +63,154 @@
       "id": "pv9",
       "catalogId": "pv-generic-200wp",
       "xPx": 48,
-      "yPx": 312,
+      "yPx": 336,
       "rotationDeg": 0
     },
     {
       "id": "pv10",
       "catalogId": "pv-generic-200wp",
-      "xPx": 216,
-      "yPx": 312,
+      "xPx": 264,
+      "yPx": 336,
       "rotationDeg": 0
     },
     {
       "id": "pv11",
       "catalogId": "pv-generic-200wp",
-      "xPx": 384,
-      "yPx": 312,
+      "xPx": 480,
+      "yPx": 336,
       "rotationDeg": 0
     },
     {
       "id": "pv12",
       "catalogId": "pv-generic-200wp",
-      "xPx": 552,
-      "yPx": 312,
+      "xPx": 696,
+      "yPx": 336,
       "rotationDeg": 0
     },
     {
       "id": "pv13",
       "catalogId": "pv-generic-200wp",
-      "xPx": 720,
-      "yPx": 312,
+      "xPx": 912,
+      "yPx": 336,
       "rotationDeg": 0
     },
     {
       "id": "pv14",
       "catalogId": "pv-generic-200wp",
-      "xPx": 888,
-      "yPx": 312,
+      "xPx": 1128,
+      "yPx": 336,
       "rotationDeg": 0
     },
     {
       "id": "pv15",
       "catalogId": "pv-generic-200wp",
-      "xPx": 1056,
-      "yPx": 312,
+      "xPx": 1344,
+      "yPx": 336,
       "rotationDeg": 0
     },
     {
       "id": "pv16",
       "catalogId": "pv-generic-200wp",
-      "xPx": 1224,
-      "yPx": 312,
+      "xPx": 1560,
+      "yPx": 336,
       "rotationDeg": 0
     },
     {
       "id": "fuse-pv1",
       "catalogId": "fuse-pv-15a",
-      "xPx": 1416,
-      "yPx": 96,
+      "xPx": 48,
+      "yPx": 624,
       "rotationDeg": 0
     },
     {
       "id": "fuse-pv2",
       "catalogId": "fuse-pv-15a",
-      "xPx": 1416,
-      "yPx": 360,
+      "xPx": 240,
+      "yPx": 624,
       "rotationDeg": 0
     },
     {
       "id": "spd",
       "catalogId": "spd-pv-600v",
-      "xPx": 1560,
-      "yPx": 216,
+      "xPx": 432,
+      "yPx": 624,
       "rotationDeg": 0
     },
     {
       "id": "inv",
       "catalogId": "inv-hybrid-5000w-48v",
-      "xPx": 1704,
-      "yPx": 168,
+      "xPx": 624,
+      "yPx": 624,
       "rotationDeg": 0
     },
     {
       "id": "bat",
       "catalogId": "bat-lfp-51v2-100ah",
-      "xPx": 1416,
-      "yPx": 576,
+      "xPx": 984,
+      "yPx": 624,
       "rotationDeg": 0
     },
     {
       "id": "fuse-bat",
       "catalogId": "fuse-bat-125a",
-      "xPx": 1680,
-      "yPx": 600,
-      "rotationDeg": 0
-    },
-    {
-      "id": "mcb-grid",
-      "catalogId": "mcb-ac-32a",
-      "xPx": 2040,
-      "yPx": 120,
-      "rotationDeg": 0
-    },
-    {
-      "id": "kwh",
-      "catalogId": "kwh-meter-sdm230",
-      "xPx": 2160,
-      "yPx": 96,
-      "rotationDeg": 0
-    },
-    {
-      "id": "grid",
-      "catalogId": "grid-pln",
-      "xPx": 2424,
-      "yPx": 120,
-      "rotationDeg": 0
-    },
-    {
-      "id": "mcb-load",
-      "catalogId": "mcb-ac-32a",
-      "xPx": 2040,
-      "yPx": 360,
-      "rotationDeg": 0
-    },
-    {
-      "id": "panel",
-      "catalogId": "load-panel-3c",
-      "xPx": 2160,
-      "yPx": 336,
-      "rotationDeg": 0
-    },
-    {
-      "id": "load-ac",
-      "catalogId": "load-ac-5000w",
-      "xPx": 2496,
-      "yPx": 360,
+      "xPx": 1272,
+      "yPx": 624,
       "rotationDeg": 0
     },
     {
       "id": "bus-pe",
       "catalogId": "busbar-pe",
-      "xPx": 1824,
-      "yPx": 600,
+      "xPx": 1464,
+      "yPx": 624,
+      "rotationDeg": 0
+    },
+    {
+      "id": "mcb-grid",
+      "catalogId": "mcb-ac-32a",
+      "xPx": 48,
+      "yPx": 984,
+      "rotationDeg": 0
+    },
+    {
+      "id": "kwh",
+      "catalogId": "kwh-meter-sdm230",
+      "xPx": 168,
+      "yPx": 984,
+      "rotationDeg": 0
+    },
+    {
+      "id": "grid",
+      "catalogId": "grid-pln",
+      "xPx": 456,
+      "yPx": 984,
+      "rotationDeg": 0
+    },
+    {
+      "id": "mcb-load",
+      "catalogId": "mcb-ac-32a",
+      "xPx": 744,
+      "yPx": 984,
+      "rotationDeg": 0
+    },
+    {
+      "id": "panel",
+      "catalogId": "load-panel-3c",
+      "xPx": 864,
+      "yPx": 984,
+      "rotationDeg": 0
+    },
+    {
+      "id": "load-ac",
+      "catalogId": "load-ac-5000w",
+      "xPx": 1224,
+      "yPx": 984,
       "rotationDeg": 0
     },
     {
       "id": "rod",
       "catalogId": "ground-rod",
-      "xPx": 2160,
-      "yPx": 600,
+      "xPx": 1392,
+      "yPx": 984,
       "rotationDeg": 0
     }
   ],

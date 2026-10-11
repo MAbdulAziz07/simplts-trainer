@@ -1,10 +1,9 @@
 import { useReactFlow } from '@xyflow/react';
 import { useCallback } from 'react';
-import { findCatalogItem, useCircuitStore, type CircuitDoc } from '@/store';
+import { findCatalogItem, useCircuitStore } from '@/store';
 import { itemSizePx } from '@/ui';
 import { snapToGridPx } from './flow-types';
-import { rotatedSizePx } from './nodes/geometry';
-import { findFreeSpot, type BoxPx } from './placement';
+import { findFreeSpot, occupiedBoxes } from './placement';
 
 export interface ClientPoint {
   x: number;
@@ -13,14 +12,6 @@ export interface ClientPoint {
 
 /** Penanda elemen meja kerja; dipakai untuk mengetahui apakah sebuah titik layar ada di meja. */
 export const WORKBENCH_ATTRIBUTE = 'data-workbench';
-
-function occupiedBoxes(doc: CircuitDoc): BoxPx[] {
-  return doc.components.flatMap((part) => {
-    const item = findCatalogItem(part.catalogId);
-    if (!item) return [];
-    return [{ xPx: part.xPx, yPx: part.yPx, ...rotatedSizePx(itemSizePx(item), part.rotationDeg) }];
-  });
-}
 
 /**
  * Menaruh komponen katalog di meja kerja dengan pusatnya di titik layar yang diberikan, atau di
