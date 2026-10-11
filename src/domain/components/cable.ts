@@ -58,6 +58,16 @@ export function cableDropLevel(voltageDropPct: number): CableDropLevel {
 }
 
 /**
+ * KHA tabel untuk penampang `areaMm2`; `undefined` bila penampang tidak ada di tabel. Cara pasang
+ * bawaan "di udara": kabel PV kolom bebas di udara, NYY kolom udara 30 °C. [PERLU VERIFIKASI]
+ */
+export function cableTableAmpacityA(cable: CableElectrical, areaMm2: number): number | undefined {
+  const size = cable.sizes.find((candidate) => candidate.areaMm2 === areaMm2);
+  if (!size) return undefined;
+  return 'ampacityAirA' in size ? size.ampacityAirA : size.ampacityAir30A;
+}
+
+/**
  * KHA efektif: KHA tabel (kolom dipilih pemanggil) × faktor suhu sekitar × faktor pengelompokan.
  * Kabel tanpa tabel faktor suhu (NYY) hanya memakai faktor pengelompokan.
  */

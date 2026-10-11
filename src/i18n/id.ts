@@ -8,4 +8,82 @@ export const id = {
     inspector: 'Inspeksi',
     simControls: 'Kendali simulasi',
   },
+  severities: {
+    info: 'Info',
+    warning: 'Peringatan',
+    danger: 'Bahaya',
+  },
+  // Kunci = kode temuan `validateCircuit` (src/domain/circuit/types.ts). `message` maksimal 8 kata.
+  findings: {
+    'reverse-polarity': {
+      message: 'Polaritas terbalik',
+      explanation:
+        'Kutub positif alat tersambung ke kutub negatif sumber, atau sebaliknya. Alat tanpa proteksi polaritas terbalik akan rusak. Tukar kedua kabelnya.',
+    },
+    'short-circuit': {
+      message: 'Hubung singkat pada sumber',
+      explanation:
+        'Kutub positif dan negatif sumber bertemu tanpa beban di antaranya. Arus sangat besar mengalir, kabel panas, dan proteksi trip. Lepas kabel yang menyatukan kedua kutub.',
+    },
+    'pv-direct': {
+      message: 'Modul surya langsung ke inverter atau beban',
+      explanation:
+        'Tegangan modul surya berubah mengikuti cahaya dan bisa jauh di atas tegangan kerja alat. Sambungkan modul ke masukan PV pada SCC.',
+    },
+    'pv-voc-over-limit': {
+      message: 'Voc array melebihi batas masukan PV',
+      explanation:
+        'Pada suhu sel terendah, tegangan rangkaian terbuka array lebih tinggi daripada batas alat. Kurangi jumlah modul seri atau pakai alat dengan batas Voc lebih tinggi.',
+    },
+    'breaker-overcurrent': {
+      message: 'Arus melebihi rating MCB atau fuse',
+      explanation:
+        'Proteksi akan trip atau putus saat rangkaian bekerja. Pilih rating di atas arus kerja tetapi tetap di bawah KHA kabel.',
+    },
+    'cable-overcurrent': {
+      message: 'Arus melebihi KHA kabel',
+      explanation:
+        'Kabel terlalu kecil untuk arus yang lewat sehingga panas dan isolasinya bisa rusak. Pakai penampang yang lebih besar.',
+    },
+    'cable-unknown': {
+      message: 'Kabel tidak ada di katalog',
+      explanation:
+        'Jenis atau penampang kabel ini tidak ada di katalog, sehingga kuat hantar arusnya tidak bisa diperiksa. Ganti dengan kabel dari baki.',
+    },
+    'system-voltage-mismatch': {
+      message: 'Tegangan sistem tidak cocok',
+      explanation:
+        'Tegangan bank baterai (12, 24, atau 48 V) berbeda dari tegangan kerja alat. Samakan tegangan baterai dengan SCC, inverter, dan beban DC.',
+    },
+    'pv-before-battery': {
+      message: 'PV tersambung sebelum baterai',
+      explanation:
+        'SCC mengenali tegangan sistem dari baterai. Urutan pasang: baterai, lalu PV, lalu beban. Urutan lepas sebaliknya.',
+    },
+    'open-circuit': {
+      message: 'Rangkaian terbuka',
+      explanation:
+        'Baru satu sisi dari pasangan terminal yang dipasangi kabel, sehingga arus belum bisa mengalir. Pasang kabel pada terminal pasangannya.',
+    },
+    'ac-load-on-dc': {
+      message: 'Beban AC di keluaran DC',
+      explanation:
+        'Beban AC memerlukan 220 V AC dari inverter atau jaringan. Pindahkan beban ke keluaran AC inverter.',
+    },
+    'gridtie-without-grid': {
+      message: 'Inverter grid-tie tanpa jaringan',
+      explanation:
+        'Inverter grid-tie hanya bekerja bila terminal L dan N tersambung ke jaringan PLN. Tanpa jaringan, inverter tidak menyalurkan daya.',
+    },
+    'pe-not-connected': {
+      message: 'PE belum tersambung ke pembumian',
+      explanation:
+        'Badan alat tidak terhubung ke elektrode pembumian sehingga berbahaya saat terjadi gangguan isolasi. Sambungkan terminal PE ke rel PE dan elektrode pembumian.',
+    },
+    'live-rewiring': {
+      message: 'Merangkai saat MCB masih ON',
+      explanation:
+        'Kabel dipasang atau dilepas ketika rangkaian masih bertegangan. Matikan semua MCB sebelum mengubah rangkaian.',
+    },
+  },
 } as const;

@@ -9,6 +9,7 @@ import {
   cableResistivityOhmMm2PerM,
   cableSteadyTempC,
   cableStepTempC,
+  cableTableAmpacityA,
   cableVoltageDropPct,
   cableVoltageDropV,
 } from './cable';
@@ -87,6 +88,18 @@ describe('cableDropLevel', () => {
     expect(cableDropLevel(3)).toBe('ok');
     expect(cableDropLevel(4.17)).toBe('warning');
     expect(cableDropLevel(5.83)).toBe('bad');
+  });
+});
+
+describe('cableTableAmpacityA', () => {
+  it('kabel PV memakai kolom bebas di udara, NYY kolom udara 30 °C', () => {
+    expect(cableTableAmpacityA(CABLE_PV, 4)).toBe(55);
+    expect(cableTableAmpacityA(CABLE_NYY, 2.5)).toBe(25);
+  });
+
+  it('penampang di luar tabel: undefined', () => {
+    expect(cableTableAmpacityA(CABLE_PV, 3)).toBeUndefined();
+    expect(cableTableAmpacityA(CABLE_NYY, 4)).toBeUndefined();
   });
 });
 
