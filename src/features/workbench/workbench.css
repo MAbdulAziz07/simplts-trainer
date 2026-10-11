@@ -50,25 +50,10 @@
   cursor: crosshair;
 }
 
-.terminal-dot {
-  display: grid;
-  place-items: center;
-  color: #fff;
-  font-weight: 700;
-  line-height: 1;
-  box-shadow:
-    0 0 0 2px #fff,
-    0 0 0 3px rgb(17 24 39 / 0.45);
+.terminal .terminal-dot {
   transition:
     transform 120ms,
     opacity 120ms;
-}
-
-.terminal-glyph-pe {
-  color: var(--color-ink);
-  text-shadow:
-    0 0 2px #fff,
-    0 0 2px #fff;
 }
 
 .terminal:hover .terminal-dot {

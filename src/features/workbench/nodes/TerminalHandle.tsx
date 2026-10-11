@@ -1,6 +1,6 @@
 import { Handle, Position } from '@xyflow/react';
 import { t } from '@/i18n';
-import { terminalBackground, terminalStyle } from '@/ui';
+import { TerminalDot } from '@/ui';
 import type { Side, TerminalSpot } from './geometry';
 
 /** Peran terminal selama sebuah kabel ditarik. */
@@ -42,8 +42,6 @@ interface TerminalHandleProps {
  */
 export function TerminalHandle({ spot, role, showLabel }: TerminalHandleProps) {
   const { terminal, side, dotPx, hitPx } = spot;
-  const { shape, glyph } = terminalStyle(terminal.kind);
-  const isPe = terminal.kind === 'pe';
 
   return (
     <Handle
@@ -57,17 +55,7 @@ export function TerminalHandle({ spot, role, showLabel }: TerminalHandleProps) {
       style={{ left: spot.xPx, top: spot.yPx }}
     >
       <span className="terminal-hit" style={{ width: hitPx, height: hitPx }}>
-        <span
-          className={`terminal-dot ${shape === 'round' ? 'rounded-full' : 'rounded-[5px]'}`}
-          style={{
-            width: dotPx,
-            height: dotPx,
-            background: terminalBackground(terminal.kind),
-            fontSize: Math.max(10, dotPx - 10),
-          }}
-        >
-          <span className={isPe ? 'terminal-glyph-pe' : undefined}>{glyph}</span>
-        </span>
+        <TerminalDot kind={terminal.kind} sizePx={dotPx} />
       </span>
       <span
         className={`terminal-label ${LABEL_PLACEMENT[side]} ${

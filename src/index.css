@@ -46,3 +46,22 @@ body {
   color: var(--color-ink);
   font-size: 14px;
 }
+
+/* Titik terminal (src/ui/TerminalDot.tsx): dipakai meja kerja dan editor terminal. */
+.terminal-dot {
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 3px rgb(17 24 39 / 0.45);
+}
+
+.terminal-glyph-striped {
+  color: var(--color-ink);
+  text-shadow:
+    0 0 2px #fff,
+    0 0 2px #fff;
+}
