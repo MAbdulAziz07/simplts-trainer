@@ -1,4 +1,5 @@
 import { Sun } from 'lucide-react';
+import { ResetButton } from '@/features/sim-controls';
 import { t } from '@/i18n';
 import { FileActions } from './FileActions';
 import { LevelSelect } from './LevelSelect';
@@ -19,6 +20,8 @@ export function TopBar() {
       </span>
       <LevelSelect />
       <FileActions />
+      <span aria-hidden className="bg-line h-8 w-px shrink-0" />
+      <ResetButton />
     </header>
   );
 }

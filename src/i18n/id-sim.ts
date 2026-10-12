@@ -24,6 +24,7 @@ export const sim = {
   autoMark: 'A',
   reset: 'Reset percobaan',
   resetConfirm: 'Ketuk lagi untuk mereset percobaan',
+  resetMark: 'Reset',
   resetConfirmMark: 'Reset?',
   resetDone: 'Percobaan direset',
 } as const;

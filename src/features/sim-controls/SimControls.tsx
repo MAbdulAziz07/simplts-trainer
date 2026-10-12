@@ -3,12 +3,11 @@ import { useSimStore } from '@/store';
 import { ChartButton, ChartPanel } from './chart/ChartPanel';
 import { EnvControls } from './EnvControls';
 import { Playback } from './Playback';
-import { ResetButton } from './ResetButton';
 import './sim-controls.css';
 
 /**
  * Bilah simulasi 72 px: putar/jeda, kecepatan, jam, iradiasi, awan, suhu (docs/UX.md §2.1), dan
- * tombol grafik 24 jam dan reset percobaan.
+ * tombol grafik 24 jam. Reset percobaan ada di bilah atas.
  */
 export function SimControls() {
   const running = useSimStore((state) => state.running);
@@ -22,8 +21,6 @@ export function SimControls() {
       <Playback />
       <EnvControls />
       <ChartButton />
-      <span aria-hidden className="bg-line h-8 w-px shrink-0" />
-      <ResetButton />
       <ChartPanel />
     </footer>
   );

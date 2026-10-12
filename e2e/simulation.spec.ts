@@ -108,6 +108,12 @@ test('reset percobaan: konfirmasi dua ketukan; trip, SoC, dan jam kembali, rangk
   await page.getByRole('button', { name: 'Reset percobaan' }).click();
   const confirm = page.getByRole('button', { name: 'Ketuk lagi untuk mereset percobaan' });
   await expect(confirm).toHaveText('Reset?');
+  // Tombol reset ada di bilah atas, terpisah dari simpan/buka.
+  await expect(
+    page
+      .getByRole('banner', { name: 'Bilah atas' })
+      .getByRole('button', { name: /mereset percobaan$/ }),
+  ).toBeVisible();
   await expect(lever).toHaveText('TRIP');
 
   await confirm.click();
