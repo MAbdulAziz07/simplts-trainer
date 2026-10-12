@@ -1,0 +1,57 @@
+/* Inspektur: kolom kanan 280 px; di bawah lebar 1024 px lembar bawah setinggi 40% layar
+   (docs/UX.md §2.1). Isinya tidak boleh terpotong pada tinggi 640 px. */
+
+.inspector {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  overflow-y: auto;
+  border-left-width: 1px;
+}
+
+.rating {
+  padding: 6px 8px;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+}
+
+.rating dt {
+  color: var(--color-ink-muted);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+}
+
+.rating abbr {
+  text-decoration: none;
+}
+
+.rating dd {
+  margin: 0;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  line-height: 26px;
+  white-space: nowrap;
+}
+
+.rating-unit {
+  margin-left: 4px;
+  color: var(--color-ink-muted);
+  font-size: 12px;
+}
+
+@media (max-width: 1023px) {
+  .inspector {
+    position: fixed;
+    right: 0;
+    bottom: var(--spacing-simbar);
+    left: 0;
+    z-index: 30;
+    height: 40vh;
+    border-top-width: 1px;
+    border-left-width: 0;
+    box-shadow: 0 -4px 16px rgb(17 24 39 / 0.18);
+  }
+}

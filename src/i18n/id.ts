@@ -1,4 +1,5 @@
 // Semua teks yang tampil ke pengguna, bahasa Indonesia.
+import { inspector } from './id-inspector';
 import { instruments } from './id-instruments';
 import { chart, findingsPanel, sim, status } from './id-sim';
 
@@ -42,6 +43,8 @@ export const id = {
       load: 'Beban',
     },
     add: (name: string) => `Tambah ${name}`,
+    collapse: 'Lipat baki',
+    expand: 'Buka baki',
   },
   workbench: {
     empty: 'Seret komponen dari baki ke sini',
@@ -113,6 +116,7 @@ export const id = {
   },
   chart,
   findingsPanel,
+  inspector,
   instruments,
   sim,
   status,

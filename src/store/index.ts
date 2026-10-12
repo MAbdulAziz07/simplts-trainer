@@ -13,4 +13,5 @@ export * from './sim-env';
 export * from './sim-reconcile';
 export * from './simStore';
 export * from './toastStore';
+export * from './uiStore';
 export * from './wire-defaults';

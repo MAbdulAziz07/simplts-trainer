@@ -4,13 +4,22 @@ import { SimControls } from '@/features/sim-controls';
 import { TopBar } from '@/features/top-bar';
 import { Tray } from '@/features/tray';
 import { Workbench } from '@/features/workbench';
+import { useCircuitStore, useUiStore } from '@/store';
 
 // Tata letak 5 area (docs/UX.md §2.1): bilah atas, baki, meja kerja, inspeksi, kendali simulasi.
+// Kolomnya diatur `.app-shell` di index.css: baki bisa dilipat, inspeksi hanya saat satu komponen
+// terpilih.
 // ReactFlowProvider membungkus semuanya karena baki dan bilah atas ikut mengendalikan kanvas.
 export function App() {
+  const trayCollapsed = useUiStore((state) => state.trayCollapsed);
+  const hasInspector = useCircuitStore((state) => state.selectedComponentIds.length === 1);
   return (
     <ReactFlowProvider>
-      <div className="grid h-full grid-cols-[var(--spacing-tray)_minmax(0,1fr)_var(--spacing-inspector)] grid-rows-[var(--spacing-topbar)_minmax(0,1fr)_var(--spacing-simbar)]">
+      <div
+        className="app-shell"
+        data-tray={trayCollapsed ? 'rail' : undefined}
+        data-inspector={hasInspector || undefined}
+      >
         <TopBar />
         <Tray />
         <Workbench />

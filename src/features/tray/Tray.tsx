@@ -1,9 +1,10 @@
 import { useReactFlow } from '@xyflow/react';
+import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { usePlaceComponent } from '@/features/workbench';
 import { t } from '@/i18n';
-import { catalogItems, findCatalogItem, useCircuitStore } from '@/store';
+import { catalogItems, findCatalogItem, useCircuitStore, useUiStore } from '@/store';
 import { ComponentPicture, itemSizePx } from '@/ui';
 import { trayGroups } from './groups';
 import { useTrayDrag, type TrayDrag } from './useTrayDrag';
@@ -32,15 +33,61 @@ function DragGhost({ drag }: { drag: TrayDrag }) {
   );
 }
 
-// docs/UX.md §2.1: ubin 92x92 px dua kolom, sela 8 px, tepi 12 px, judul kategori 44 px.
+// docs/UX.md §2.1: ubin 92x92 px dua kolom, sela 8 px, tepi 12 px, judul kategori 44 px. Baki bisa
+// dilipat menjadi rel ikon 64 px; ikon kelompok di rel membukanya lagi.
 export function Tray() {
   const packageId = useCircuitStore((state) => state.packageId);
   const groups = useMemo(() => trayGroups(catalogItems, packageId), [packageId]);
   const place = usePlaceComponent();
   const { drag, tileHandlers } = useTrayDrag({ onDrop: place, onTap: (id) => place(id) });
+  const collapsed = useUiStore((state) => state.trayCollapsed);
+  const setCollapsed = useUiStore((state) => state.setTrayCollapsed);
+
+  if (collapsed)
+    return (
+      <aside
+        aria-label={t.areas.tray}
+        className="border-line bg-card flex flex-col items-center gap-1 overflow-y-auto border-r py-1"
+      >
+        <button
+          type="button"
+          aria-label={t.tray.expand}
+          title={t.tray.expand}
+          aria-expanded={false}
+          onClick={() => setCollapsed(false)}
+          className="hover:bg-app flex size-11 shrink-0 items-center justify-center rounded-lg"
+        >
+          <PanelLeftOpen aria-hidden size={20} />
+        </button>
+        {groups.map((group) => (
+          <button
+            key={group.id}
+            type="button"
+            aria-label={t.tray.groups[group.id]}
+            title={t.tray.groups[group.id]}
+            onClick={() => setCollapsed(false)}
+            className="text-ink-muted hover:bg-app flex size-11 shrink-0 items-center justify-center rounded-lg"
+          >
+            <group.icon aria-hidden size={20} />
+          </button>
+        ))}
+      </aside>
+    );
 
   return (
     <aside aria-label={t.areas.tray} className="border-line bg-card overflow-y-auto border-r">
+      <div className="flex justify-end px-1 pt-1">
+        <button
+          type="button"
+          aria-label={t.tray.collapse}
+          title={t.tray.collapse}
+          aria-expanded
+          onClick={() => setCollapsed(true)}
+          className="hover:bg-app text-ink-muted flex size-11 items-center justify-center rounded-lg"
+        >
+          <PanelLeftClose aria-hidden size={20} />
+        </button>
+      </div>
       {groups.map((group) => (
         <section key={group.id} aria-label={t.tray.groups[group.id]} className="px-3 pb-2">
           <h2 className="text-ink-muted flex h-11 items-center gap-2 text-xs font-semibold tracking-wide uppercase">

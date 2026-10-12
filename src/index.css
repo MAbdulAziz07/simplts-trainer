@@ -29,6 +29,7 @@
   /* Ukuran area (§2.1) dan target sentuh minimal (§2.5). */
   --spacing-topbar: 56px;
   --spacing-tray: 216px;
+  --spacing-tray-rail: 64px;
   --spacing-inspector: 280px;
   --spacing-simbar: 72px;
   --spacing-touch: 44px;
@@ -38,6 +39,32 @@ html,
 body,
 #root {
   height: 100%;
+}
+
+/* Tata letak 5 area (docs/UX.md §2.1). Baki bisa dilipat menjadi rel ikon; inspektur hanya
+   mendapat kolom saat ada komponen terpilih, dan di bawah 1024 px menjadi lembar bawah. */
+.app-shell {
+  --tray-col: var(--spacing-tray);
+  --inspector-col: 0px;
+
+  display: grid;
+  height: 100%;
+  grid-template-rows: var(--spacing-topbar) minmax(0, 1fr) var(--spacing-simbar);
+  grid-template-columns: var(--tray-col) minmax(0, 1fr) var(--inspector-col);
+}
+
+.app-shell[data-tray='rail'] {
+  --tray-col: var(--spacing-tray-rail);
+}
+
+.app-shell[data-inspector] {
+  --inspector-col: var(--spacing-inspector);
+}
+
+@media (max-width: 1023px) {
+  .app-shell[data-inspector] {
+    --inspector-col: 0px;
+  }
 }
 
 body {
