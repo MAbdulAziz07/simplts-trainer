@@ -21,13 +21,20 @@ Tujuan: menggantikan trainer fisik PLTS off-grid, on-grid, dan hibrida untuk pra
  
 ## Struktur folder
 src/domain/    logika fisika murni TypeScript, TANPA import React/store/ui
+               catalog/ tipe katalog, components/ model komponen, circuit/ netlist dan pemeriksaan rangkaian,
+               engine/ solver dan langkah waktu, instruments/ bacaan alat ukur
 src/data/      katalog komponen, skenario, profil beban dan matahari (JSON)
+               catalog/ katalog dan skema zod, project/ berkas rangkaian .simplts.json, presets/ preset tiga paket
 src/store/     state Zustand
-src/features/  fitur UI: workbench, tray, inspector, instruments, scenarios, sim-controls
+src/features/  fitur UI: workbench, tray, inspector, instruments, scenarios, sim-controls, top-bar,
+               terminal-editor (halaman pengembang /dev/terminal-editor)
 src/ui/        komponen UI kecil yang dipakai ulang
 src/i18n/      teks tampilan bahasa Indonesia
 src/assets/    gambar komponen siap pakai (.webp)
 assets-src/    gambar mentah dari Nano Banana
+scripts/       skrip pembantu (process-assets.py: assets-src/ → src/assets/)
+vite-plugins/  plugin Vite untuk pengembangan (penyimpan posisi dari editor terminal)
+e2e/           uji alur Playwright
 docs/          dokumentasi proyek; docs/review/ laporan reviewer
  
 ## Aturan kode

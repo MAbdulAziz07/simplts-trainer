@@ -2,6 +2,15 @@
 
 Entri terbaru di atas.
 
+## 2026-10-12 — Kecepatan 3600× dan penyesuaian dokumen
+- Sumber: butir "perlu keputusan" dua entri di bawah (disetujui: tambah 3600×, sesuaikan docs/ARSITEKTUR.md dan struktur folder di AGENTS.md). Rencana 5 poin disetujui sebelum mulai.
+- Commit (2, di master, tanpa push): `3414242` kecepatan 3600× dan grafik tanpa ruas kosong, lalu commit dokumen (AGENTS.md, docs/ARSITEKTUR.md, log ini).
+- Diubah: src/store/{sim-env.ts, chart-history.ts, chartStore.ts} dan test-nya; src/i18n/id-sim.ts; e2e/chart.spec.ts; AGENTS.md (hanya bagian "Struktur folder"); docs/ARSITEKTUR.md; docs/LOG_SESI.md. Tidak ada file baru.
+- Isi: (1) Pilihan kecepatan 1×/60×/600×/3600×; pada 3600× satu detik nyata = satu jam simulasi, sehari selesai dalam 24 detik. (2) `recordElapsed`: grafik mengisi semua ruas 5 menit yang dilalui satu hitungan (sampai 15 menit pada 3600×), dihitung dari selisih waktu simulasi sehingga menggeser jam tidak mengisi ruas; ruas awal hanya diisi bila masih kosong. (3) ARSITEKTUR.md: status sekarang, isi tiap lapisan, §2 ditulis ulang (putaran bingkai di `simStore`, nama fungsi yang ada di kode), §2.1 saat rangkaian berubah, §2.2 tabel store, dan daftar import antarfitur. (4) AGENTS.md: subfolder `src/domain` dan `src/data`, fitur `top-bar` dan `terminal-editor`, serta `scripts/`, `vite-plugins/`, `e2e/`.
+- Validasi: npm run check lolos (lint, 1024 test, build); 7 test baru. npm run test:e2e lolos, 28 test (1 baru: 3600× memajukan jam 3 jam dalam sekitar 3 detik dan garis grafik bersambung). Satu hari penuh pada 3600× dijalankan lewat skrip Playwright: kurva PV, beban 50 W, dan SoC terisi 00:00–24:00 tanpa celah, inverter LVD sekitar pukul 00:40 hari berikutnya.
+- Batasan: pada 3600× lingkungan (iradiasi, suhu) dianggap tetap selama satu hitungan (sekitar 3 menit simulasi, sampai 15 menit bila bingkai lambat); ruas grafik yang dilalui dalam satu hitungan memakai cuplikan akhir hitungan itu; batas 80 sub-langkah per hitungan membuat simulasi berjalan di bawah 3600× saat ada penghitung tunda (menuju trip, LVD, kabel panas).
+- Perlu keputusan: docs/UX.md §2.1 masih menyebut zoom 50% (kode 40%) dan bilah simulasi tanpa tombol grafik/reset; docs/KATALOG.md baris 3 ("Belum ada skema zod") sudah tidak berlaku; assets-src/ belum di-commit.
+
 ## 2026-10-12 — Reset percobaan dan pengatur daya beban
 - Sumber: butir "perlu keputusan" entri di bawah, docs/PRD.md §3.2, F8, US14, docs/UX.md §1 butir 10. Rencana 5 poin disetujui sebelum mulai, termasuk dua usulan: tuas MCB yang trip tetap OFF saat reset, dan pengatur daya berupa slider di inspektur.
 - Commit (2, di master, tanpa push): `1a443b9` reset percobaan, `7f93316` pengatur daya beban; ditambah commit penutup untuk log ini.
