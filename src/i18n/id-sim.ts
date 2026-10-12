@@ -72,3 +72,13 @@ export const status = {
   repairWire: (id: string) => `Ganti kabel ${id}`,
   wireDamaged: 'Kabel rusak',
 } as const;
+
+// Tombol segitiga temuan di pojok meja kerja; teks tiap temuan ada di `findings` (./id.ts).
+export const findingsPanel = {
+  button: (count: number) =>
+    count === 0 ? 'Tidak ada temuan pemeriksaan' : `${count} temuan pemeriksaan`,
+  list: 'Temuan pemeriksaan',
+  show: (message: string) => `${message}: tunjukkan di meja`,
+  explain: (message: string) => `Penjelasan: ${message}`,
+  more: (count: number) => `+${count}`,
+} as const;

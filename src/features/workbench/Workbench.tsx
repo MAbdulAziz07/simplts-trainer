@@ -7,6 +7,7 @@ import {
   type Connection,
 } from '@xyflow/react';
 import { useState } from 'react';
+import { FindingsButton } from '@/features/inspector';
 import { InstrumentLayer } from '@/features/instruments';
 import { t } from '@/i18n';
 import { useCircuitStore, useInstrumentStore, useSimStore, useToastStore } from '@/store';
@@ -115,6 +116,7 @@ export function Workbench() {
         />
         <SelectedWirePanel />
         <InstrumentLayer />
+        <FindingsButton />
         <FitOnLoad />
       </ReactFlow>
       {isEmpty && (

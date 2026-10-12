@@ -2,6 +2,7 @@
 export * from './catalog';
 export * from './circuit-doc';
 export * from './circuitStore';
+export * from './findingsStore';
 export * from './history';
 export * from './instrument-readings';
 export * from './instrumentStore';

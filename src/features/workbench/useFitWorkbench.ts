@@ -4,8 +4,11 @@ import { useCircuitStore } from '@/store';
 import { GRID_PX } from './flow-types';
 import { occupiedBoxes } from './placement';
 
-/** Ruang di luar kotak komponen: nama di atas, tuas MCB di kanan, jajaran terminal di bawah. */
-const MARGIN_PX = { left: GRID_PX, top: 2 * GRID_PX, right: 3 * GRID_PX, bottom: 3 * GRID_PX };
+/**
+ * Ruang di luar kotak komponen: nama dan deret indikator (LED, LCD, bar SoC) di atas, tuas MCB di
+ * kanan, jajaran terminal di bawah.
+ */
+const MARGIN_PX = { left: GRID_PX, top: 4 * GRID_PX, right: 3 * GRID_PX, bottom: 3 * GRID_PX };
 /** Lebar layar yang ditempati bilah alat di tepi kiri meja; tidak ikut zoom. */
 const TOOLBAR_WIDTH_PX = 80;
 const FIT_MAX_ZOOM = 1;
