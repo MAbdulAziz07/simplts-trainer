@@ -2,6 +2,16 @@
 
 Entri terbaru di atas.
 
+## 2026-10-12 — Penyesuaian UX.md dan KATALOG.md, commit assets-src
+- Sumber: butir "perlu keputusan" entri di bawah (disetujui ketiganya). Hanya dokumen dan gambar mentah; tidak ada kode yang diubah.
+- Commit (2, di master, tanpa push): commit `assets-src/` (21 gambar mentah, sekitar 64 MB, apa adanya tanpa diubah), lalu commit dokumen (docs/UX.md, docs/KATALOG.md, log ini).
+- Diubah: docs/UX.md, docs/KATALOG.md, docs/LOG_SESI.md. Ditambahkan ke git: assets-src/ (20 .png dan 1 .jpg; `.gitkeep` sudah ada).
+- KATALOG.md: status dan kalimat "belum ada skema zod" diganti keadaan sekarang; field `image` (20 gambar, 13 item masih kotak berikon) dan `xPct`/`yPct` (diisi lewat editor terminal); catatan `powerSettingW` dan item kipas di §6.10; contoh §7 disamakan dengan JSON sekarang; §8 butir 7; langkah §9 dilengkapi; §10 baru memuat 11 aturan yang dijaga skema, dicocokkan dengan `src/data/catalog/schema.ts` dan `schema/`.
+- UX.md: §2.1 zoom 40–200% dan isi bilah simulasi (kecepatan sampai 3600×, suhu, grafik, reset); §4 baru "Status penerapan": tambahan yang belum ada di §2 (indikator, tanda kondisi, alat ukur, temuan, grafik, pengatur daya), selisih keputusan §2 terhadap kode (tab mode, baki lipat, inspektur, legenda, ukuran komponen, ukuran dan label terminal, gembok, centang), dan bagian §3 yang kini sudah ada tampilannya. Keputusan §2 lainnya tidak diubah.
+- Validasi: npm run lint lolos (dokumen dan assets-src di luar pemeriksaan Prettier); isi §10 KATALOG dan §4.2 UX dicocokkan ke kode (skema, component-size.ts, geometry.ts, terminal-style.ts, Tray, TopBar). Unit test dan uji alur tidak dijalankan ulang karena kode tidak berubah.
+- Catatan: assets-src menambah sekitar 64 MB ke riwayat git secara permanen. Nama berkas mentah dibiarkan seperti aslinya (bersepasi, sebagian berakhiran `_rb`); pemetaannya ke nama `.webp` ada di scripts/process-assets.py.
+- Perlu keputusan: selisih di UX.md §4.2 mau diikuti kode (mis. area sentuh terminal 44 px tetap di layar, label selalu tampak, inspektur hanya saat terpilih) atau keputusan §2-nya yang direvisi; docs/review/2026-10-11-kerangka-proyek.md dan docs/review/domain-codex.md (laporan reviewer) serta folder .claude/ masih belum di-commit.
+
 ## 2026-10-12 — Kecepatan 3600× dan penyesuaian dokumen
 - Sumber: butir "perlu keputusan" dua entri di bawah (disetujui: tambah 3600×, sesuaikan docs/ARSITEKTUR.md dan struktur folder di AGENTS.md). Rencana 5 poin disetujui sebelum mulai.
 - Commit (2, di master, tanpa push): `3414242` kecepatan 3600× dan grafik tanpa ruas kosong, lalu commit dokumen (AGENTS.md, docs/ARSITEKTUR.md, log ini).

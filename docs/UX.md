@@ -42,9 +42,9 @@ Acuan desain: jendela 1366x768. Area tampil browser di laptop 1366x768 umumnya l
 |---|---|---|
 | Bilah atas | tinggi 56 px, lebar penuh | Logo + nama, pilihan paket, 4 tab mode (ikon + label), simpan / buka / reset |
 | Baki komponen | lebar 216 px; rel ikon 64 px saat dilipat | Ubin 92x92 px, dua kolom, sela 8 px, tepi 12 px; judul kategori 44 px; gulir vertikal |
-| Meja kerja | sisa ruang: 1150x640 px tanpa inspektur, 870x640 px dengan inspektur | Kisi 24 px, komponen menempel ke kisi; zoom 50–200%, awal 100%, tombol "paskan"; legenda dan status berupa cip mengambang di dalam meja |
+| Meja kerja | sisa ruang: 1150x640 px tanpa inspektur, 870x640 px dengan inspektur | Kisi 24 px, komponen menempel ke kisi; zoom 40–200% (terkecil 40%, bukan 50%, agar preset Terbaik dengan 16 panel muat), awal 100%, tombol "paskan"; alat ukur, temuan, dan status berupa cip atau panel mengambang di dalam meja |
 | Inspektur | lebar 280 px, hanya muncul saat ada komponen terpilih | Isi tidak boleh terpotong pada tinggi 640 px; di bawah lebar 1024 px menjadi lembar bawah setinggi 40% layar |
-| Bilah simulasi | tinggi 72 px, lebar penuh | Putar/jeda 48 px, kecepatan, waktu, iradiasi, awan; selalu terlihat |
+| Bilah simulasi | tinggi 72 px, lebar penuh | Putar/jeda 48 px, kecepatan (1×/60×/600×/3600×), jam, iradiasi, awan, suhu lingkungan, tombol grafik 24 jam, dan tombol reset percobaan yang dipisah garis dan meminta konfirmasi; selalu terlihat |
 | Toast | di tengah bawah meja, 16 px di atas bilah simulasi | Hilang sendiri setelah 3 detik; tidak menutupi terminal yang sedang dipakai |
 
 ### 2.2 Kartu komponen di meja
@@ -112,3 +112,39 @@ Karena merah juga dipakai untuk DC+, status bahaya wajib memakai ikon dan denyut
 ## 3. Hal yang belum bisa dinilai dari gambar
 
 Tangkapan layar belum memuat: alat ukur (multimeter, tang ampere), MCB/saklar dengan keadaan buka-tutup, tampilan trip/asap/rusak, mode Praktik Terpandu dan Cari Gangguan, rangkaian AC, dan tampilan tablet. Bagian ini perlu prototipe dan kajian tersendiri sebelum Tahap 5 untuk fitur terkait.
+
+## 4. Status penerapan (2026-10-12)
+
+Keputusan §2 yang sudah diterapkan apa adanya tidak diulang di sini. Tabel ini hanya mencatat tambahan dan selisih antara keputusan §2 dan kode, supaya dokumen ini tidak menyesatkan. Riwayat rincinya ada di `docs/LOG_SESI.md`.
+
+### 4.1 Tambahan yang belum ada di §2
+
+| Hal | Penerapan |
+|---|---|
+| Indikator simulasi di komponen | Deret di atas nama komponen: LED bertanda (✓ normal, ! peringatan, × gangguan; berkedip saat mengisi) pada SCC dan inverter, cip LCD 14 px pada SCC (V dan A baterai serta PV), bar SoC dengan angka persen pada baterai, cip setelan daya pada beban |
+| Tanda kondisi | Pojok kanan atas komponen: ikon + teks ≤ 6 huruf (TRIP, PUTUS, BMS, LVD, HVD, LEBIH, GALAT, DROP, RUSAK, N/A) dengan warna §2.4; komponen rusak berasap, gambarnya menghitam dan retak |
+| Reset per komponen | Tombol kunci pas 44 px di kanan atas komponen (ganti fuse/komponen, reset BMS/beban lebih); MCB trip dipulihkan lewat tuasnya yang bertanda TRIP; kabel rusak punya tombol ganti di tengahnya |
+| Arus kabel | Titik putih bergerak searah arus, kecepatan sebanding besar arus; berhenti saat simulasi dijeda; pendar jingga saat kabel terlalu panas |
+| Alat ukur | Tiga tombol bergambar di kanan atas meja; panel alat di kanan bawah meja, tidak ikut zoom, angka LCD 30 px; probe dan jepitan diseret ke terminal/kabel atau diketuk lalu sasarannya diketuk |
+| Temuan pemeriksaan | Segitiga 44 px di kiri bawah meja dengan jumlah temuan; daftar baru muncul saat diklik, penjelasan lewat tombol "?" per baris |
+| Grafik 24 jam | Panel mengambang di atas bilah simulasi, dibuka dari tombol di bilah itu; daya (W) dan SoC (%) pada dua bidang bertumpuk |
+| Pengatur daya beban | Slider di inspektur saat satu beban terpilih |
+| Warna terminal data | Ungu `#7C3AED` (belum ditetapkan di §2.4) [PERLU VERIFIKASI] |
+
+### 4.2 Selisih terhadap §2
+
+| Keputusan §2 | Di kode sekarang |
+|---|---|
+| §2.1 Bilah atas memuat 4 tab mode dan tombol reset | Belum ada tab mode (baru Rakit Bebas); bilah atas berisi paket, tingkat Pemula/Mahir, simpan, buka, preset; reset percobaan ada di bilah simulasi |
+| §2.1 Baki bisa dilipat menjadi rel ikon 64 px | Belum bisa dilipat |
+| §2.1 Inspektur hanya muncul saat ada komponen terpilih; lembar bawah di lebar < 1024 px | Kolom 280 px selalu tampil dan kosong kecuali saat satu beban terpilih; belum ada lembar bawah |
+| §2.1 Legenda warna kabel berupa cip mengambang | Belum ada legenda |
+| §2.2 Kartu 144x144, 192x168, 288x192 px berisi gambar dan nama | Komponen tampil sebagai gambarnya sendiri tanpa kartu; sisi terpanjang 144 px (kecil), 216 px (sedang), 288 px (besar), SCC 264 px, MCB AC 168 px, rasio gambar dipertahankan agar posisi terminal pas |
+| §2.3 Terminal tampak 24 px, area sentuh 44 px tetap di layar pada semua zoom, jarak antarpusat ≥ 48 px | Titik 14–24 px dan area sentuh 24–44 px menurut jarak antarterminal pada gambar, dan ikut zoom; terminal rapat pada gambar kecil berjarak di bawah 48 px |
+| §2.3 Label terminal selalu tampak | Tanda kutub (+, −, L, N, ⏚) selalu tampak di dalam titik; label lengkap muncul saat hover, komponen terpilih, atau kabel sedang ditarik |
+| §2.3 Terminal penuh diberi ikon gembok | Tanpa gembok; sambungan ditolak dengan alasan satu kalimat di toast |
+| §2.4 Status normal diberi ikon centang di komponen | Hanya SCC dan inverter yang punya LED; komponen lain tanpa tanda saat normal |
+
+### 4.3 Bagian §3 yang kini ada tampilannya
+
+Alat ukur, MCB dengan tuas buka-tutup, tampilan trip/asap/rusak, dan rangkaian AC sudah diterapkan (§4.1) tetapi belum dikaji lewat uji pakai dengan peserta. Mode Praktik Terpandu, Cari Gangguan, dan tampilan tablet belum ada.

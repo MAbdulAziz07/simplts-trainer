@@ -1,6 +1,6 @@
 # Katalog Komponen — Trainer Virtual PLTS (SimPLTS) v1
 
-Status: draf data untuk review. Sumber: `docs/MODEL_FISIKA.md`, `docs/PRD.md`, dan tujuh berkas di `docs/datasheet/`. Isi katalog ada di `src/data/catalog/*.json`; dokumen ini menjelaskan setiap field. Belum ada skema zod: skema dibuat bersama kode TypeScript berdasarkan dokumen ini.
+Status: katalog dipakai aplikasi; angka generik masih menunggu verifikasi (§8). Sumber: `docs/MODEL_FISIKA.md`, `docs/PRD.md`, dan tujuh berkas di `docs/datasheet/`. Isi katalog ada di `src/data/catalog/*.json`; dokumen ini menjelaskan setiap field. Bentuk dan aturan isinya dijaga skema zod di `src/data/catalog/schema.ts` dan `schema/` (§10); katalog divalidasi saat aplikasi dimuat (`loadCatalog`) dan di `npm run test`.
 
 Angka yang tidak ada di datasheet memakai nilai generik pasar Indonesia tanpa merek dan ditandai **[PERLU VERIFIKASI]** (lihat §5).
 
@@ -50,7 +50,7 @@ Keanggotaan paket: `min` 26 item, `rek` 39 item, `best` 29 item.
 | `electrical` | objek | lihat §4 | ya | Parameter listrik. Satuan ada di akhir nama field. |
 | `terminals` | larik | – | ya | Terminal (§5.1). Larik kosong untuk kabel (kabel menyambung terminal, bukan diseret ke meja). |
 | `protection` | objek | lihat §4 | ya | Rating proteksi: batas yang memicu trip, galat, atau kerusakan. Boleh `{}` bila komponen tidak punya rating proteksi. |
-| `image` | teks | – | ya | Path gambar relatif dari akar proyek, berakhiran `.webp`, di `src/assets/components/`. **Berkas gambar belum ada** (aset belum dibuat). Beberapa item satu keluarga memakai satu gambar (mis. semua MCB DC 2P). |
+| `image` | teks | – | ya | Path gambar relatif dari akar proyek, berakhiran `.webp`, di `src/assets/components/`. Ada 20 berkas gambar, dibuat dari `assets-src/` oleh `scripts/process-assets.py`; item satu keluarga memakai satu gambar (mis. semua MCB DC memakai `mcb-dc-2p.webp`). 13 item belum punya berkas gambarnya (busbar, fuse, SPD, BMS, elektrode pembumian, panel beban, jaringan PLN) dan tampil sebagai kotak berikon. |
 | `datasheet` | objek | – | ya | Asal data (§5.2). |
 | `notes` | teks | – | tidak | Catatan untuk pengembang dan reviewer; memuat tanda `[PERLU VERIFIKASI]` bila ada angka tak pasti. Bukan teks tampilan: teks UI ada di `src/i18n/id.ts`. |
 
@@ -82,8 +82,8 @@ Kurva dan tabel ditulis sebagai larik pasangan `[x, y]` atau dua larik sejajar; 
 | `id` | teks | – | Unik dalam satu item (`pos`, `bat-neg`, `l-in`). Dipakai oleh kabel di berkas simpan. |
 | `label` | teks | – | Label di gambar komponen (`PV+`, `BAT−`, `L IN`). Singkat; bukan paragraf. |
 | `kind` | teks | – | Jenis terminal: `pv+`, `pv-`, `dc+`, `dc-`, `acL`, `acN`, `pe`, `data` (tabel di bawah). |
-| `xPct` | bilangan | % lebar gambar | Posisi horizontal pusat terminal terhadap gambar, 0–100. **Sementara 0** sampai gambar komponen jadi. |
-| `yPct` | bilangan | % tinggi gambar | Posisi vertikal, 0–100. **Sementara 0.** |
+| `xPct` | bilangan | % lebar gambar | Posisi horizontal pusat terminal terhadap gambar, 0–100. Diisi lewat editor terminal (`/dev/terminal-editor`, hanya saat pengembangan). |
+| `yPct` | bilangan | % tinggi gambar | Posisi vertikal, 0–100. Terminal yang masih (0, 0) dianggap belum ditandai dan dijajarkan di bawah gambar. |
 | `maxWires` | bilangan bulat | kabel | Kapasitas sambungan per terminal (PRD §2): sambungan ke terminal penuh ditolak. Nilai ini rancangan trainer (1 kabel per terminal; 2 untuk baut baterai), bukan angka datasheet. [PERLU VERIFIKASI] |
 
 | `kind` | Arti | Kutub |
@@ -310,6 +310,8 @@ Panjang dan penampang dipilih per kabel di meja kerja, bukan di katalog.
 | | `maxPowerW`, `minPowerW`, `stepW` | W | Rentang dan langkah yang dapat diatur peserta (PRD F8) |
 | | `resistanceAtMaxOhm` | Ω | `V²/Pmax`; daya sebenarnya `P = V²/R` |
 
+Setelan daya tiap beban disimpan di berkas rangkaian (`powerSettingW`), bukan di katalog. `load-ac-fan-50w` (Kipas AC 50W) juga dimodelkan resistif; gambarnya `load-ac-fan.webp`.
+
 ## 7. Contoh satu item
 
 `pv-js185cb-48p` dari `pv-modules.json` (nilai dari datasheet kecuali yang tercantum di `verify`):
@@ -327,11 +329,11 @@ Panjang dan penampang dipilih per kabel di meja kerja, bukan di katalog.
     "tempOpMaxC": 85
   },
   "terminals": [
-    {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-    {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+    {"id": "pos", "label": "+", "kind": "pv+", "xPct": 23.1, "yPct": 97.4, "maxWires": 1},
+    {"id": "neg", "label": "−", "kind": "pv-", "xPct": 80.9, "yPct": 97.8, "maxWires": 1}
   ],
   "protection": {"seriesFuseMaxA": 20, "reverseCurrentMaxA": 20},
-  "image": "src/assets/components/pv-js185cb-48p.webp",
+  "image": "src/assets/components/pv-module.webp",
   "datasheet": {
     "source": "Datasheet_Panel_Surya_Update.xlsx › Datasheet PV › kolom R (JS185CB-48P); sumber S7 hlm. 1",
     "coverage": "partial",
@@ -353,7 +355,7 @@ Cara membaca: Voc 17.7 V ≤ batas 24 V SCC PWM 12 V, sehingga aman di paket Min
 | 4 | MCB DC hanya ABB S200 M UC (16/20/32/63 A) dan Schneider C120N 100 A (produk `discontinued` sejak 23 Sep 2025 di datasheet); MCB AC memakai CHINT NXB-63. Kurva trip bukan dari datasheet. | MODEL_FISIKA §13 butir 9 |
 | 5 | Parameter isi VRLA 100 Ah dipinjam dari Aokly 6-FM-20; seluruh `modelParams` baterai adalah asumsi kalibrasi. | MODEL_FISIKA §4, §13 butir 5 |
 | 6 | Baterai Victron 24 V wajib BMS eksternal; BMS dimodelkan sebagai pemutus seri pada kedua kutub. BMS MBL48 diperlakukan sebagai BMS internal (sumber ambigu). | MODEL_FISIKA §13 butir 6–7 |
-| 7 | `maxWires` (kapasitas terminal), posisi `xPct`/`yPct`, dan file gambar `.webp` belum final. | Diisi saat aset gambar dibuat |
+| 7 | `maxWires` (kapasitas terminal) masih rancangan. Posisi `xPct`/`yPct` semua terminal sudah diisi; 13 item belum punya gambar (§3). Gambar `mcb-ac-1p` berkutub satu, sedangkan MCB AC katalog punya 4 terminal. | Gambar menyusul; posisi terminal item itu perlu ditandai ulang saat gambarnya ada |
 
 ## 9. Menambah atau mengubah item
 
@@ -361,4 +363,24 @@ Cara membaca: Voc 17.7 V ≤ batas 24 V SCC PWM 12 V, sehingga aman di paket Min
 2. Beri `id` unik dan jangan ubah `id` item yang sudah dipakai skenario.
 3. Isi semua field wajib; satuan di akhir nama field.
 4. Nilai yang tidak ada di datasheet: pakai nilai generik tanpa merek, masukkan jalurnya ke `datasheet.verify`, dan tulis `[PERLU VERIFIKASI]` di `notes`.
-5. Bila bentuk item berubah, naikkan `schemaVersion` dan perbarui dokumen ini.
+5. Bila bentuk item berubah, perbarui skema zod dan tipe domain (`src/domain/catalog/`), naikkan `schemaVersion`, dan perbarui dokumen ini.
+6. Jalankan `npm run test`: `catalog.test.ts` memeriksa jumlah item dan keanggotaan paket di §1, `rules.test.ts` memeriksa aturan §10.
+7. Tandai posisi terminal item baru lewat `/dev/terminal-editor` (`npm run dev`).
+
+## 10. Aturan yang dijaga skema
+
+Selain bentuk tiap field (§2–§6; field yang tidak dikenal ditolak), skema menolak isi yang tidak konsisten. Pelanggaran menggagalkan pemuatan katalog dan `npm run test`.
+
+| # | Aturan | Berlaku untuk |
+|---|---|---|
+| 1 | `vmpV < vocV`, `impA < iscA`, dan `pmaxW` dalam ±5% dari `vmpV × impA` [PERLU VERIFIKASI toleransi] | `pv-module` |
+| 2 | Sumbu x kurva naik ketat; kurva proteksi `[rasio, detik]` bernilai positif; faktor tabel suhu positif (suhu negatif boleh); sumbu SoC baterai naik ketat dari 0 sampai 1 | semua kurva dan tabel |
+| 3 | Efisiensi `0 < η ≤ 1` | ketiga jenis inverter, `scc-mppt` |
+| 4 | Field bernama sama di `protection` dan `electrical` wajib bernilai sama | semua item |
+| 5 | `protection.vocMaxV = electrical.pvVocMaxV` | `scc-mppt` |
+| 6 | `mpptMinV < mpptMaxV ≤` batas Voc (grid-tie: `protection.dcVocMaxV`) | `scc-mppt`, `inverter-gridtie`, `inverter-hybrid` |
+| 7 | `installOrder` tepat `battery, pv, load` | `scc-pwm` |
+| 8 | Id paket dan id terminal tidak boleh ganda dalam satu item; kabel tanpa terminal, komponen lain wajib punya terminal | semua item |
+| 9 | Tiap jalur di `datasheet.verify` harus ada di item dan tidak ganda; `coverage: full` tidak boleh punya isi `verify`; `coverage: generic` wajib memuat semua field `electrical` dan `protection` di `verify` | semua item |
+| 10 | `notes` wajib memuat `[PERLU VERIFIKASI]` bila `coverage` bukan `full` atau `verify` berisi | semua item |
+| 11 | Kedua belas berkas di §1 wajib ada; validasi sebagian hanya lewat opsi `allowPartial` | `validateCatalog` |
