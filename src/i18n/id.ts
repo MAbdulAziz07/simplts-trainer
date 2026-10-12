@@ -1,4 +1,6 @@
 // Semua teks yang tampil ke pengguna, bahasa Indonesia.
+import { sim } from './id-sim';
+
 export const id = {
   appName: 'Trainer Virtual PLTS',
   areas: {
@@ -107,6 +109,7 @@ export const id = {
     backToApp: 'Kembali ke aplikasi',
     progress: (placed: number, total: number) => `${placed}/${total}`,
   },
+  sim,
   severities: {
     info: 'Info',
     warning: 'Peringatan',

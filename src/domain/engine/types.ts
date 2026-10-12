@@ -137,6 +137,8 @@ export interface OperatingPoint {
   grids: Record<string, Reading>;
   /** Besar arus tiap kabel; bisa diteruskan ke `validateCircuit`. */
   currentAByWireId: Record<string, number>;
+  /** Arus bertanda tiap kabel: positif = dari `wire.from` ke `wire.to`. */
+  flowAByWireId: Record<string, number>;
   /** Besar arus lewat MCB, fuse, dan kWh meter (kutub terbesar). */
   currentAByComponentId: Record<string, number>;
   voltageDropVByWireId: Record<string, number>;

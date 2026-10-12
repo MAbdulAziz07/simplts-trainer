@@ -165,6 +165,8 @@ export function potentialDiffV(
 export interface FlowSummary {
   /** Besar arus tiap kabel. */
   currentAByWireId: Record<string, number>;
+  /** Arus bertanda tiap kabel: positif = dari `wire.from` ke `wire.to`. */
+  flowAByWireId: Record<string, number>;
   /** Besar arus lewat MCB, fuse, dan kWh meter (kutub terbesar). */
   currentAByComponentId: Record<string, number>;
   voltageDropVByWireId: Record<string, number>;
@@ -182,6 +184,7 @@ export function summarizeFlow(
 ): FlowSummary {
   const summary: FlowSummary = {
     currentAByWireId: {},
+    flowAByWireId: {},
     currentAByComponentId: {},
     voltageDropVByWireId: {},
     loopWireIds: flow.loopEdges.flatMap((i) => edges[i]?.wireId ?? []).sort(),
@@ -191,6 +194,8 @@ export function summarizeFlow(
     const currentA = Math.abs(flow.currentA[i] ?? 0);
     if (edge.wireId !== undefined) {
       summary.currentAByWireId[edge.wireId] = currentA;
+      // `|| 0` supaya nol tidak menjadi -0.
+      summary.flowAByWireId[edge.wireId] = flow.currentA[i] || 0;
       summary.voltageDropVByWireId[edge.wireId] = currentA * edge.resistanceOhm;
       summary.wireLossW += currentA ** 2 * edge.resistanceOhm;
       return;

@@ -92,6 +92,7 @@ export function wireStatuses(frame: SimFrame, state: SimState): Record<string, W
           : 'ok',
       conductorTempC: state.conductorTempCByWireId[id] ?? frame.environment.ambientTempC,
       currentA: isDamaged ? 0 : (point.currentAByWireId[id] ?? 0),
+      flowA: isDamaged ? 0 : (point.flowAByWireId[id] ?? 0),
       voltageDropV: isDamaged ? 0 : (point.voltageDropVByWireId[id] ?? 0),
     };
   }

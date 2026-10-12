@@ -15,6 +15,7 @@ import {
   addPart,
   addWire,
   moveParts,
+  openSwitches,
   patchWire,
   removeItems,
   rotateParts,
@@ -61,6 +62,8 @@ export interface CircuitState {
   connect: (from: TerminalRef, to: TerminalRef) => ConnectionCheck;
   updateWire: (wireId: string, patch: WirePatch) => void;
   toggleSwitch: (componentId: string) => void;
+  /** Tuas pindah ke OFF karena trip; bukan tindakan pengguna, jadi tidak masuk riwayat undo. */
+  openSwitches: (componentIds: readonly string[]) => void;
   select: (componentIds: readonly string[], wireIds: readonly string[]) => void;
   undo: () => void;
   redo: () => void;
@@ -155,6 +158,7 @@ export const useCircuitStore = create<CircuitState>()((set, get) => {
     },
 
     toggleSwitch: (componentId) => commit(toggleSwitch(get().doc, componentId, findCatalogItem)),
+    openSwitches: (componentIds) => set({ doc: openSwitches(get().doc, componentIds) }),
 
     select: (componentIds, wireIds) =>
       set({ selectedComponentIds: [...componentIds], selectedWireIds: [...wireIds] }),

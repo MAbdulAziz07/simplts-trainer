@@ -200,6 +200,7 @@ export function readOperatingPoint(solved: SolvedSystem): OperatingPoint {
     loads: {},
     grids: {},
     currentAByWireId: {},
+    flowAByWireId: {},
     currentAByComponentId: {},
     voltageDropVByWireId: {},
     loopWireIds: [],

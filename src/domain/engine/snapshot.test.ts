@@ -134,9 +134,12 @@ describe('wireStatuses', () => {
       condition: 'ok',
       conductorTempC: 45,
       currentA: frame.point.currentAByWireId[DC_WIRE],
+      flowA: frame.point.flowAByWireId[DC_WIRE],
       voltageDropV: frame.point.voltageDropVByWireId[DC_WIRE],
     });
     expect(wires[DC_WIRE]?.currentA).toBeGreaterThan(40);
+    // Kabel `bat1.pos>mcb1.pos-in`: arus keluar dari kutub positif baterai, searah kabel.
+    expect(wires[DC_WIRE]?.flowA).toBeCloseTo(wires[DC_WIRE]?.currentA ?? 0, 9);
     expect(wires[AC_WIRE]?.conductorTempC).toBe(frame.environment.ambientTempC);
   });
 
@@ -154,6 +157,7 @@ describe('wireStatuses', () => {
       condition: 'damaged',
       conductorTempC: 96,
       currentA: 0,
+      flowA: 0,
       voltageDropV: 0,
     });
   });

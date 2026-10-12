@@ -168,8 +168,17 @@ describe('summarizeFlow', () => {
 
   it('arus, jatuh tegangan, dan rugi tiap kabel', () => {
     expect(summary.currentAByWireId).toEqual({ w1: 10, w2: 10, w0: 0 });
+    expect(summary.flowAByWireId).toEqual({ w1: 10, w2: 10, w0: 0 });
     expect(summary.voltageDropVByWireId.w2).toBeCloseTo(0.2, 9);
     expect(summary.wireLossW).toBeCloseTo(100 * 0.01 + 100 * 0.02, 9);
+  });
+
+  it('arus bertanda negatif bila mengalir dari `to` ke `from`', () => {
+    const reversed = [edge('load1.a', 'bat1.pos', 0.01, 'w1')];
+    const reverseFlow = solveFlow(reversed, injections({ 'bat1.pos': 10, 'load1.a': -10 }));
+    const reverseSummary = summarizeFlow(reversed, reverseFlow, new Map());
+    expect(reverseSummary.flowAByWireId).toEqual({ w1: -10 });
+    expect(reverseSummary.currentAByWireId).toEqual({ w1: 10 });
   });
 
   it('arus MCB dilaporkan, busbar tidak; kabel ganda masuk loopWireIds', () => {

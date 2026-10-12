@@ -1,0 +1,84 @@
+/* Bilah kendali simulasi (docs/UX.md §2.1, §2.5): slider netral, ibu jari 28 px, area sentuh 44 px. */
+
+.sim-range {
+  appearance: none;
+  width: 100%;
+  height: var(--spacing-touch);
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.sim-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-line);
+}
+
+.sim-range::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-line);
+}
+
+.sim-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  margin-top: -11px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--color-control);
+  box-shadow: 0 1px 3px rgb(17 24 39 / 0.35);
+}
+
+.sim-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--color-control);
+  box-shadow: 0 1px 3px rgb(17 24 39 / 0.35);
+}
+
+.sim-range:focus-visible {
+  outline: none;
+}
+
+.sim-range:focus-visible::-webkit-slider-thumb {
+  outline: 3px solid var(--color-brand);
+  outline-offset: 1px;
+}
+
+.sim-range:focus-visible::-moz-range-thumb {
+  outline: 3px solid var(--color-brand);
+  outline-offset: 1px;
+}
+
+/* Garis bergerak di tepi atas bilah selama simulasi berjalan (docs/UX.md §1 butir 9). */
+.sim-running-bar {
+  position: absolute;
+  top: -1px;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-brand) 0 24px,
+    rgb(15 118 110 / 0.25) 24px 48px
+  );
+  background-size: 48px 100%;
+  animation: sim-running 0.8s linear infinite;
+}
+
+@keyframes sim-running {
+  to {
+    background-position-x: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sim-running-bar {
+    animation: none;
+  }
+}

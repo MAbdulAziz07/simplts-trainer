@@ -115,6 +115,12 @@ export function patchWire(doc: CircuitDoc, wireId: string, patch: WirePatch): Ci
   return same ? doc : { ...doc, wires: doc.wires.map((wire) => (wire === current ? next : wire)) };
 }
 
+/** Membuka (OFF) tuas yang disebut, mis. setelah trip; yang sudah OFF tidak berubah. */
+export function openSwitches(doc: CircuitDoc, ids: readonly string[]): CircuitDoc {
+  const closedSwitchIds = doc.closedSwitchIds.filter((id) => !ids.includes(id));
+  return closedSwitchIds.length === doc.closedSwitchIds.length ? doc : { ...doc, closedSwitchIds };
+}
+
 /** ON ↔ OFF untuk MCB/fuse; komponen lain tidak berubah. */
 export function toggleSwitch(
   doc: CircuitDoc,

@@ -180,6 +180,8 @@ export interface WireStatus {
   condition: WireCondition;
   conductorTempC: number;
   currentA: number;
+  /** Arus bertanda: positif = dari `wire.from` ke `wire.to`. */
+  flowA: number;
   voltageDropV: number;
 }
 
