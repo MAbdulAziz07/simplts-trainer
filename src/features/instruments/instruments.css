@@ -1,0 +1,188 @@
+/* Alat ukur: panel dengan layar LCD, tombol probe/jepitan, dan penandanya di meja kerja. */
+
+.instrument-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 232px;
+  padding: 10px;
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  background: var(--color-card);
+  box-shadow: 0 2px 8px rgb(17 24 39 / 0.15);
+}
+
+/* Angka alat ukur 20 px ke atas, tabular, bergaya LCD (docs/UX.md §2.5). */
+.meter-lcd {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  align-items: baseline;
+  column-gap: 6px;
+  padding: 6px 10px;
+  border: 2px solid #1f2937;
+  border-radius: 8px;
+  background: #b9d7a8;
+  color: #10220f;
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  font-weight: 700;
+}
+
+.meter-mark {
+  font-size: 12px;
+}
+
+.meter-digits {
+  font-size: 30px;
+  font-variant-numeric: tabular-nums;
+  line-height: 36px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.meter-unit {
+  min-width: 28px;
+  font-size: 14px;
+}
+
+.tool-chip {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  height: var(--spacing-touch);
+  padding: 0 10px;
+  border: 2px solid var(--color-line);
+  border-radius: 8px;
+  background: var(--color-card);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.tool-chip[aria-pressed='true'] {
+  border-color: var(--color-brand);
+  background: rgb(15 118 110 / 0.1);
+}
+
+.tool-chip-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border: 3px solid var(--tool-color);
+  border-radius: 50%;
+  background: var(--tool-color);
+}
+
+.tool-chip-icon[data-away],
+.tool-chip[data-tool='clamp'] .tool-chip-icon {
+  background: transparent;
+}
+
+.tool-chip[data-tool='red'],
+[data-probe='red'] {
+  --tool-color: var(--color-wire-dc-pos);
+}
+
+.tool-chip[data-tool='black'],
+[data-probe='black'] {
+  --tool-color: #111827;
+}
+
+.tool-chip[data-tool='clamp'] {
+  --tool-color: #d97706;
+}
+
+/* Probe: ujung jarum tepat di titik jangkar, gagang berwarna miring ke atas. */
+.probe-glyph {
+  position: absolute;
+  bottom: 0;
+  left: -7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 14px;
+  transform: rotate(28deg);
+  transform-origin: 50% 100%;
+  pointer-events: none;
+}
+
+.probe-glyph[data-probe='black'] {
+  transform: rotate(-28deg);
+}
+
+.probe-grip {
+  width: 14px;
+  height: 40px;
+  border: 2px solid #fff;
+  border-radius: 7px 7px 4px 4px;
+  background: var(--tool-color);
+  box-shadow: 0 1px 3px rgb(17 24 39 / 0.4);
+  cursor: grab;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.probe-needle {
+  width: 3px;
+  height: 20px;
+  border-radius: 0 0 2px 2px;
+  background: linear-gradient(90deg, #6b7280, #e5e7eb, #6b7280);
+}
+
+.probe-marker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: 0;
+  height: 0;
+}
+
+.clamp-glyph {
+  position: absolute;
+  top: -17px;
+  left: -17px;
+  width: 34px;
+  height: 34px;
+  border: 7px solid #f59e0b;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1.5px #1f2937,
+    inset 0 0 0 1.5px #1f2937;
+  cursor: grab;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.clamp-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Bayangan alat yang mengikuti penunjuk selama dibawa. */
+.placing-ghost {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  width: 0;
+  height: 0;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.placing-ghost * {
+  pointer-events: none;
+}
+
+.workbench[data-placing='red'] .terminal-hit,
+.workbench[data-placing='black'] .terminal-hit,
+.workbench[data-placing='clamp'] .react-flow__edge {
+  cursor: copy;
+}

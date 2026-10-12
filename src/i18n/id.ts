@@ -1,4 +1,5 @@
 // Semua teks yang tampil ke pengguna, bahasa Indonesia.
+import { instruments } from './id-instruments';
 import { sim, status } from './id-sim';
 
 export const id = {
@@ -110,6 +111,7 @@ export const id = {
     backToApp: 'Kembali ke aplikasi',
     progress: (placed: number, total: number) => `${placed}/${total}`,
   },
+  instruments,
   sim,
   status,
   severities: {

@@ -7,8 +7,9 @@ import {
   type Connection,
 } from '@xyflow/react';
 import { useState } from 'react';
+import { InstrumentLayer } from '@/features/instruments';
 import { t } from '@/i18n';
-import { useCircuitStore, useSimStore, useToastStore } from '@/store';
+import { useCircuitStore, useInstrumentStore, useSimStore, useToastStore } from '@/store';
 import { SelectedWirePanel } from './edges/SelectedWirePanel';
 import { WireEdge } from './edges/WireEdge';
 import { FitOnLoad } from './FitOnLoad';
@@ -64,6 +65,7 @@ export function Workbench() {
   // sentuh; dengan keyboard cukup Shift+seret atau Ctrl+klik).
   const [selectMode, setSelectMode] = useState(false);
   const running = useSimStore((state) => state.running);
+  const placing = useInstrumentStore((state) => state.placing);
   useWorkbenchShortcuts();
   const isEmpty = nodes.length === 0;
 
@@ -72,6 +74,7 @@ export function Workbench() {
       aria-label={t.areas.workbench}
       className="workbench relative"
       data-sim-running={running || undefined}
+      data-placing={placing}
       {...{ [WORKBENCH_ATTRIBUTE]: '' }}
     >
       <ReactFlow<ComponentFlowNode, WireFlowEdge>
@@ -111,6 +114,7 @@ export function Workbench() {
           onToggleSelectMode={() => setSelectMode((on) => !on)}
         />
         <SelectedWirePanel />
+        <InstrumentLayer />
         <FitOnLoad />
       </ReactFlow>
       {isEmpty && (

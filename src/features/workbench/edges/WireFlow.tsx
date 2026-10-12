@@ -1,5 +1,6 @@
 import { ViewportPortal } from '@xyflow/react';
 import { Wrench } from 'lucide-react';
+import { ClampMarker } from '@/features/instruments';
 import { t } from '@/i18n';
 import { useSimStore } from '@/store';
 import { flowSpeedPxPerS } from '../status/indicators';
@@ -52,6 +53,7 @@ export function WireFlow({ wireId, d, widthPx, midX, midY }: WireFlowProps) {
 
   return (
     <>
+      <ClampMarker wireId={wireId} x={midX} y={midY} />
       {condition === 'overheating' && (
         <path d={d} className="wire-overheat" strokeWidth={widthPx + 2 * WIRE_HALO_PX} />
       )}

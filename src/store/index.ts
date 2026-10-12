@@ -3,6 +3,8 @@ export * from './catalog';
 export * from './circuit-doc';
 export * from './circuitStore';
 export * from './history';
+export * from './instrument-readings';
+export * from './instrumentStore';
 export * from './project-io';
 export * from './sim-env';
 export * from './sim-reconcile';

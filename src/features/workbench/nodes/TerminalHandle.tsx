@@ -1,4 +1,5 @@
-import { Handle, Position } from '@xyflow/react';
+import { Handle, Position, useNodeId } from '@xyflow/react';
+import { ProbeMarker } from '@/features/instruments';
 import { t } from '@/i18n';
 import { TerminalDot } from '@/ui';
 import type { Side, TerminalSpot } from './geometry';
@@ -42,6 +43,7 @@ interface TerminalHandleProps {
  */
 export function TerminalHandle({ spot, role, showLabel }: TerminalHandleProps) {
   const { terminal, side, dotPx, hitPx } = spot;
+  const nodeId = useNodeId();
 
   return (
     <Handle
@@ -65,6 +67,7 @@ export function TerminalHandle({ spot, role, showLabel }: TerminalHandleProps) {
       >
         {terminal.label}
       </span>
+      {nodeId && <ProbeMarker nodeId={nodeId} terminalId={terminal.id} />}
     </Handle>
   );
 }
