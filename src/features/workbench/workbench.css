@@ -26,7 +26,7 @@
   pointer-events: none;
 }
 
-/* Handle sebesar titik di pusat terminal; area sentuhnya `.terminal-hit`. */
+/* Handle sebesar titik di pusat terminal; area sentuhnya `.terminal-hit` di bawah titiknya. */
 .react-flow__handle.terminal {
   width: 2px;
   height: 2px;
@@ -44,10 +44,34 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: crosshair;
+}
+
+/* Titik tidak menangkap penunjuk: kejadian jatuh ke area sentuh di bawahnya. */
+.terminal-dot-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   display: grid;
   place-items: center;
   transform: translate(-50%, -50%);
-  cursor: crosshair;
+  pointer-events: none;
+}
+
+/* Gembok pada terminal penuh selama kabel ditarik (docs/UX.md §2.3). */
+.terminal-lock {
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-card);
+  color: var(--color-ink);
+  box-shadow: 0 0 0 1.5px var(--color-ink);
 }
 
 .terminal .terminal-dot {
@@ -87,7 +111,9 @@
 }
 
 .terminal[data-role='blocked'] .terminal-dot,
-.terminal[data-role='blocked'] .terminal-label {
+.terminal[data-role='blocked'] .terminal-label,
+.terminal[data-role='full'] .terminal-dot,
+.terminal[data-role='full'] .terminal-label {
   opacity: 0.4;
 }
 

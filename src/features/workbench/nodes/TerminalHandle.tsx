@@ -1,11 +1,21 @@
 import { Handle, Position, useNodeId } from '@xyflow/react';
+import { Lock } from 'lucide-react';
 import { ProbeMarker } from '@/features/instruments';
 import { t } from '@/i18n';
-import { TerminalDot } from '@/ui';
+import { TerminalDot, terminalStyle } from '@/ui';
 import type { Side, TerminalSpot } from './geometry';
 
-/** Peran terminal selama sebuah kabel ditarik. */
-export type TerminalRole = 'idle' | 'origin' | 'allowed' | 'blocked';
+/**
+ * Peran terminal selama sebuah kabel ditarik: asal, boleh dituju, ditolak aturan sambungan, atau
+ * penuh (jumlah kabelnya sudah sebanyak `maxWires`).
+ */
+export type TerminalRole = 'idle' | 'origin' | 'allowed' | 'blocked' | 'full';
+
+/** Area sentuh sebuah terminal pada tingkat zoom sekarang (lihat hit-area.ts). */
+export interface TerminalHit {
+  sidePx: number;
+  clipPath: string;
+}
 
 const POSITION_BY_SIDE: Record<Side, Position> = {
   top: Position.Top,
@@ -33,17 +43,22 @@ function labelOffset({ side, hitPx, labelRow }: TerminalSpot) {
 interface TerminalHandleProps {
   spot: TerminalSpot;
   role: TerminalRole;
-  /** Label selalu tampak (node terpilih atau kabel sedang ditarik); selain itu hanya saat hover. */
-  showLabel: boolean;
+  hit: TerminalHit;
+  /** Node terpilih atau kabel sedang ditarik: label yang hanya mengulang tanda kutub ikut tampil. */
+  emphasized: boolean;
 }
 
 /**
  * Satu terminal. Handle @xyflow/react dibuat sebesar titik di pusat terminal supaya ujung kabel
- * jatuh tepat di tengah; area sentuhnya adalah anak yang lebih besar.
+ * jatuh tepat di tengah; area sentuhnya (44 px di layar) adalah anak yang lebih besar di bawah
+ * titiknya. Label selalu tampak (docs/UX.md §2.3), kecuali label yang sama persis dengan tanda di
+ * dalam titik (+, −, L, N), yang baru muncul saat hover, node terpilih, atau kabel ditarik.
  */
-export function TerminalHandle({ spot, role, showLabel }: TerminalHandleProps) {
-  const { terminal, side, dotPx, hitPx } = spot;
+export function TerminalHandle({ spot, role, hit, emphasized }: TerminalHandleProps) {
+  const { terminal, side, dotPx } = spot;
   const nodeId = useNodeId();
+  const repeatsGlyph = terminal.label === terminalStyle(terminal.kind).glyph;
+  const isLabelShown = emphasized || !repeatsGlyph;
 
   return (
     <Handle
@@ -56,12 +71,22 @@ export function TerminalHandle({ spot, role, showLabel }: TerminalHandleProps) {
       data-kind={terminal.kind}
       style={{ left: spot.xPx, top: spot.yPx }}
     >
-      <span className="terminal-hit" style={{ width: hitPx, height: hitPx }}>
+      <span
+        className="terminal-hit"
+        style={{ width: hit.sidePx, height: hit.sidePx, clipPath: hit.clipPath }}
+      />
+      <span className="terminal-dot-wrap">
         <TerminalDot kind={terminal.kind} sizePx={dotPx} />
+        {role === 'full' && (
+          <span className="terminal-lock">
+            <Lock aria-hidden size={10} strokeWidth={3} />
+            <span className="sr-only">{t.connectionRejections['terminal-full']}</span>
+          </span>
+        )}
       </span>
       <span
         className={`terminal-label ${LABEL_PLACEMENT[side]} ${
-          showLabel ? 'opacity-100' : 'opacity-0 group-hover/terminal:opacity-100'
+          isLabelShown ? 'opacity-100' : 'opacity-0 group-hover/terminal:opacity-100'
         }`}
         style={labelOffset(spot)}
       >

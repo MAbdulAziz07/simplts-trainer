@@ -20,7 +20,10 @@ export interface TerminalSpot {
   side: Side;
   /** Garis tengah titik yang tampak. */
   dotPx: number;
-  /** Sisi area sentuh; tidak pernah di bawah `MIN_HIT_PX`. */
+  /**
+   * Ruang bebas di sekitar titik (24–44 px) menurut jarak ke terminal terdekat; menentukan jarak
+   * label. Area sentuhnya sendiri dihitung di hit-area.ts.
+   */
   hitPx: number;
   /** `false` bila posisi di katalog belum diisi (0, 0) dan terminal dijajarkan di bawah node. */
   placed: boolean;

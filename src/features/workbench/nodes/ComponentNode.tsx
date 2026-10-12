@@ -1,12 +1,13 @@
-import { useUpdateNodeInternals, type NodeProps } from '@xyflow/react';
+import { useStore, useUpdateNodeInternals, type NodeProps } from '@xyflow/react';
 import { memo, useEffect, useMemo } from 'react';
 import { itemSizePx } from '@/ui';
 import type { ComponentFlowNode } from '../flow-types';
 import { NodePicture } from '../status/NodePicture';
 import { NodeStatus } from '../status/NodeStatus';
 import { layoutTerminals, rotatedSizePx } from './geometry';
+import { hitClipPath, hitPolygon, hitSidePx, quantizeZoom } from './hit-area';
 import { SwitchToggle } from './SwitchToggle';
-import { TerminalHandle } from './TerminalHandle';
+import { TerminalHandle, type TerminalHit } from './TerminalHandle';
 import { useTerminalRoles } from './useTerminalRoles';
 
 /**
@@ -26,6 +27,15 @@ export const ComponentNode = memo(function ComponentNode({
     [item, size, rotationDeg],
   );
   const roles = useTerminalRoles(id, spots);
+  // Area sentuh terminal tetap 44 px di layar: ukurannya di ruang meja mengikuti zoom.
+  const zoom = useStore((state) => quantizeZoom(state.transform[2]));
+  const hits = useMemo((): TerminalHit[] => {
+    const sidePx = hitSidePx(zoom);
+    return spots.map((spot) => ({
+      sidePx,
+      clipPath: hitClipPath(hitPolygon(spot, spots, sidePx), sidePx),
+    }));
+  }, [spots, zoom]);
 
   // Posisi handle berubah saat komponen diputar atau katalog diperbarui.
   const updateNodeInternals = useUpdateNodeInternals();
@@ -51,7 +61,8 @@ export const ComponentNode = memo(function ComponentNode({
           key={spot.terminal.id}
           spot={spot}
           role={roles?.[index] ?? 'idle'}
-          showLabel={Boolean(selected) || roles !== undefined}
+          hit={hits[index] ?? { sidePx: 0, clipPath: 'none' }}
+          emphasized={Boolean(selected) || roles !== undefined}
         />
       ))}
     </div>
