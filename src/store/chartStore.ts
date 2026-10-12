@@ -1,8 +1,9 @@
 // Riwayat grafik 24 jam: dicatat tiap simulasi maju, dikosongkan saat rangkaian lain dimuat atau
 // percobaan direset.
-// Satu hitungan simulasi paling jauh 150 s (0,25 s × 600), jadi tidak ada ruas 5 menit terlewat.
+// Pada 3600× satu hitungan bisa menempuh sampai 15 menit (0,25 s × 3600), jadi semua ruas 5 menit
+// yang dilalui ikut diisi.
 import { create } from 'zustand';
-import { EMPTY_BINS, recordSample, sampleOf, type ChartBins } from './chart-history';
+import { EMPTY_BINS, recordElapsed, sampleOf, type ChartBins } from './chart-history';
 import { useCircuitStore } from './circuitStore';
 import { useSimStore } from './simStore';
 
@@ -29,7 +30,9 @@ useSimStore.subscribe((sim, previous) => {
   // Waktu yang mundur (rangkaian lain dimuat) tidak dicatat.
   if (sim.state.timeS <= previous.state.timeS) return;
   const { bins } = useChartStore.getState();
-  const next = recordSample(bins, sim.clockHour, sampleOf(sim.snapshot));
+  // Lama langkah dihitung dari waktu simulasi, bukan dari jam: menggeser jam tidak mengisi ruas.
+  const elapsedS = sim.state.timeS - previous.state.timeS;
+  const next = recordElapsed(bins, sim.clockHour, elapsedS, sampleOf(sim.snapshot));
   if (next !== bins) useChartStore.setState({ bins: next });
 });
 

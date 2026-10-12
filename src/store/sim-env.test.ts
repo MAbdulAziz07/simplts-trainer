@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   DEFAULT_ENV,
+  SIM_SPEEDS,
   IRRADIANCE_MAX_WM2,
   clockHourAt,
   cloudFactorOf,
@@ -60,5 +61,11 @@ describe('formatClock', () => {
     expect(formatClock(0)).toBe('00:00');
     expect(formatClock(23.999)).toBe('23:59');
     expect(formatClock(24.25)).toBe('00:15');
+  });
+});
+
+describe('SIM_SPEEDS', () => {
+  it('waktu nyata, 1 menit, 10 menit, dan 1 jam simulasi per detik', () => {
+    expect([...SIM_SPEEDS]).toEqual([1, 60, 600, 3600]);
   });
 });

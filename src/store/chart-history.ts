@@ -60,3 +60,27 @@ export function recordSample(bins: ChartBins, clockHour: number, sample: ChartSa
   next[index] = sample;
   return next;
 }
+
+/**
+ * Mencatat cuplikan di ruas jam ini dan di semua ruas yang dilalui selama `elapsedS` detik
+ * simulasi terakhir, supaya percepatan tinggi tidak meninggalkan ruas kosong. Ruas tempat langkah
+ * itu dimulai hanya diisi bila masih kosong; bila sudah berisi, isinya cuplikan sebelumnya.
+ */
+export function recordElapsed(
+  bins: ChartBins,
+  clockHour: number,
+  elapsedS: number,
+  sample: ChartSample,
+): ChartBins {
+  const to = binIndexOf(clockHour);
+  const from = binIndexOf(clockHour - Math.max(elapsedS, 0) / 3600);
+  const crossed = Math.min((to - from + CHART_BIN_COUNT) % CHART_BIN_COUNT, CHART_BIN_COUNT - 1);
+  let next = recordSample(bins, clockHour, sample);
+  for (let back = 1; back <= crossed; back += 1) {
+    const index = (to - back + CHART_BIN_COUNT) % CHART_BIN_COUNT;
+    const isStart = back === crossed;
+    if (isStart && next[index] !== undefined) break;
+    next = recordSample(next, binCenterHour(index), sample);
+  }
+  return next;
+}

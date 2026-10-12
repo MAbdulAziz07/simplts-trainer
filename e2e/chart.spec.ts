@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { numberIn, pause, play, seedCircuit, setSpeed } from './sim-helpers';
+import { clockMinutes, numberIn, pause, play, seedCircuit, setSpeed } from './sim-helpers';
 
 // Grafik 24 jam: dibuka dari bilah simulasi, terisi selama simulasi berjalan.
 
@@ -76,4 +76,35 @@ test('grafik dibuka bila perlu, terisi saat simulasi berjalan, dan nilainya bisa
 
   await chart.getByRole('button', { name: 'Tutup grafik' }).click();
   await expect(chart).toHaveCount(0);
+});
+
+test('3600×: satu detik = satu jam simulasi, grafik terisi tanpa ruas kosong', async ({ page }) => {
+  await seedCircuit(
+    page,
+    [
+      ['bat', 'bat-vrla-agm-12v-100ah'],
+      ['inv', 'inv-offgrid-500w-12v'],
+      ['fan', 'load-ac-fan-50w'],
+    ],
+    [
+      ['bat.pos', 'inv.dc-pos'],
+      ['bat.neg', 'inv.dc-neg'],
+      ['inv.ac-l', 'fan.a'],
+      ['inv.ac-n', 'fan.b'],
+    ],
+  );
+  await page.getByRole('button', { name: 'Grafik 24 jam', exact: true }).click();
+  const speed = page.getByRole('radio', { name: '3600×', exact: true });
+  await expect(speed).toHaveAttribute('title', '1 detik = 1 jam simulasi');
+  await setSpeed(page, 3600);
+  await play(page);
+  // Mulai 10:00; tiga jam simulasi berlalu dalam sekitar tiga detik.
+  await expect.poll(() => clockMinutes(page), { timeout: 10_000 }).toBeGreaterThanOrEqual(13 * 60);
+  await pause(page);
+
+  // Garis beban bersambung dari 10:00 sampai jam sekarang: satu lintasan, lebih dari 30 ruas.
+  const loadLine = page.locator('.day-chart-plot [data-series="load"] path');
+  await expect(loadLine).toHaveCount(1);
+  const d = (await loadLine.getAttribute('d')) ?? '';
+  expect(d.split('L').length).toBeGreaterThan(30);
 });

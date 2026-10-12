@@ -7,8 +7,12 @@ export const sim = {
   pause: 'Jeda simulasi',
   speed: 'Kecepatan simulasi',
   speedOption: (multiple: number) => `${multiple}×`,
-  speedHint: (multiple: number) =>
-    multiple === 1 ? 'Waktu nyata' : `1 detik = ${number(multiple / 60)} menit simulasi`,
+  speedHint: (multiple: number) => {
+    if (multiple === 1) return 'Waktu nyata';
+    return multiple >= 3600
+      ? `1 detik = ${number(multiple / 3600)} jam simulasi`
+      : `1 detik = ${number(multiple / 60)} menit simulasi`;
+  },
   clock: 'Jam',
   irradiance: 'Iradiasi',
   irradianceValue: (irradianceWm2: number) => `${number(irradianceWm2)} W/m²`,

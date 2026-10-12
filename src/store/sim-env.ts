@@ -2,8 +2,11 @@
 // profil matahari (docs/MODEL_FISIKA.md §11) atau disetel tangan.
 import { sunAmbientTempC, sunIrradianceWm2, type SolverEnvironment } from '@/domain';
 
-/** Pengali waktu simulasi terhadap waktu nyata (docs/ARSITEKTUR.md §2 butir 2). */
-export const SIM_SPEEDS = [1, 60, 600] as const;
+/**
+ * Pengali waktu simulasi terhadap waktu nyata (docs/ARSITEKTUR.md §2 butir 2). Pada 3600× satu
+ * detik nyata = satu jam simulasi, jadi satu hari selesai dalam 24 detik.
+ */
+export const SIM_SPEEDS = [1, 60, 600, 3600] as const;
 export type SimSpeed = (typeof SIM_SPEEDS)[number];
 
 export const HOURS_PER_DAY = 24;
