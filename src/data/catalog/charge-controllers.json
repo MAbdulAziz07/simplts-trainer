@@ -17,12 +17,12 @@
         "installOrder": ["battery", "pv", "load"]
       },
       "terminals": [
-        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "load-pos", "label": "BEBAN+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "load-neg", "label": "BEBAN−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 17.8, "yPct": 88.4, "maxWires": 1},
+        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 27.6, "yPct": 88.3, "maxWires": 1},
+        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 44.8, "yPct": 88.6, "maxWires": 1},
+        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 54.6, "yPct": 88.4, "maxWires": 1},
+        {"id": "load-pos", "label": "BEBAN+", "kind": "dc+", "xPct": 71.7, "yPct": 88.6, "maxWires": 1},
+        {"id": "load-neg", "label": "BEBAN−", "kind": "dc-", "xPct": 81.7, "yPct": 88.4, "maxWires": 1}
       ],
       "protection": {
         "vocFaultFactor": 1.2, "loadOverloadCurve": [[1.25, 60], [1.5, 5]],
@@ -55,10 +55,10 @@
         "absorptionDurationMin": 120, "tempOpMinC": -20, "tempOpMaxC": 55
       },
       "terminals": [
-        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 31.9, "yPct": 82.1, "maxWires": 1},
+        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 39, "yPct": 82, "maxWires": 1},
+        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 46.1, "yPct": 82, "maxWires": 1},
+        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 53.5, "yPct": 82.6, "maxWires": 1}
       ],
       "protection": {
         "vocMaxV": 75, "vocFaultFactor": 1.1, "overloadAlarmPct": 110,
@@ -89,10 +89,10 @@
         "absorptionDurationMin": 120, "tempOpMinC": 0, "tempOpMaxC": 55
       },
       "terminals": [
-        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 31.9, "yPct": 82.1, "maxWires": 1},
+        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 39, "yPct": 82, "maxWires": 1},
+        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 46.1, "yPct": 82, "maxWires": 1},
+        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 53.5, "yPct": 82.6, "maxWires": 1}
       ],
       "protection": {
         "vocMaxV": 145, "vocFaultFactor": 1.1, "overloadAlarmPct": 110,
@@ -125,10 +125,10 @@
         "absorptionDurationMin": 120, "tempOpMinC": -20, "tempOpMaxC": 55
       },
       "terminals": [
-        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 31.9, "yPct": 82.1, "maxWires": 1},
+        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 39, "yPct": 82, "maxWires": 1},
+        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 46.1, "yPct": 82, "maxWires": 1},
+        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 53.5, "yPct": 82.6, "maxWires": 1}
       ],
       "protection": {
         "vocMaxV": 100, "vocFaultFactor": 1.1, "overloadAlarmPct": 110,

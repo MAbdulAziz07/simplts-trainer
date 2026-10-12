@@ -15,11 +15,11 @@
         "waveform": "pure-sine"
       },
       "terminals": [
-        {"id": "dc-pos", "label": "DC+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "dc-neg", "label": "DC−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "ac-l", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "ac-n", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "dc-pos", "label": "DC+", "kind": "dc+", "xPct": 23.1, "yPct": 75.3, "maxWires": 1},
+        {"id": "dc-neg", "label": "DC−", "kind": "dc-", "xPct": 46.7, "yPct": 75.7, "maxWires": 1},
+        {"id": "ac-l", "label": "L", "kind": "acL", "xPct": 71.5, "yPct": 91.8, "maxWires": 1},
+        {"id": "ac-n", "label": "N", "kind": "acN", "xPct": 77, "yPct": 91.9, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 82.9, "yPct": 92.1, "maxWires": 1}
       ],
       "protection": {
         "overloadCurve": [[1.1, 600], [1.25, 60], [1.5, 10], [2.0, 1], [3.0, 0.1]],
@@ -56,11 +56,11 @@
         "waveform": "pure-sine"
       },
       "terminals": [
-        {"id": "dc-pos", "label": "DC+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "dc-neg", "label": "DC−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "ac-l", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "ac-n", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "dc-pos", "label": "DC+", "kind": "dc+", "xPct": 23.1, "yPct": 75.3, "maxWires": 1},
+        {"id": "dc-neg", "label": "DC−", "kind": "dc-", "xPct": 46.7, "yPct": 75.7, "maxWires": 1},
+        {"id": "ac-l", "label": "L", "kind": "acL", "xPct": 71.5, "yPct": 91.8, "maxWires": 1},
+        {"id": "ac-n", "label": "N", "kind": "acN", "xPct": 77, "yPct": 91.9, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 82.9, "yPct": 92.1, "maxWires": 1}
       ],
       "protection": {
         "overloadCurve": [[1.1, 600], [1.25, 60], [1.5, 10], [2.0, 1], [2.5, 0.1]],
@@ -98,11 +98,11 @@
         "acOutputVoltageV": 220, "acOutputFrequencyHz": 50
       },
       "terminals": [
-        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "ac-l", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "ac-n", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pv-pos", "label": "PV+", "kind": "pv+", "xPct": 19.2, "yPct": 80.4, "maxWires": 1},
+        {"id": "pv-neg", "label": "PV−", "kind": "pv-", "xPct": 33.5, "yPct": 79.8, "maxWires": 1},
+        {"id": "ac-l", "label": "L", "kind": "acL", "xPct": 63.4, "yPct": 84.4, "maxWires": 1},
+        {"id": "ac-n", "label": "N", "kind": "acN", "xPct": 70.1, "yPct": 84.6, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 78.4, "yPct": 83.9, "maxWires": 1}
       ],
       "protection": {
         "dcVocMaxV": 450, "antiIslanding": true, "antiIslandingTimeS": 2,
@@ -144,18 +144,18 @@
         "modes": ["SBU", "SUB", "UTILITY_FIRST"]
       },
       "terminals": [
-        {"id": "pv1-pos", "label": "PV1+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pv1-neg", "label": "PV1−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pv2-pos", "label": "PV2+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pv2-neg", "label": "PV2−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "grid-l", "label": "GRID L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "grid-n", "label": "GRID N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "load-l", "label": "BEBAN L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "load-n", "label": "BEBAN N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "data", "label": "DATA", "kind": "data", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pv1-pos", "label": "PV1+", "kind": "pv+", "xPct": 13.9, "yPct": 84.8, "maxWires": 1},
+        {"id": "pv1-neg", "label": "PV1−", "kind": "pv-", "xPct": 20.7, "yPct": 85, "maxWires": 1},
+        {"id": "pv2-pos", "label": "PV2+", "kind": "pv+", "xPct": 27.8, "yPct": 85.1, "maxWires": 1},
+        {"id": "pv2-neg", "label": "PV2−", "kind": "pv-", "xPct": 34.2, "yPct": 85.1, "maxWires": 1},
+        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 44.2, "yPct": 89.4, "maxWires": 1},
+        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 54.7, "yPct": 88.8, "maxWires": 1},
+        {"id": "grid-l", "label": "GRID L", "kind": "acL", "xPct": 66.5, "yPct": 71.6, "maxWires": 1},
+        {"id": "grid-n", "label": "GRID N", "kind": "acN", "xPct": 71.5, "yPct": 71.6, "maxWires": 1},
+        {"id": "load-l", "label": "BEBAN L", "kind": "acL", "xPct": 69.3, "yPct": 87.7, "maxWires": 1},
+        {"id": "load-n", "label": "BEBAN N", "kind": "acN", "xPct": 74.9, "yPct": 87.7, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 77.2, "yPct": 71.5, "maxWires": 1},
+        {"id": "data", "label": "DATA", "kind": "data", "xPct": 85.4, "yPct": 87.6, "maxWires": 1}
       ],
       "protection": {
         "overloadCurve": [[1.1, 600], [1.25, 60], [1.5, 10], [2.0, 0.1]], "hasInternalFuse": false,

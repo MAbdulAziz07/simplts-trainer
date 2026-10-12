@@ -15,12 +15,12 @@
         "gainErrorMaxPct": 1, "terminalMaxMm2": 19, "tempOpMinC": -25, "tempOpMaxC": 55
       },
       "terminals": [
-        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "mbus", "label": "M-BUS", "kind": "data", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pulse", "label": "PULSA", "kind": "data", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 20.7, "yPct": 84.8, "maxWires": 1},
+        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 69.2, "yPct": 85.1, "maxWires": 1},
+        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 30.3, "yPct": 85.6, "maxWires": 1},
+        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 78.9, "yPct": 85.1, "maxWires": 1},
+        {"id": "mbus", "label": "M-BUS", "kind": "data", "xPct": 45.2, "yPct": 82.7, "maxWires": 1},
+        {"id": "pulse", "label": "PULSA", "kind": "data", "xPct": 54.2, "yPct": 82.3, "maxWires": 1}
       ],
       "protection": {"currentMaxA": 100, "overCurrentDamageA": 100, "ipRating": "IP51"},
       "image": "src/assets/components/kwh-meter-sdm230.webp",

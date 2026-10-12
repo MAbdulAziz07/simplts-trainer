@@ -39,8 +39,8 @@
         }
       },
       "terminals": [
-        {"id": "pos", "label": "+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 2},
-        {"id": "neg", "label": "−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 2}
+        {"id": "pos", "label": "+", "kind": "dc+", "xPct": 13.1, "yPct": 24.5, "maxWires": 2},
+        {"id": "neg", "label": "−", "kind": "dc-", "xPct": 85.6, "yPct": 25.4, "maxWires": 2}
       ],
       "protection": {"internalBms": false, "externalBmsRequired": false},
       "image": "src/assets/components/battery-vrla.webp",
@@ -98,8 +98,8 @@
         }
       },
       "terminals": [
-        {"id": "pos", "label": "+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 2},
-        {"id": "neg", "label": "−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 2}
+        {"id": "pos", "label": "+", "kind": "dc+", "xPct": 13.1, "yPct": 24.5, "maxWires": 2},
+        {"id": "neg", "label": "−", "kind": "dc-", "xPct": 85.6, "yPct": 25.4, "maxWires": 2}
       ],
       "protection": {"internalBms": false, "externalBmsRequired": false},
       "image": "src/assets/components/battery-vrla.webp",
@@ -160,9 +160,9 @@
         }
       },
       "terminals": [
-        {"id": "pos", "label": "+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 2},
-        {"id": "neg", "label": "−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 2},
-        {"id": "bms", "label": "BMS", "kind": "data", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos", "label": "+", "kind": "dc+", "xPct": 20.4, "yPct": 80.5, "maxWires": 2},
+        {"id": "neg", "label": "−", "kind": "dc-", "xPct": 79.4, "yPct": 80.5, "maxWires": 2},
+        {"id": "bms", "label": "BMS", "kind": "data", "xPct": 49.9, "yPct": 71, "maxWires": 1}
       ],
       "protection": {"internalBms": false, "externalBmsRequired": true, "overCurrentDischargeA": 200},
       "image": "src/assets/components/battery-lfp.webp",
@@ -218,9 +218,9 @@
         }
       },
       "terminals": [
-        {"id": "pos", "label": "+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 2},
-        {"id": "neg", "label": "−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 2},
-        {"id": "can", "label": "CAN", "kind": "data", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos", "label": "+", "kind": "dc+", "xPct": 20.6, "yPct": 80.4, "maxWires": 2},
+        {"id": "neg", "label": "−", "kind": "dc-", "xPct": 79.3, "yPct": 80.4, "maxWires": 2},
+        {"id": "can", "label": "CAN", "kind": "data", "xPct": 49.8, "yPct": 79.7, "maxWires": 1}
       ],
       "protection": {
         "internalBms": true, "overVoltageCutoffV": 58.6, "underVoltageCutoffV": 40,

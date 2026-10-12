@@ -14,8 +14,8 @@
         "tempOpMaxC": 85
       },
       "terminals": [
-        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 23.1, "yPct": 97.4, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 80.9, "yPct": 97.8, "maxWires": 1}
       ],
       "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 15},
       "image": "src/assets/components/pv-module.webp",
@@ -44,8 +44,8 @@
         "tempOpMaxC": 85
       },
       "terminals": [
-        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 23.1, "yPct": 97.4, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 80.9, "yPct": 97.8, "maxWires": 1}
       ],
       "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 15},
       "image": "src/assets/components/pv-module.webp",
@@ -74,8 +74,8 @@
         "tempOpMaxC": 85
       },
       "terminals": [
-        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 23.1, "yPct": 97.4, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 80.9, "yPct": 97.8, "maxWires": 1}
       ],
       "protection": {"seriesFuseMaxA": 20, "reverseCurrentMaxA": 20},
       "image": "src/assets/components/pv-module.webp",
@@ -98,8 +98,8 @@
         "tempOpMaxC": 85
       },
       "terminals": [
-        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 23.1, "yPct": 97.4, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 80.9, "yPct": 97.8, "maxWires": 1}
       ],
       "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 15},
       "image": "src/assets/components/pv-module.webp",
@@ -122,8 +122,8 @@
         "tempOpMaxC": 85
       },
       "terminals": [
-        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 23.1, "yPct": 97.4, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 80.9, "yPct": 97.8, "maxWires": 1}
       ],
       "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 15},
       "image": "src/assets/components/pv-module.webp",
@@ -149,8 +149,8 @@
         "tempOpMaxC": 90
       },
       "terminals": [
-        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 23.1, "yPct": 97.4, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 80.9, "yPct": 97.8, "maxWires": 1}
       ],
       "protection": {"seriesFuseMaxA": 15, "reverseCurrentMaxA": 16},
       "image": "src/assets/components/pv-module.webp",
@@ -172,8 +172,8 @@
         "tempOpMaxC": 85
       },
       "terminals": [
-        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 23.1, "yPct": 97.4, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 80.9, "yPct": 97.8, "maxWires": 1}
       ],
       "protection": {"seriesFuseMaxA": 20, "reverseCurrentMaxA": 20},
       "image": "src/assets/components/pv-module.webp",

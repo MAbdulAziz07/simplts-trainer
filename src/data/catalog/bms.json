@@ -13,11 +13,11 @@
         "maxBatteriesParallel": 20, "balancing": true
       },
       "terminals": [
-        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 2},
-        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 2},
-        {"id": "sys-pos", "label": "SIS+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 2},
-        {"id": "sys-neg", "label": "SIS−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 2},
-        {"id": "cell", "label": "SEL", "kind": "data", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "bat-pos", "label": "BAT+", "kind": "dc+", "xPct": 6.9, "yPct": 93.7, "maxWires": 2},
+        {"id": "bat-neg", "label": "BAT−", "kind": "dc-", "xPct": 20.3, "yPct": 92.4, "maxWires": 2},
+        {"id": "sys-pos", "label": "SIS+", "kind": "dc+", "xPct": 44.6, "yPct": 94.1, "maxWires": 2},
+        {"id": "sys-neg", "label": "SIS−", "kind": "dc-", "xPct": 60.4, "yPct": 94.5, "maxWires": 2},
+        {"id": "cell", "label": "SEL", "kind": "data", "xPct": 85.3, "yPct": 93.7, "maxWires": 1}
       ],
       "protection": {
         "overCurrentDischargeA": 200, "overCurrentDelayS": 10, "shortCircuitFactor": 3,

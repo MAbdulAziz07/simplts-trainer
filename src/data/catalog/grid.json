@@ -12,9 +12,9 @@
         "frequencyHz": 50, "availableDefault": true
       },
       "terminals": [
-        {"id": "l", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "n", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "l", "label": "L", "kind": "acL", "xPct": 11.3, "yPct": 91.6, "maxWires": 1},
+        {"id": "n", "label": "N", "kind": "acN", "xPct": 50.4, "yPct": 90.5, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 91, "yPct": 91.1, "maxWires": 1}
       ],
       "protection": {},
       "image": "src/assets/components/grid-pln.webp",

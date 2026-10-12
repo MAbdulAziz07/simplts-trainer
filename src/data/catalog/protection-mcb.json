@@ -12,10 +12,10 @@
         "breakingCapacityKa": 10, "refTempC": 55, "polarized": true, "minOperatingVoltageV": 12
       },
       "terminals": [
-        {"id": "pos-in", "label": "+ IN", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pos-out", "label": "+ OUT", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg-in", "label": "− IN", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg-out", "label": "− OUT", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos-in", "label": "+ IN", "kind": "dc+", "xPct": 29.3, "yPct": 9.2, "maxWires": 1},
+        {"id": "pos-out", "label": "+ OUT", "kind": "dc+", "xPct": 29.3, "yPct": 86.5, "maxWires": 1},
+        {"id": "neg-in", "label": "− IN", "kind": "dc-", "xPct": 70.5, "yPct": 9.6, "maxWires": 1},
+        {"id": "neg-out", "label": "− OUT", "kind": "dc-", "xPct": 70.5, "yPct": 87.4, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 16, "curve": "C", "ratedVoltageDcV": 440, "breakingCapacityKa": 10},
       "image": "src/assets/components/mcb-dc-2p.webp",
@@ -35,10 +35,10 @@
         "breakingCapacityKa": 10, "refTempC": 55, "polarized": true, "minOperatingVoltageV": 12
       },
       "terminals": [
-        {"id": "pos-in", "label": "+ IN", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pos-out", "label": "+ OUT", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg-in", "label": "− IN", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg-out", "label": "− OUT", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos-in", "label": "+ IN", "kind": "dc+", "xPct": 29.3, "yPct": 9.2, "maxWires": 1},
+        {"id": "pos-out", "label": "+ OUT", "kind": "dc+", "xPct": 29.3, "yPct": 86.5, "maxWires": 1},
+        {"id": "neg-in", "label": "− IN", "kind": "dc-", "xPct": 70.5, "yPct": 9.6, "maxWires": 1},
+        {"id": "neg-out", "label": "− OUT", "kind": "dc-", "xPct": 70.5, "yPct": 87.4, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 20, "curve": "C", "ratedVoltageDcV": 440, "breakingCapacityKa": 10},
       "image": "src/assets/components/mcb-dc-2p.webp",
@@ -58,10 +58,10 @@
         "breakingCapacityKa": 10, "refTempC": 55, "polarized": true, "minOperatingVoltageV": 12
       },
       "terminals": [
-        {"id": "pos-in", "label": "+ IN", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pos-out", "label": "+ OUT", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg-in", "label": "− IN", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg-out", "label": "− OUT", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos-in", "label": "+ IN", "kind": "dc+", "xPct": 29.3, "yPct": 9.2, "maxWires": 1},
+        {"id": "pos-out", "label": "+ OUT", "kind": "dc+", "xPct": 29.3, "yPct": 86.5, "maxWires": 1},
+        {"id": "neg-in", "label": "− IN", "kind": "dc-", "xPct": 70.5, "yPct": 9.6, "maxWires": 1},
+        {"id": "neg-out", "label": "− OUT", "kind": "dc-", "xPct": 70.5, "yPct": 87.4, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 32, "curve": "C", "ratedVoltageDcV": 440, "breakingCapacityKa": 10},
       "image": "src/assets/components/mcb-dc-2p.webp",
@@ -81,10 +81,10 @@
         "breakingCapacityKa": 10, "refTempC": 55, "polarized": true, "minOperatingVoltageV": 12
       },
       "terminals": [
-        {"id": "pos-in", "label": "+ IN", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pos-out", "label": "+ OUT", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg-in", "label": "− IN", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg-out", "label": "− OUT", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos-in", "label": "+ IN", "kind": "dc+", "xPct": 29.3, "yPct": 9.2, "maxWires": 1},
+        {"id": "pos-out", "label": "+ OUT", "kind": "dc+", "xPct": 29.3, "yPct": 86.5, "maxWires": 1},
+        {"id": "neg-in", "label": "− IN", "kind": "dc-", "xPct": 70.5, "yPct": 9.6, "maxWires": 1},
+        {"id": "neg-out", "label": "− OUT", "kind": "dc-", "xPct": 70.5, "yPct": 87.4, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 63, "curve": "C", "ratedVoltageDcV": 440, "breakingCapacityKa": 10},
       "image": "src/assets/components/mcb-dc-2p.webp",
@@ -104,10 +104,10 @@
         "breakingCapacityKa": 10, "refTempC": 40, "polarized": false, "minOperatingVoltageV": 0
       },
       "terminals": [
-        {"id": "pos-in", "label": "1", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pos-out", "label": "2", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg-in", "label": "3", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg-out", "label": "4", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos-in", "label": "1", "kind": "dc+", "xPct": 29.3, "yPct": 9.2, "maxWires": 1},
+        {"id": "pos-out", "label": "2", "kind": "dc+", "xPct": 29.3, "yPct": 86.5, "maxWires": 1},
+        {"id": "neg-in", "label": "3", "kind": "dc-", "xPct": 70.5, "yPct": 9.6, "maxWires": 1},
+        {"id": "neg-out", "label": "4", "kind": "dc-", "xPct": 70.5, "yPct": 87.4, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 100, "curve": "C", "ratedVoltageDcV": 250, "breakingCapacityKa": 10},
       "image": "src/assets/components/mcb-dc-2p.webp",
@@ -127,10 +127,10 @@
         "ratedVoltageDcV": null, "breakingCapacityKa": 6, "refTempC": 30, "frequencyHz": 50
       },
       "terminals": [
-        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 21.2, "yPct": 3.6, "maxWires": 1},
+        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 18.2, "yPct": 91.2, "maxWires": 1},
+        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 78.3, "yPct": 5.2, "maxWires": 1},
+        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 77.8, "yPct": 91.2, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 6, "curve": "C", "ratedVoltageAcV": 240, "breakingCapacityKa": 6},
       "image": "src/assets/components/mcb-ac-1p.webp",
@@ -150,10 +150,10 @@
         "ratedVoltageDcV": null, "breakingCapacityKa": 6, "refTempC": 30, "frequencyHz": 50
       },
       "terminals": [
-        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 21.2, "yPct": 3.6, "maxWires": 1},
+        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 18.2, "yPct": 91.2, "maxWires": 1},
+        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 78.3, "yPct": 5.2, "maxWires": 1},
+        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 77.8, "yPct": 91.2, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 10, "curve": "C", "ratedVoltageAcV": 240, "breakingCapacityKa": 6},
       "image": "src/assets/components/mcb-ac-1p.webp",
@@ -173,10 +173,10 @@
         "ratedVoltageDcV": null, "breakingCapacityKa": 6, "refTempC": 30, "frequencyHz": 50
       },
       "terminals": [
-        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 21.2, "yPct": 3.6, "maxWires": 1},
+        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 18.2, "yPct": 91.2, "maxWires": 1},
+        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 78.3, "yPct": 5.2, "maxWires": 1},
+        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 77.8, "yPct": 91.2, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 16, "curve": "C", "ratedVoltageAcV": 240, "breakingCapacityKa": 6},
       "image": "src/assets/components/mcb-ac-1p.webp",
@@ -196,10 +196,10 @@
         "ratedVoltageDcV": null, "breakingCapacityKa": 6, "refTempC": 30, "frequencyHz": 50
       },
       "terminals": [
-        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "l-in", "label": "L IN", "kind": "acL", "xPct": 21.2, "yPct": 3.6, "maxWires": 1},
+        {"id": "l-out", "label": "L OUT", "kind": "acL", "xPct": 18.2, "yPct": 91.2, "maxWires": 1},
+        {"id": "n-in", "label": "N IN", "kind": "acN", "xPct": 78.3, "yPct": 5.2, "maxWires": 1},
+        {"id": "n-out", "label": "N OUT", "kind": "acN", "xPct": 77.8, "yPct": 91.2, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 32, "curve": "C", "ratedVoltageAcV": 240, "breakingCapacityKa": 6},
       "image": "src/assets/components/mcb-ac-1p.webp",

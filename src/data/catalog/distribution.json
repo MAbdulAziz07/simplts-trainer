@@ -9,12 +9,12 @@
       "packages": ["min", "rek", "best"],
       "electrical": {"positions": 6, "ratedCurrentA": 100, "ratedVoltageV": 1000},
       "terminals": [
-        {"id": "t1", "label": "+1", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t2", "label": "+2", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t3", "label": "+3", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t4", "label": "+4", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t5", "label": "+5", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t6", "label": "+6", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "t1", "label": "+1", "kind": "dc+", "xPct": 21.4, "yPct": 90.5, "maxWires": 1},
+        {"id": "t2", "label": "+2", "kind": "dc+", "xPct": 39.7, "yPct": 91, "maxWires": 1},
+        {"id": "t3", "label": "+3", "kind": "dc+", "xPct": 58.1, "yPct": 89.5, "maxWires": 1},
+        {"id": "t4", "label": "+4", "kind": "dc+", "xPct": 77.6, "yPct": 90.5, "maxWires": 1},
+        {"id": "t5", "label": "+5", "kind": "dc+", "xPct": 93.6, "yPct": 90.5, "maxWires": 1},
+        {"id": "t6", "label": "+6", "kind": "dc+", "xPct": 4.5, "yPct": 89.5, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 100},
       "image": "src/assets/components/busbar.webp",
@@ -35,12 +35,12 @@
       "packages": ["min", "rek", "best"],
       "electrical": {"positions": 6, "ratedCurrentA": 100, "ratedVoltageV": 1000},
       "terminals": [
-        {"id": "t1", "label": "−1", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t2", "label": "−2", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t3", "label": "−3", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t4", "label": "−4", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t5", "label": "−5", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t6", "label": "−6", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "t1", "label": "−1", "kind": "dc-", "xPct": 21.4, "yPct": 90.5, "maxWires": 1},
+        {"id": "t2", "label": "−2", "kind": "dc-", "xPct": 39.7, "yPct": 91, "maxWires": 1},
+        {"id": "t3", "label": "−3", "kind": "dc-", "xPct": 58.1, "yPct": 89.5, "maxWires": 1},
+        {"id": "t4", "label": "−4", "kind": "dc-", "xPct": 77.6, "yPct": 90.5, "maxWires": 1},
+        {"id": "t5", "label": "−5", "kind": "dc-", "xPct": 93.6, "yPct": 90.5, "maxWires": 1},
+        {"id": "t6", "label": "−6", "kind": "dc-", "xPct": 4.5, "yPct": 89.5, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 100},
       "image": "src/assets/components/busbar.webp",
@@ -61,12 +61,12 @@
       "packages": ["min", "rek", "best"],
       "electrical": {"positions": 6, "ratedCurrentA": 100, "ratedVoltageV": 1000},
       "terminals": [
-        {"id": "t1", "label": "L1", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t2", "label": "L2", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t3", "label": "L3", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t4", "label": "L4", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t5", "label": "L5", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t6", "label": "L6", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "t1", "label": "L1", "kind": "acL", "xPct": 21.4, "yPct": 90.5, "maxWires": 1},
+        {"id": "t2", "label": "L2", "kind": "acL", "xPct": 39.7, "yPct": 91, "maxWires": 1},
+        {"id": "t3", "label": "L3", "kind": "acL", "xPct": 58.1, "yPct": 89.5, "maxWires": 1},
+        {"id": "t4", "label": "L4", "kind": "acL", "xPct": 77.6, "yPct": 90.5, "maxWires": 1},
+        {"id": "t5", "label": "L5", "kind": "acL", "xPct": 93.6, "yPct": 90.5, "maxWires": 1},
+        {"id": "t6", "label": "L6", "kind": "acL", "xPct": 4.5, "yPct": 89.5, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 100},
       "image": "src/assets/components/busbar.webp",
@@ -87,12 +87,12 @@
       "packages": ["min", "rek", "best"],
       "electrical": {"positions": 6, "ratedCurrentA": 100, "ratedVoltageV": 1000},
       "terminals": [
-        {"id": "t1", "label": "N1", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t2", "label": "N2", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t3", "label": "N3", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t4", "label": "N4", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t5", "label": "N5", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t6", "label": "N6", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "t1", "label": "N1", "kind": "acN", "xPct": 21.4, "yPct": 90.5, "maxWires": 1},
+        {"id": "t2", "label": "N2", "kind": "acN", "xPct": 39.7, "yPct": 91, "maxWires": 1},
+        {"id": "t3", "label": "N3", "kind": "acN", "xPct": 58.1, "yPct": 89.5, "maxWires": 1},
+        {"id": "t4", "label": "N4", "kind": "acN", "xPct": 77.6, "yPct": 90.5, "maxWires": 1},
+        {"id": "t5", "label": "N5", "kind": "acN", "xPct": 93.6, "yPct": 90.5, "maxWires": 1},
+        {"id": "t6", "label": "N6", "kind": "acN", "xPct": 4.5, "yPct": 89.5, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 100},
       "image": "src/assets/components/busbar.webp",
@@ -113,12 +113,12 @@
       "packages": ["min", "rek", "best"],
       "electrical": {"positions": 6, "ratedCurrentA": 100, "ratedVoltageV": 1000},
       "terminals": [
-        {"id": "t1", "label": "PE1", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t2", "label": "PE2", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t3", "label": "PE3", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t4", "label": "PE4", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t5", "label": "PE5", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "t6", "label": "PE6", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "t1", "label": "PE1", "kind": "pe", "xPct": 21.4, "yPct": 90.5, "maxWires": 1},
+        {"id": "t2", "label": "PE2", "kind": "pe", "xPct": 39.7, "yPct": 91, "maxWires": 1},
+        {"id": "t3", "label": "PE3", "kind": "pe", "xPct": 58.1, "yPct": 89.5, "maxWires": 1},
+        {"id": "t4", "label": "PE4", "kind": "pe", "xPct": 77.6, "yPct": 90.5, "maxWires": 1},
+        {"id": "t5", "label": "PE5", "kind": "pe", "xPct": 93.6, "yPct": 90.5, "maxWires": 1},
+        {"id": "t6", "label": "PE6", "kind": "pe", "xPct": 4.5, "yPct": 89.5, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 100},
       "image": "src/assets/components/busbar.webp",
@@ -138,7 +138,7 @@
       "name": "Elektroda Pentanahan",
       "packages": ["min", "rek", "best"],
       "electrical": {"earthResistanceOhm": 5},
-      "terminals": [{"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 6}],
+      "terminals": [{"id": "pe", "label": "PE", "kind": "pe", "xPct": 50.5, "yPct": 92.6, "maxWires": 6}],
       "protection": {},
       "image": "src/assets/components/ground-rod.webp",
       "datasheet": {
@@ -157,15 +157,15 @@
         "ratedVoltageAcV": 220, "breakingCapacityKa": 6
       },
       "terminals": [
-        {"id": "in-l", "label": "IN L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "in-n", "label": "IN N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "c1-l", "label": "C1 L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "c1-n", "label": "C1 N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "c2-l", "label": "C2 L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "c2-n", "label": "C2 N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "c3-l", "label": "C3 L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "c3-n", "label": "C3 N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "in-l", "label": "IN L", "kind": "acL", "xPct": 3.5, "yPct": 93.6, "maxWires": 1},
+        {"id": "in-n", "label": "IN N", "kind": "acN", "xPct": 12.4, "yPct": 93, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 22.9, "yPct": 94.1, "maxWires": 1},
+        {"id": "c1-l", "label": "C1 L", "kind": "acL", "xPct": 31.3, "yPct": 94.9, "maxWires": 1},
+        {"id": "c1-n", "label": "C1 N", "kind": "acN", "xPct": 38.2, "yPct": 94.1, "maxWires": 1},
+        {"id": "c2-l", "label": "C2 L", "kind": "acL", "xPct": 48.2, "yPct": 95.5, "maxWires": 1},
+        {"id": "c2-n", "label": "C2 N", "kind": "acN", "xPct": 57.4, "yPct": 95.3, "maxWires": 1},
+        {"id": "c3-l", "label": "C3 L", "kind": "acL", "xPct": 65.5, "yPct": 94.7, "maxWires": 1},
+        {"id": "c3-n", "label": "C3 N", "kind": "acN", "xPct": 77.8, "yPct": 94.7, "maxWires": 1}
       ],
       "protection": {"ratedCurrentA": 32, "circuitBreakerA": 10, "circuitCurve": "C", "breakingCapacityKa": 6},
       "image": "src/assets/components/load-panel-3c.webp",

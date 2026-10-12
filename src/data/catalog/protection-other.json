@@ -12,10 +12,10 @@
         "class": "gPV"
       },
       "terminals": [
-        {"id": "pos-in", "label": "+ IN", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pos-out", "label": "+ OUT", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg-in", "label": "− IN", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg-out", "label": "− OUT", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos-in", "label": "+ IN", "kind": "pv+", "xPct": 28.8, "yPct": 5.9, "maxWires": 1},
+        {"id": "pos-out", "label": "+ OUT", "kind": "pv+", "xPct": 32.2, "yPct": 96, "maxWires": 1},
+        {"id": "neg-in", "label": "− IN", "kind": "pv-", "xPct": 66.4, "yPct": 7.1, "maxWires": 1},
+        {"id": "neg-out", "label": "− OUT", "kind": "pv-", "xPct": 65.3, "yPct": 95.1, "maxWires": 1}
       ],
       "protection": {
         "ratedCurrentA": 15, "ratedVoltageDcV": 1000,
@@ -45,8 +45,8 @@
         "class": "ANL"
       },
       "terminals": [
-        {"id": "in", "label": "IN", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "out", "label": "OUT", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "in", "label": "IN", "kind": "dc+", "xPct": 47.4, "yPct": 6.6, "maxWires": 1},
+        {"id": "out", "label": "OUT", "kind": "dc+", "xPct": 49.2, "yPct": 95.5, "maxWires": 1}
       ],
       "protection": {
         "ratedCurrentA": 100, "ratedVoltageDcV": 58,
@@ -76,8 +76,8 @@
         "class": "ANL"
       },
       "terminals": [
-        {"id": "in", "label": "IN", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "out", "label": "OUT", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "in", "label": "IN", "kind": "dc+", "xPct": 46.8, "yPct": 5.4, "maxWires": 1},
+        {"id": "out", "label": "OUT", "kind": "dc+", "xPct": 49.4, "yPct": 93.9, "maxWires": 1}
       ],
       "protection": {
         "ratedCurrentA": 125, "ratedVoltageDcV": 80,
@@ -107,9 +107,9 @@
         "nominalDischargeCurrentKa": 20, "maxEvents": 10
       },
       "terminals": [
-        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "pos", "label": "+", "kind": "pv+", "xPct": 14.8, "yPct": 10, "maxWires": 1},
+        {"id": "neg", "label": "−", "kind": "pv-", "xPct": 51.1, "yPct": 11.1, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 82.4, "yPct": 11.4, "maxWires": 1}
       ],
       "protection": {
         "continuousVoltageUcV": 600, "protectionLevelUpKv": 2.0, "nominalDischargeCurrentKa": 20,
@@ -138,13 +138,13 @@
         "poles": 2
       },
       "terminals": [
-        {"id": "s1-pos", "label": "S1+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "s1-neg", "label": "S1−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "s2-pos", "label": "S2+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "s2-neg", "label": "S2−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "out-pos", "label": "OUT+", "kind": "pv+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "out-neg", "label": "OUT−", "kind": "pv-", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "s1-pos", "label": "S1+", "kind": "pv+", "xPct": 16, "yPct": 90.4, "maxWires": 1},
+        {"id": "s1-neg", "label": "S1−", "kind": "pv-", "xPct": 26.5, "yPct": 90.2, "maxWires": 1},
+        {"id": "s2-pos", "label": "S2+", "kind": "pv+", "xPct": 36.7, "yPct": 90.6, "maxWires": 1},
+        {"id": "s2-neg", "label": "S2−", "kind": "pv-", "xPct": 46.7, "yPct": 90.3, "maxWires": 1},
+        {"id": "out-pos", "label": "OUT+", "kind": "pv+", "xPct": 68.5, "yPct": 77.4, "maxWires": 1},
+        {"id": "out-neg", "label": "OUT−", "kind": "pv-", "xPct": 76.7, "yPct": 77, "maxWires": 1},
+        {"id": "pe", "label": "PE", "kind": "pe", "xPct": 86.9, "yPct": 62.5, "maxWires": 1}
       ],
       "protection": {"fusePerStringA": 15, "ratedVoltageDcV": 1000, "ratedCurrentA": 32},
       "image": "src/assets/components/combiner-pv-2s.webp",

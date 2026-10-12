@@ -12,8 +12,8 @@
         "resistanceAtMaxOhm": 0.72
       },
       "terminals": [
-        {"id": "a", "label": "+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "b", "label": "−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "a", "label": "+", "kind": "dc+", "xPct": 41.7, "yPct": 91.9, "maxWires": 1},
+        {"id": "b", "label": "−", "kind": "dc-", "xPct": 55.8, "yPct": 91.9, "maxWires": 1}
       ],
       "protection": {},
       "image": "src/assets/components/load-dc.webp",
@@ -37,8 +37,8 @@
         "resistanceAtMaxOhm": 1.44
       },
       "terminals": [
-        {"id": "a", "label": "+", "kind": "dc+", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "b", "label": "−", "kind": "dc-", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "a", "label": "+", "kind": "dc+", "xPct": 41.7, "yPct": 91.9, "maxWires": 1},
+        {"id": "b", "label": "−", "kind": "dc-", "xPct": 55.8, "yPct": 91.9, "maxWires": 1}
       ],
       "protection": {},
       "image": "src/assets/components/load-dc.webp",
@@ -62,8 +62,8 @@
         "resistanceAtMaxOhm": 96.8
       },
       "terminals": [
-        {"id": "a", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "b", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "a", "label": "L", "kind": "acL", "xPct": 36.1, "yPct": 92.1, "maxWires": 1},
+        {"id": "b", "label": "N", "kind": "acN", "xPct": 59.9, "yPct": 92.4, "maxWires": 1}
       ],
       "protection": {},
       "image": "src/assets/components/load-ac.webp",
@@ -87,8 +87,8 @@
         "resistanceAtMaxOhm": 32.267
       },
       "terminals": [
-        {"id": "a", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "b", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "a", "label": "L", "kind": "acL", "xPct": 36.1, "yPct": 92.1, "maxWires": 1},
+        {"id": "b", "label": "N", "kind": "acN", "xPct": 59.9, "yPct": 92.4, "maxWires": 1}
       ],
       "protection": {},
       "image": "src/assets/components/load-ac.webp",
@@ -112,8 +112,8 @@
         "resistanceAtMaxOhm": 24.2
       },
       "terminals": [
-        {"id": "a", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "b", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "a", "label": "L", "kind": "acL", "xPct": 36.1, "yPct": 92.1, "maxWires": 1},
+        {"id": "b", "label": "N", "kind": "acN", "xPct": 59.9, "yPct": 92.4, "maxWires": 1}
       ],
       "protection": {},
       "image": "src/assets/components/load-ac.webp",
@@ -137,8 +137,8 @@
         "resistanceAtMaxOhm": 9.68
       },
       "terminals": [
-        {"id": "a", "label": "L", "kind": "acL", "xPct": 0, "yPct": 0, "maxWires": 1},
-        {"id": "b", "label": "N", "kind": "acN", "xPct": 0, "yPct": 0, "maxWires": 1}
+        {"id": "a", "label": "L", "kind": "acL", "xPct": 36.1, "yPct": 92.1, "maxWires": 1},
+        {"id": "b", "label": "N", "kind": "acN", "xPct": 59.9, "yPct": 92.4, "maxWires": 1}
       ],
       "protection": {},
       "image": "src/assets/components/load-ac.webp",
