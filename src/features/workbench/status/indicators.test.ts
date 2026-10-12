@@ -7,6 +7,7 @@ import {
   loadLevelOf,
   sccLcdKey,
   sccLcdOf,
+  workingOf,
 } from './indicators';
 import {
   INVERTER_COMPONENTS,
@@ -154,5 +155,27 @@ describe('flowSpeedPxPerS', () => {
 
   it('arus yang hampir sama memberi kecepatan yang sama (tidak tersentak)', () => {
     expect(flowSpeedPxPerS(10)).toBe(flowSpeedPxPerS(10.2));
+  });
+});
+
+describe('workingOf', () => {
+  const FAN = catalogItem('load-ac-fan-50w');
+  const BATTERY = catalogItem('bat-vrla-agm-12v-100ah');
+
+  it('komponen normal yang dialiri arus sedang bekerja', () => {
+    const { snapshot } = solve(INVERTER_COMPONENTS, INVERTER_WIRES);
+    expect(workingOf('fan', FAN, snapshot)).toBe(true);
+    expect(workingOf('bat', BATTERY, snapshot)).toBe(true);
+  });
+
+  it('tanpa arus, rusak, atau komponen ber-LED: tidak bertanda bekerja', () => {
+    const idle = solve(INVERTER_COMPONENTS, INVERTER_WIRES.slice(0, 2)).snapshot;
+    expect(workingOf('fan', FAN, idle)).toBe(false);
+    const damaged = solve(INVERTER_COMPONENTS, INVERTER_WIRES, SUNNY, {
+      damagedComponentIds: ['fan'],
+    }).snapshot;
+    expect(workingOf('fan', FAN, damaged)).toBe(false);
+    const running = solve(INVERTER_COMPONENTS, INVERTER_WIRES).snapshot;
+    expect(workingOf('inv', INVERTER, running)).toBe(false);
   });
 });

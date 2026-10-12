@@ -50,6 +50,8 @@ export const id = {
     empty: 'Seret komponen dari baki ke sini',
     component: (name: string, id: string) => `${name} (${id})`,
     terminal: (label: string) => `Terminal ${label}`,
+    legend: 'Warna kabel dan bentuk terminal',
+    legendKinds: { 'dc+': 'DC+', 'dc-': 'DC−', acL: 'L', acN: 'N', pe: 'PE' },
   },
   file: {
     save: 'Simpan',

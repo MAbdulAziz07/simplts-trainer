@@ -81,11 +81,20 @@ test('lampu berpendar sebanding daya dan padam tanpa sumber', async ({ page }) =
     ],
   );
   const glow = node(page, 'lamp').locator('.lamp-glow');
+  const working = (id: string) => node(page, id).locator('.status-badge[data-condition="ok"]');
   await expect(glow).toHaveCount(0);
+  // Tanpa arus tidak ada tanda bekerja.
+  await expect(working('lamp')).toHaveCount(0);
+  await expect(working('bat')).toHaveCount(0);
 
   await page.getByRole('switch', { name: 'Tuas MCB DC 32A' }).click();
   await expect(glow).toBeVisible();
   expect(Number(await glow.getAttribute('data-level'))).toBeGreaterThanOrEqual(18);
+  // Komponen yang dialiri arus bercentang: ikon + teks singkat, bukan warna saja.
+  for (const id of ['bat', 'mcb', 'lamp']) {
+    await expect(working(id)).toHaveText(/^OK/);
+    await expect(working(id)).toContainText('Bekerja normal');
+  }
 });
 
 test('MCB trip: tuas pindah ke OFF bertanda TRIP, lalu di-ON-kan lagi', async ({ page }) => {
@@ -125,7 +134,8 @@ test('MCB trip: tuas pindah ke OFF bertanda TRIP, lalu di-ON-kan lagi', async ({
 
   await lever.click();
   await expect(lever).toHaveAttribute('aria-checked', 'true');
-  await expect(node(page, 'mcb').locator('.status-badge')).toHaveCount(0);
+  // Tanda TRIP hilang; MCB yang kembali dialiri arus bertanda bekerja.
+  await expect(node(page, 'mcb').locator('.status-badge')).toHaveText(/^OK/);
   await expect(wire(page, 'w1').locator('.wire-flow')).toHaveCount(1);
 });
 
@@ -192,4 +202,21 @@ test('kabel terlalu kecil: memanas, rusak, lalu diganti', async ({ page }) => {
   const damaged = await page.getByRole('button', { name: /^Ganti kabel/ }).count();
   await replace.click();
   await expect(page.getByRole('button', { name: /^Ganti kabel/ })).toHaveCount(damaged - 1);
+});
+
+test('legenda lima warna kabel dengan bentuk terminalnya mengambang di meja', async ({ page }) => {
+  await page.goto('/');
+  const legend = page.getByRole('list', { name: 'Warna kabel dan bentuk terminal' });
+  await expect(legend.getByRole('listitem')).toHaveText(['+DC+', '−DC−', 'LL', 'NN', '⏚PE']);
+  // DC bulat, AC dan PE persegi bersudut tumpul.
+  const dot = (index: number) => legend.getByRole('listitem').nth(index).locator('.terminal-dot');
+  await expect(dot(0)).toHaveCSS('border-radius', /^(50%|9999px|3\.35544e\+07px)$/);
+  await expect(dot(2)).toHaveCSS('border-radius', '5px');
+  // Tidak menutupi segitiga temuan di sampingnya.
+  const triangle = (await page
+    .getByRole('button', { name: 'Tidak ada temuan pemeriksaan' })
+    .boundingBox())!;
+  const box = (await legend.boundingBox())!;
+  expect(box.x).toBeGreaterThanOrEqual(triangle.x + triangle.width + 8);
+  expect(box.height).toBe(44);
 });

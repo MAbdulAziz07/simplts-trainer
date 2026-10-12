@@ -79,6 +79,8 @@ export const status = {
     damaged: (name: string) => `Ganti ${name}`,
   },
   repairWire: (id: string) => `Ganti kabel ${id}`,
+  working: 'OK',
+  workingHint: 'Bekerja normal',
   loadPower: 'Daya beban',
   loadPowerValue: (powerW: number) => `${number(powerW)} W`,
   loadPowerSetting: (name: string) => `Setelan daya ${name}`,

@@ -168,6 +168,10 @@
   white-space: nowrap;
 }
 
+.status-badge[data-tone='ok'] {
+  background: var(--color-status-ok);
+}
+
 .status-badge[data-tone='warning'] {
   background: var(--color-status-warning);
 }

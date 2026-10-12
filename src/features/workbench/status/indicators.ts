@@ -101,6 +101,22 @@ export function batteryKey(id: string, snapshot: Snapshot): string {
   return `${Math.round(socPct)}|${direction}`;
 }
 
+/** Arus terminal terkecil yang dianggap komponen sedang bekerja. */
+const WORKING_MIN_A = 0.01;
+
+/**
+ * `true` bila komponen berkondisi normal dan sedang dialiri arus di salah satu terminalnya. SCC
+ * dan inverter tidak dihitung: keadaannya sudah ditunjukkan LED-nya.
+ */
+export function workingOf(id: string, item: CatalogItem, snapshot: Snapshot): boolean {
+  if (item.category === 'scc-pwm' || item.category === 'inverter-offgrid') return false;
+  if (snapshot.components[id]?.condition !== 'ok') return false;
+  return item.terminals.some(
+    (terminal) =>
+      Math.abs(snapshot.terminals[`${id}.${terminal.id}`]?.currentA ?? 0) >= WORKING_MIN_A,
+  );
+}
+
 export type BadgeTone = 'warning' | 'trip' | 'danger' | 'broken' | 'muted';
 
 /** Warna tanda status per kondisi (docs/UX.md §2.4); `ok` dan `off` tidak diberi tanda. */

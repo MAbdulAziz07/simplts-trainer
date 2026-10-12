@@ -1,5 +1,6 @@
 import {
   Ban,
+  Check,
   BatteryLow,
   BatteryWarning,
   Flame,
@@ -15,7 +16,7 @@ import {
 import type { CatalogItem, ComponentCondition } from '@/domain';
 import { t } from '@/i18n';
 import { REPAIRABLE_CONDITIONS, useSimStore } from '@/store';
-import { BADGE_TONE } from './indicators';
+import { BADGE_TONE, workingOf } from './indicators';
 
 type MarkedCondition = keyof typeof t.status.conditions;
 
@@ -38,12 +39,26 @@ const isRepairable = (condition: MarkedCondition): condition is keyof typeof t.s
 
 /**
  * Tanda kondisi di pojok kanan atas node: ikon + teks singkat + warna (docs/UX.md §2.4). Komponen
- * rusak berasap. Kondisi yang bisa dipulihkan mendapat tombol reset; MCB trip dipulihkan lewat
+ * yang bekerja normal bercentang, komponen rusak berasap. Kondisi yang bisa dipulihkan mendapat tombol reset; MCB trip dipulihkan lewat
  * tuasnya sendiri.
  */
 export function ConditionBadge({ id, item }: { id: string; item: CatalogItem }) {
   const condition = useSimStore((state) => state.snapshot.components[id]?.condition);
   const repairComponent = useSimStore((state) => state.repairComponent);
+  const isWorking = useSimStore((state) => workingOf(id, item, state.snapshot));
+  if (isWorking)
+    return (
+      <span
+        className="status-badge"
+        data-condition="ok"
+        data-tone="ok"
+        title={t.status.workingHint}
+      >
+        <Check aria-hidden size={14} strokeWidth={3} />
+        {t.status.working}
+        <span className="sr-only">{t.status.workingHint}</span>
+      </span>
+    );
   if (!condition || !isMarked(condition)) return null;
   const Icon = ICON[condition];
   const hint = t.status.conditionHints[condition];

@@ -22,6 +22,7 @@ import { useFlowHandlers } from './useFlowHandlers';
 import { useFlowNodes } from './useFlowNodes';
 import { WORKBENCH_ATTRIBUTE } from './usePlaceComponent';
 import { useWorkbenchShortcuts } from './useWorkbenchShortcuts';
+import { WireLegend } from './WireLegend';
 import { WorkbenchToolbar } from './WorkbenchToolbar';
 import './workbench.css';
 import './status/status.css';
@@ -117,6 +118,7 @@ export function Workbench() {
         <SelectedWirePanel />
         <InstrumentLayer />
         <FindingsButton />
+        <WireLegend />
         <FitOnLoad />
       </ReactFlow>
       {isEmpty && (

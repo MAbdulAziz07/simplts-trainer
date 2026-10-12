@@ -139,3 +139,8 @@
       0 0 0 5px var(--color-brand);
   }
 }
+
+/* Legenda warna kabel: di kanan segitiga temuan (44 px + sela). */
+.react-flow__panel.wire-legend-panel {
+  margin-left: 71px;
+}
