@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { expect, type Locator, type Page } from '@playwright/test';
 
 // Pembantu uji alur simulasi: menaruh komponen lewat baki, memasang kabel, dan kendali bawah.
@@ -46,4 +47,63 @@ export async function numberIn(locator: Locator): Promise<number> {
   const text = (await locator.textContent()) ?? '';
   const match = /-?\d+(?:[.,]\d+)?/.exec(text.replace(/\.(?=\d{3})/g, ''));
   return match ? Number(match[0].replace(',', '.')) : Number.NaN;
+}
+
+export interface SeedOptions {
+  /** Penampang semua kabel; bawaan 4 mm². */
+  areaMm2?: number;
+  /** Id kabel katalog; bawaan kabel PV. */
+  cableId?: string;
+  /** MCB/fuse yang ON. */
+  closed?: string[];
+}
+
+/**
+ * Memuat rangkaian jadi lewat simpan otomatis, tingkat Mahir. `parts` = [id, id katalog];
+ * `links` = pasangan `komponen.terminal`; kabelnya w1, w2, … Komponen ditata berjajar lalu
+ * meja dipaskan ke layar.
+ */
+export async function seedCircuit(
+  page: Page,
+  parts: [string, string][],
+  links: [string, string][],
+  { areaMm2 = 4, cableId = 'cable-pv-h1z2z2k', closed = [] }: SeedOptions = {},
+) {
+  const COLUMNS = 3;
+  const project = {
+    app: 'simplts',
+    formatVersion: 1,
+    packageId: 'min',
+    components: parts.map(([id, catalogId], index) => ({
+      id,
+      catalogId,
+      xPx: 48 + (index % COLUMNS) * 384,
+      yPx: 96 + Math.floor(index / COLUMNS) * 384,
+      rotationDeg: 0,
+    })),
+    wires: links.map(([from, to], index) => {
+      const [fromNode = '', fromTerminal = ''] = from.split('.');
+      const [toNode = '', toTerminal = ''] = to.split('.');
+      return {
+        id: `w${index + 1}`,
+        from: { componentId: fromNode, terminalId: fromTerminal },
+        to: { componentId: toNode, terminalId: toTerminal },
+        cableId,
+        areaMm2,
+        lengthM: 1,
+      };
+    }),
+    closedSwitchIds: closed,
+  };
+  await page.goto('/');
+  await page.evaluate(
+    (saved) => {
+      window.localStorage.setItem('simplts.autosave.v1', JSON.stringify(saved));
+    },
+    { project, level: 'expert' },
+  );
+  await page.reload();
+  await expect(page.locator('.react-flow__node')).toHaveCount(parts.length);
+  await expect(page.locator('.react-flow__edge')).toHaveCount(links.length);
+  await page.getByRole('button', { name: 'Paskan ke layar' }).click();
 }

@@ -1,13 +1,18 @@
 import { useUpdateNodeInternals, type NodeProps } from '@xyflow/react';
 import { memo, useEffect, useMemo } from 'react';
-import { ComponentPicture, itemSizePx } from '@/ui';
+import { itemSizePx } from '@/ui';
 import type { ComponentFlowNode } from '../flow-types';
+import { NodePicture } from '../status/NodePicture';
+import { NodeStatus } from '../status/NodeStatus';
 import { layoutTerminals, rotatedSizePx } from './geometry';
 import { SwitchToggle } from './SwitchToggle';
 import { TerminalHandle } from './TerminalHandle';
 import { useTerminalRoles } from './useTerminalRoles';
 
-/** Satu komponen di meja kerja: gambar (ikut berputar) dan terminalnya (label tetap tegak). */
+/**
+ * Satu komponen di meja kerja: gambar (ikut berputar), keadaan simulasinya, dan terminalnya (label
+ * tetap tegak).
+ */
 export const ComponentNode = memo(function ComponentNode({
   id,
   data,
@@ -33,16 +38,8 @@ export const ComponentNode = memo(function ComponentNode({
       style={{ width: box.widthPx, height: box.heightPx }}
     >
       <span className="component-name">{item.name}</span>
-      <div
-        className="absolute top-1/2 left-1/2"
-        style={{
-          width: size.widthPx,
-          height: size.heightPx,
-          transform: `translate(-50%, -50%) rotate(${rotationDeg}deg)`,
-        }}
-      >
-        <ComponentPicture item={item} />
-      </div>
+      <NodePicture id={id} item={item} size={size} rotationDeg={rotationDeg} />
+      <NodeStatus id={id} item={item} />
       <SwitchToggle
         componentId={id}
         category={item.category}

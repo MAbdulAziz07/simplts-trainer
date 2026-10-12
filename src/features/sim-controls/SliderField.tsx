@@ -22,7 +22,10 @@ export function SliderField(props: SliderFieldProps) {
   return (
     <div className="flex min-w-0 flex-1 items-center gap-2" title={label}>
       <Icon aria-hidden size={20} className="text-ink-muted shrink-0" />
-      <output className="w-[76px] shrink-0 text-sm font-semibold tabular-nums">{valueText}</output>
+      {/* Nilai yang sama dibacakan lewat `aria-valuetext` slider. */}
+      <span aria-hidden className="w-[76px] shrink-0 text-sm font-semibold tabular-nums">
+        {valueText}
+      </span>
       <input
         type="range"
         className="sim-range min-w-0 flex-1"

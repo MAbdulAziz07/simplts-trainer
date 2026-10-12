@@ -5,6 +5,7 @@ import {
   addPart,
   addWire,
   moveParts,
+  openSwitches,
   nextId,
   patchWire,
   removeItems,
@@ -136,5 +137,14 @@ describe('toggleSwitch', () => {
     const doc = sample();
     expect(toggleSwitch(doc, 'c1', findItem)).toBe(doc);
     expect(toggleSwitch(doc, 'hilang', findItem)).toBe(doc);
+  });
+});
+
+describe('openSwitches', () => {
+  it('membuka tuas yang disebut; yang sudah OFF atau tidak dikenal tidak mengubah dokumen', () => {
+    const doc = sample();
+    expect(openSwitches(doc, ['c3']).closedSwitchIds).toEqual([]);
+    expect(openSwitches(doc, ['c2', 'hilang'])).toBe(doc);
+    expect(doc.closedSwitchIds).toEqual(['c3']);
   });
 });

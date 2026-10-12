@@ -151,6 +151,31 @@
         ]
       },
       "notes": "[PERLU VERIFIKASI] Beban resistif yang dapat diatur 0–5000 W (kontrol beban PRD F8); tanpa arus lonjakan awal (PRD §7)."
+    },
+    {
+      "id": "load-ac-fan-50w",
+      "category": "load-ac",
+      "name": "Kipas AC 50W",
+      "packages": ["min", "rek", "best"],
+      "electrical": {
+        "kind": "resistive", "ratedVoltageV": 220, "maxPowerW": 50, "minPowerW": 0, "stepW": 5,
+        "resistanceAtMaxOhm": 968
+      },
+      "terminals": [
+        {"id": "a", "label": "L", "kind": "acL", "xPct": 40, "yPct": 96, "maxWires": 1},
+        {"id": "b", "label": "N", "kind": "acN", "xPct": 60, "yPct": 96, "maxWires": 1}
+      ],
+      "protection": {},
+      "image": "src/assets/components/load-ac-fan.webp",
+      "datasheet": {
+        "source": "Tidak ada datasheet; nilai generik pasar Indonesia tanpa merek (MODEL_FISIKA.md)",
+        "coverage": "generic",
+        "verify": [
+          "electrical.kind", "electrical.ratedVoltageV", "electrical.maxPowerW",
+          "electrical.minPowerW", "electrical.stepW", "electrical.resistanceAtMaxOhm"
+        ]
+      },
+      "notes": "[PERLU VERIFIKASI] Kipas meja 50 W dimodelkan sebagai beban resistif (tanpa arus asut dan tanpa faktor daya); putaran baling-baling di tampilan sebanding daya terserap."
     }
   ]
 }

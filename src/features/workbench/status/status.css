@@ -1,0 +1,394 @@
+/* Umpan balik simulasi di meja kerja: LED, LCD, bar SoC, tanda kondisi, efek gambar, arus kabel. */
+
+/* Deret indikator di atas nama komponen. */
+.node-strip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 34px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.status-led {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #9ca3af;
+  box-shadow: 0 0 0 1px rgb(17 24 39 / 0.4);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: auto;
+}
+
+.status-led[data-led^='green'] {
+  background: #16a34a;
+  box-shadow:
+    0 0 0 1px rgb(17 24 39 / 0.4),
+    0 0 8px 2px rgb(34 197 94 / 0.7);
+}
+
+.status-led[data-led='yellow'] {
+  background: #eab308;
+  color: var(--color-ink);
+  box-shadow:
+    0 0 0 1px rgb(17 24 39 / 0.4),
+    0 0 8px 2px rgb(234 179 8 / 0.7);
+}
+
+.status-led[data-led='red'] {
+  background: #dc2626;
+  box-shadow:
+    0 0 0 1px rgb(17 24 39 / 0.4),
+    0 0 8px 2px rgb(220 38 38 / 0.7);
+}
+
+.status-led[data-led='green-blink'] {
+  animation: led-blink 1s steps(2, jump-none) infinite;
+}
+
+@keyframes led-blink {
+  to {
+    background: #14532d;
+    box-shadow: 0 0 0 1px rgb(17 24 39 / 0.4);
+  }
+}
+
+/* Cip LCD 14 px (docs/UX.md §1 butir 5, §2.5). */
+.lcd-chip {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 8px;
+  padding: 3px 8px;
+  border: 2px solid #1f2937;
+  border-radius: 6px;
+  background: #1c2b22;
+  color: #4b6455;
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  line-height: 18px;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.lcd-chip[data-on] {
+  background: #b9d7a8;
+  color: #10220f;
+}
+
+.lcd-tag {
+  font-size: 12px;
+  text-align: left;
+}
+
+.soc {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: var(--color-card);
+}
+
+.soc-bar {
+  width: 72px;
+  height: 10px;
+  overflow: hidden;
+  border: 1px solid var(--color-control);
+  border-radius: 3px;
+  background: #fff;
+}
+
+.soc-fill {
+  display: block;
+  height: 100%;
+  background: var(--color-status-ok);
+  transition: width 200ms linear;
+}
+
+.soc-bar[data-tone='medium'] .soc-fill {
+  background: var(--color-status-warning);
+}
+
+.soc-bar[data-tone='low'] .soc-fill {
+  background: var(--color-status-danger);
+}
+
+.soc-text {
+  min-width: 36px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  text-align: right;
+}
+
+/* Tanda kondisi di pojok kanan atas: ikon + teks singkat + warna (§2.4). */
+.status-badge {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: var(--color-status-trip);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.status-badge[data-tone='warning'] {
+  background: var(--color-status-warning);
+}
+
+.status-badge[data-tone='danger'] {
+  background: var(--color-status-danger);
+  animation: badge-pulse 1s ease-in-out infinite;
+}
+
+.status-badge[data-tone='broken'] {
+  background: var(--color-status-broken);
+}
+
+.status-badge[data-tone='muted'] {
+  background: #fff;
+  border-color: var(--color-control);
+  color: var(--color-control);
+}
+
+@keyframes badge-pulse {
+  50% {
+    box-shadow: 0 0 0 6px rgb(185 28 28 / 0.3);
+  }
+}
+
+.repair-button {
+  position: absolute;
+  top: 16px;
+  left: 100%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: var(--spacing-touch);
+  height: var(--spacing-touch);
+  margin-left: 12px;
+  border: 2px solid var(--color-brand);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--color-brand);
+  box-shadow: 0 1px 3px rgb(17 24 39 / 0.25);
+  cursor: pointer;
+}
+
+/* MCB punya tuas di tengah sisi kanan; tombol reset naik ke atasnya. */
+.component-node:has([role='switch']) .repair-button {
+  top: -36px;
+}
+
+.repair-button:hover {
+  background: var(--color-brand);
+  color: #fff;
+}
+
+/* Efek pada gambar. */
+.lamp-glow {
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(255 244 180 / 0.95) 0%,
+    rgb(255 220 90 / 0.75) 32%,
+    rgb(255 200 60 / 0) 68%
+  );
+  transform: translate(-50%, -50%);
+  transition: opacity 250ms;
+  pointer-events: none;
+}
+
+.fan-blades {
+  position: absolute;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  animation: fan-spin 1s linear infinite;
+  pointer-events: none;
+}
+
+.fan-blades path {
+  fill: rgb(55 65 81 / 0.55);
+}
+
+.fan-blur {
+  fill: rgb(229 231 235 / 0.55);
+}
+
+@keyframes fan-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.node-picture[data-damaged] img,
+.node-picture[data-damaged] > div {
+  filter: grayscale(1) brightness(0.4);
+}
+
+.crack {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.crack polyline {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.5;
+  stroke-linejoin: bevel;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 1px #000);
+}
+
+.smoke {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  z-index: 1;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.smoke i {
+  position: absolute;
+  bottom: 0;
+  left: -11px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgb(75 85 99 / 0.75);
+  filter: blur(3px);
+  opacity: 0;
+  animation: smoke-rise 2.4s ease-out infinite;
+}
+
+.smoke i:nth-child(2) {
+  left: -2px;
+  animation-delay: 0.8s;
+}
+
+.smoke i:nth-child(3) {
+  left: -20px;
+  animation-delay: 1.6s;
+}
+
+@keyframes smoke-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  20% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-64px) scale(2);
+  }
+}
+
+/* Arus kabel: titik bergerak searah arus, kecepatan lewat `animation-duration`. */
+.wire-flow {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-dasharray: 0.1 15.9;
+  stroke-opacity: 0.9;
+  pointer-events: none;
+  animation: wire-flow 1s linear infinite;
+}
+
+@keyframes wire-flow {
+  to {
+    stroke-dashoffset: -16px;
+  }
+}
+
+.wire-overheat {
+  fill: none;
+  stroke: #f97316;
+  stroke-linecap: round;
+  pointer-events: none;
+  animation: wire-overheat 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes wire-overheat {
+  from {
+    stroke-opacity: 0.25;
+  }
+  to {
+    stroke-opacity: 0.8;
+  }
+}
+
+.wire-repair {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: var(--spacing-touch);
+  height: var(--spacing-touch);
+  border: 2px solid var(--color-status-broken);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--color-status-broken);
+  box-shadow: 0 1px 3px rgb(17 24 39 / 0.25);
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.wire-repair .smoke {
+  top: 0;
+}
+
+/* Saat jeda waktu berhenti: arus dan baling-baling diam di tempat. */
+.workbench:not([data-sim-running]) .wire-flow,
+.workbench:not([data-sim-running]) .fan-blades,
+.workbench:not([data-sim-running]) .status-led[data-led='green-blink'] {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wire-flow,
+  .wire-overheat,
+  .fan-blades,
+  .smoke i,
+  .status-badge[data-tone='danger'],
+  .status-led[data-led='green-blink'] {
+    animation: none;
+  }
+
+  .smoke i {
+    opacity: 0.7;
+  }
+
+  .wire-overheat {
+    stroke-opacity: 0.6;
+  }
+}

@@ -3,5 +3,6 @@ export * from './category-icon';
 export * from './component-image';
 export * from './component-size';
 export * from './ComponentPicture';
+export * from './picture-effect';
 export * from './TerminalDot';
 export * from './terminal-style';

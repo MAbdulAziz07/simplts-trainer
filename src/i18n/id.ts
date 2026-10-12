@@ -1,5 +1,5 @@
 // Semua teks yang tampil ke pengguna, bahasa Indonesia.
-import { sim } from './id-sim';
+import { sim, status } from './id-sim';
 
 export const id = {
   appName: 'Trainer Virtual PLTS',
@@ -67,6 +67,7 @@ export const id = {
   switch: {
     on: 'ON',
     off: 'OFF',
+    tripped: 'TRIP',
     label: (name: string) => `Tuas ${name}`,
   },
   actions: {
@@ -110,6 +111,7 @@ export const id = {
     progress: (placed: number, total: number) => `${placed}/${total}`,
   },
   sim,
+  status,
   severities: {
     info: 'Info',
     warning: 'Peringatan',

@@ -159,6 +159,8 @@ useCircuitStore.subscribe((circuit, previous) => {
   if (sameCircuit(circuit.doc, previous.doc)) return;
   const state = reconcileSimState(sim.state, partsOf(circuit.doc));
   useSimStore.setState(solve(circuit.doc, state, sim.settings));
+  // Tuas MCB rusak yang di-ON-kan pengguna kembali ke OFF.
+  syncSwitches(state);
 });
 
 // Putar/jeda menyalakan dan mematikan putaran bingkai.

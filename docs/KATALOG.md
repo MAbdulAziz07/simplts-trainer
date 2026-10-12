@@ -6,7 +6,7 @@ Angka yang tidak ada di datasheet memakai nilai generik pasar Indonesia tanpa me
 
 ## 1. Berkas
 
-Satu berkas per kelompok kategori. Total 51 item di 12 berkas. Kolom paket menghitung keanggotaan (satu item boleh masuk lebih dari satu paket).
+Satu berkas per kelompok kategori. Total 52 item di 12 berkas. Kolom paket menghitung keanggotaan (satu item boleh masuk lebih dari satu paket).
 
 | Berkas | Kategori (`category`) | Item |
 |---|---|---|
@@ -20,10 +20,10 @@ Satu berkas per kelompok kategori. Total 51 item di 12 berkas. Kolom paket mengh
 | `cables.json` | `cable` | 2 |
 | `meters.json` | `kwh-meter` | 1 |
 | `distribution.json` | `busbar`, `grounding`, `load-panel` | 7 |
-| `loads.json` | `load-dc`, `load-ac` | 6 |
+| `loads.json` | `load-dc`, `load-ac` | 7 |
 | `grid.json` | `grid` | 1 |
 
-Keanggotaan paket: `min` 25 item, `rek` 38 item, `best` 28 item.
+Keanggotaan paket: `min` 26 item, `rek` 39 item, `best` 29 item.
 
 **Tidak masuk katalog** (bukan komponen meja kerja): multimeter, clamp DC, dan meter V AC (fitur `instruments`, PRD F5); tampilan monitoring (nilai di UI, PRD §7). Model datasheet yang tidak dipakai paket mana pun belum dimasukkan: panel LONGi/AESOLAR/REC, SCC PWM RBL selain 20 A, SCC MPPT 300/850 W dan 3KW 12/48 V, baterai FirstPower/Aokly/Tianneng/Victron lain, MCB selain yang dipilih, kWh meter RS PRO dan CHINT.
 

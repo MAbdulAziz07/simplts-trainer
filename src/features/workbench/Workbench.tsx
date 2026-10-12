@@ -8,7 +8,7 @@ import {
 } from '@xyflow/react';
 import { useState } from 'react';
 import { t } from '@/i18n';
-import { useCircuitStore, useToastStore } from '@/store';
+import { useCircuitStore, useSimStore, useToastStore } from '@/store';
 import { SelectedWirePanel } from './edges/SelectedWirePanel';
 import { WireEdge } from './edges/WireEdge';
 import { FitOnLoad } from './FitOnLoad';
@@ -22,6 +22,7 @@ import { WORKBENCH_ATTRIBUTE } from './usePlaceComponent';
 import { useWorkbenchShortcuts } from './useWorkbenchShortcuts';
 import { WorkbenchToolbar } from './WorkbenchToolbar';
 import './workbench.css';
+import './status/status.css';
 
 // docs/UX.md §2.1: kisi 24 px, zoom awal 100%, paling besar 200%. Zoom terkecil 40% (UX.md
 // menyebut 50%) agar preset Terbaik dengan 16 panel muat di meja 870x640 px.
@@ -62,11 +63,17 @@ export function Workbench() {
   // Mode pilih banyak: menyeret di meja membuat kotak pilih, bukan menggeser meja (untuk layar
   // sentuh; dengan keyboard cukup Shift+seret atau Ctrl+klik).
   const [selectMode, setSelectMode] = useState(false);
+  const running = useSimStore((state) => state.running);
   useWorkbenchShortcuts();
   const isEmpty = nodes.length === 0;
 
   return (
-    <main aria-label={t.areas.workbench} className="relative" {...{ [WORKBENCH_ATTRIBUTE]: '' }}>
+    <main
+      aria-label={t.areas.workbench}
+      className="workbench relative"
+      data-sim-running={running || undefined}
+      {...{ [WORKBENCH_ATTRIBUTE]: '' }}
+    >
       <ReactFlow<ComponentFlowNode, WireFlowEdge>
         nodes={nodes}
         edges={edges}

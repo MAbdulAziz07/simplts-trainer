@@ -40,11 +40,11 @@ describe('berkas katalog', () => {
     const inPackage = (id: (typeof PACKAGE_IDS)[number]) =>
       items.filter((item) => item.packages.includes(id)).length;
 
-    expect(items).toHaveLength(51);
+    expect(items).toHaveLength(52);
     expect({ min: inPackage('min'), rek: inPackage('rek'), best: inPackage('best') }).toEqual({
-      min: 25,
-      rek: 38,
-      best: 28,
+      min: 26,
+      rek: 39,
+      best: 29,
     });
   });
 
