@@ -82,3 +82,20 @@ export const findingsPanel = {
   explain: (message: string) => `Penjelasan: ${message}`,
   more: (count: number) => `+${count}`,
 } as const;
+
+// Grafik 24 jam yang dibuka dari bilah simulasi.
+export const chart = {
+  open: 'Grafik 24 jam',
+  close: 'Tutup grafik',
+  title: 'Grafik 24 jam simulasi',
+  power: 'Daya (W)',
+  soc: 'SoC baterai (%)',
+  series: { pv: 'PV', load: 'Beban', soc: 'SoC' },
+  watt: (powerW: number) => `${number(powerW)} W`,
+  percent: (socPct: number) => `${number(socPct)}%`,
+  none: '—',
+  empty: 'Jalankan simulasi untuk mengisi grafik',
+  hint: 'Arahkan penunjuk atau tekan panah kiri dan kanan untuk membaca nilai',
+  table: 'Cuplikan tiap jam',
+  hour: 'Jam',
+} as const;

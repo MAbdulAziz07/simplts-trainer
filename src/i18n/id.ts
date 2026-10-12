@@ -1,6 +1,6 @@
 // Semua teks yang tampil ke pengguna, bahasa Indonesia.
 import { instruments } from './id-instruments';
-import { findingsPanel, sim, status } from './id-sim';
+import { chart, findingsPanel, sim, status } from './id-sim';
 
 export const id = {
   appName: 'Trainer Virtual PLTS',
@@ -111,6 +111,7 @@ export const id = {
     backToApp: 'Kembali ke aplikasi',
     progress: (placed: number, total: number) => `${placed}/${total}`,
   },
+  chart,
   findingsPanel,
   instruments,
   sim,

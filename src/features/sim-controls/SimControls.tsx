@@ -1,10 +1,14 @@
 import { t } from '@/i18n';
 import { useSimStore } from '@/store';
+import { ChartButton, ChartPanel } from './chart/ChartPanel';
 import { EnvControls } from './EnvControls';
 import { Playback } from './Playback';
 import './sim-controls.css';
 
-/** Bilah simulasi 72 px: putar/jeda, kecepatan, jam, iradiasi, awan, suhu (docs/UX.md §2.1). */
+/**
+ * Bilah simulasi 72 px: putar/jeda, kecepatan, jam, iradiasi, awan, suhu (docs/UX.md §2.1), dan
+ * tombol grafik 24 jam.
+ */
 export function SimControls() {
   const running = useSimStore((state) => state.running);
   return (
@@ -16,6 +20,8 @@ export function SimControls() {
       {running && <span aria-hidden className="sim-running-bar" />}
       <Playback />
       <EnvControls />
+      <ChartButton />
+      <ChartPanel />
     </footer>
   );
 }
