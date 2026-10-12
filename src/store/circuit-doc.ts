@@ -115,6 +115,25 @@ export function patchWire(doc: CircuitDoc, wireId: string, patch: WirePatch): Ci
   return same ? doc : { ...doc, wires: doc.wires.map((wire) => (wire === current ? next : wire)) };
 }
 
+/** Setelan daya sebuah beban (W); komponen yang tidak ada atau setelan yang sama tidak mengubah. */
+export function setPartPower(doc: CircuitDoc, id: string, powerSettingW: number): CircuitDoc {
+  const current = doc.components.find((part) => part.id === id);
+  if (!current || current.powerSettingW === powerSettingW) return doc;
+  const components = doc.components.map((part) =>
+    part === current ? { ...part, powerSettingW } : part,
+  );
+  return { ...doc, components };
+}
+
+/** Setelan daya tiap beban yang sudah diatur; beban tanpa setelan bekerja pada daya maksimum. */
+export function loadPowerSettings(doc: CircuitDoc): Record<string, number> {
+  const settings: Record<string, number> = {};
+  for (const part of doc.components) {
+    if (part.powerSettingW !== undefined) settings[part.id] = part.powerSettingW;
+  }
+  return settings;
+}
+
 /** Membuka (OFF) tuas yang disebut, mis. setelah trip; yang sudah OFF tidak berubah. */
 export function openSwitches(doc: CircuitDoc, ids: readonly string[]): CircuitDoc {
   const closedSwitchIds = doc.closedSwitchIds.filter((id) => !ids.includes(id));

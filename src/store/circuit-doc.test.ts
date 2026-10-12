@@ -4,12 +4,14 @@ import {
   EMPTY_DOC,
   addPart,
   addWire,
+  loadPowerSettings,
   moveParts,
   openSwitches,
   nextId,
   patchWire,
   removeItems,
   rotateParts,
+  setPartPower,
   toggleSwitch,
   type CircuitDoc,
 } from './circuit-doc';
@@ -146,5 +148,28 @@ describe('openSwitches', () => {
     expect(openSwitches(doc, ['c3']).closedSwitchIds).toEqual([]);
     expect(openSwitches(doc, ['c2', 'hilang'])).toBe(doc);
     expect(doc.closedSwitchIds).toEqual(['c3']);
+  });
+});
+
+describe('setPartPower dan loadPowerSettings', () => {
+  it('menyimpan setelan daya di komponennya tanpa mengubah dokumen asal', () => {
+    const doc = sample();
+    const next = setPartPower(doc, 'c1', 60);
+    expect(next.components[0]).toMatchObject({ id: 'c1', powerSettingW: 60 });
+    expect(doc.components[0]?.powerSettingW).toBeUndefined();
+    expect(loadPowerSettings(next)).toEqual({ c1: 60 });
+    expect(loadPowerSettings(doc)).toEqual({});
+  });
+
+  it('setelan yang sama atau komponen tak dikenal mengembalikan dokumen yang sama', () => {
+    const doc = setPartPower(sample(), 'c1', 60);
+    expect(setPartPower(doc, 'c1', 60)).toBe(doc);
+    expect(setPartPower(doc, 'hilang', 60)).toBe(doc);
+  });
+
+  it('setelan ikut saat komponen digeser dan diputar', () => {
+    let doc = setPartPower(sample(), 'c1', 0);
+    doc = rotateParts(moveParts(doc, [{ id: 'c1', xPx: 96, yPx: 96 }]), ['c1']);
+    expect(loadPowerSettings(doc)).toEqual({ c1: 0 });
   });
 });

@@ -192,3 +192,44 @@ describe('simStore — reset percobaan', () => {
     expect(sim().clockHour).toBe(10);
   });
 });
+
+describe('simStore — setelan daya beban', () => {
+  it('menurunkan setelan menurunkan daya dan arus; 0 W memutus arus', () => {
+    circuit().addComponent('bat-vrla-agm-12v-100ah', { xPx: 0, yPx: 0 });
+    circuit().addComponent('load-dc-12v-200w', { xPx: 240, yPx: 0 });
+    circuit().connect(ref('c1', 'pos'), ref('c2', 'a'));
+    circuit().connect(ref('c1', 'neg'), ref('c2', 'b'));
+    const fullW = sim().snapshot.operatingPoint.loads.c2?.powerW ?? 0;
+    expect(fullW).toBeGreaterThan(180);
+
+    circuit().setLoadPower('c2', 100);
+    const halfW = sim().snapshot.operatingPoint.loads.c2?.powerW ?? 0;
+    expect(halfW).toBeGreaterThan(fullW * 0.45);
+    expect(halfW).toBeLessThan(fullW * 0.6);
+
+    circuit().setLoadPower('c2', 0);
+    expect(sim().snapshot.operatingPoint.loads.c2?.powerW).toBe(0);
+    expect(sim().snapshot.wires.w1?.currentA).toBe(0);
+  });
+
+  it('beban 100 W di terminal beban SCC tidak lagi beban lebih', () => {
+    circuit().addComponent('bat-vrla-agm-12v-100ah', { xPx: 0, yPx: 0 });
+    circuit().addComponent('scc-pwm-rbl-20a', { xPx: 240, yPx: 0 });
+    circuit().addComponent('load-dc-12v-200w', { xPx: 480, yPx: 0 });
+    circuit().connect(ref('c2', 'bat-pos'), ref('c1', 'pos'));
+    circuit().connect(ref('c2', 'bat-neg'), ref('c1', 'neg'));
+    circuit().connect(ref('c2', 'load-pos'), ref('c3', 'a'));
+    circuit().connect(ref('c2', 'load-neg'), ref('c3', 'b'));
+    circuit().setLoadPower('c3', 100);
+    sim().setSpeed(60);
+    for (let i = 0; i < 40; i += 1) sim().advance(0.05);
+    expect(sim().snapshot.components.c2?.condition).toBe('ok');
+    expect(Math.abs(sim().snapshot.operatingPoint.sccs.c2?.loadCurrentA ?? 0)).toBeLessThan(10);
+
+    circuit().setLoadPower('c3', 200);
+    for (let i = 0; i < 40 && sim().snapshot.components.c2?.condition === 'ok'; i += 1) {
+      sim().advance(0.05);
+    }
+    expect(sim().snapshot.components.c2?.condition).toBe('overload');
+  });
+});

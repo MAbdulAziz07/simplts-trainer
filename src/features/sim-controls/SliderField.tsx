@@ -14,6 +14,9 @@ interface SliderFieldProps {
   onChange: (value: number) => void;
   /** Besaran yang bisa mengikuti jam: tombol "A" menyala saat otomatis. */
   auto?: { on: boolean; onEnable: () => void };
+  /** Awal dan akhir satu seretan ibu jari slider, mis. untuk menjadikannya satu langkah undo. */
+  onGestureStart?: () => void;
+  onGestureEnd?: () => void;
 }
 
 /** Satu besaran lingkungan: ikon, angka, slider, dan (bila ada) tombol kembali ke otomatis. */
@@ -36,6 +39,10 @@ export function SliderField(props: SliderFieldProps) {
         step={props.step}
         value={props.value}
         onChange={(event) => props.onChange(Number(event.target.value))}
+        onPointerDown={props.onGestureStart}
+        onPointerUp={props.onGestureEnd}
+        onPointerCancel={props.onGestureEnd}
+        onBlur={props.onGestureEnd}
       />
       {auto && (
         <button

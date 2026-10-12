@@ -26,7 +26,10 @@ export interface CircuitParts {
   closedSwitchIds: readonly string[];
 }
 
-/** `true` bila kedua dokumen sama secara listrik (posisi dan putaran tidak dihitung). */
+/**
+ * `true` bila kedua dokumen sama secara listrik: komponen, setelan daya beban, kabel, dan tuas
+ * (posisi dan putaran tidak dihitung).
+ */
 export function sameCircuit(a: CircuitDoc, b: CircuitDoc): boolean {
   if (a === b) return true;
   return (
@@ -35,7 +38,11 @@ export function sameCircuit(a: CircuitDoc, b: CircuitDoc): boolean {
     a.components.length === b.components.length &&
     a.components.every((part, i) => {
       const other = b.components[i];
-      return part.id === other?.id && part.catalogId === other.catalogId;
+      return (
+        part.id === other?.id &&
+        part.catalogId === other.catalogId &&
+        part.powerSettingW === other.powerSettingW
+      );
     })
   );
 }

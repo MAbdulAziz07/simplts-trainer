@@ -87,3 +87,27 @@ describe('validateProject', () => {
     expect(result.project).toBeUndefined();
   });
 });
+
+describe('validateProject — setelan daya beban', () => {
+  const load = { id: 'l1', catalogId: 'load-dc-12v-200w', xPx: 0, yPx: 0, rotationDeg: 0 } as const;
+
+  it('menerima powerSettingW pada beban; berkas tanpa field itu tetap sah', () => {
+    const withSetting = project((draft) => draft.components.push({ ...load, powerSettingW: 60 }));
+    expect(validateProject(withSetting, catalog).issues).toEqual([]);
+    expect(validateProject(withSetting, catalog).project?.components[2]?.powerSettingW).toBe(60);
+    const without = project((draft) => draft.components.push({ ...load }));
+    expect(validateProject(without, catalog).issues).toEqual([]);
+  });
+
+  it('menolak powerSettingW pada komponen bukan beban dan nilai negatif', () => {
+    const onPanel = project((draft) => {
+      const [panel] = draft.components;
+      if (panel) draft.components[0] = { ...panel, powerSettingW: 60 };
+    });
+    expect(validateProject(onPanel, catalog).issues).toEqual([
+      'components.pv1: powerSettingW hanya untuk beban',
+    ]);
+    const negative = project((draft) => draft.components.push({ ...load, powerSettingW: -5 }));
+    expect(validateProject(negative, catalog).rejection).toBe('invalid');
+  });
+});

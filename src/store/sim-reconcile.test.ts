@@ -175,3 +175,20 @@ describe('repairState', () => {
     expect(reset.overloadDoseById).toEqual({});
   });
 });
+
+describe('sameCircuit — setelan daya beban', () => {
+  it('setelan daya yang berubah adalah perubahan listrik', () => {
+    const part = {
+      id: 'c1',
+      catalogId: 'load-dc-12v-200w',
+      xPx: 0,
+      yPx: 0,
+      rotationDeg: 0,
+    } as const;
+    const doc: CircuitDoc = { components: [part], wires: [], closedSwitchIds: [] };
+    const dimmed = { ...doc, components: [{ ...part, powerSettingW: 100 }] };
+    expect(sameCircuit(doc, dimmed)).toBe(false);
+    const again = { ...doc, components: [{ ...part, powerSettingW: 100 }] };
+    expect(sameCircuit(dimmed, again)).toBe(true);
+  });
+});

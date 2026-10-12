@@ -164,3 +164,37 @@ describe('circuitStore — proyek', () => {
     expect(store().doc).toBe(EMPTY_DOC);
   });
 });
+
+describe('circuitStore — setelan daya beban', () => {
+  it('dibulatkan ke langkah katalog, dibatasi rentang beban, dan bisa dibatalkan', () => {
+    // Beban DC 12 V: 0–200 W, langkah 10 W.
+    store().addComponent('load-dc-12v-200w', { xPx: 0, yPx: 0 });
+    store().setLoadPower('c1', 64);
+    expect(store().doc.components[0]?.powerSettingW).toBe(60);
+    store().setLoadPower('c1', 900);
+    expect(store().doc.components[0]?.powerSettingW).toBe(200);
+    store().setLoadPower('c1', -20);
+    expect(store().doc.components[0]?.powerSettingW).toBe(0);
+    store().undo();
+    expect(store().doc.components[0]?.powerSettingW).toBe(200);
+  });
+
+  it('satu seretan slider menjadi satu langkah undo', () => {
+    store().addComponent('load-dc-12v-200w', { xPx: 0, yPx: 0 });
+    const steps = store().history.past.length;
+    store().beginGesture();
+    for (const powerW of [180, 150, 120, 100]) store().setLoadPower('c1', powerW);
+    store().endGesture();
+    expect(store().history.past.length).toBe(steps + 1);
+    store().undo();
+    expect(store().doc.components[0]?.powerSettingW).toBeUndefined();
+  });
+
+  it('komponen yang bukan beban tidak berubah', () => {
+    placeThree();
+    const { doc } = store();
+    store().setLoadPower('c1', 50);
+    store().setLoadPower('hilang', 50);
+    expect(store().doc).toBe(doc);
+  });
+});

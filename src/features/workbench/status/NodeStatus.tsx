@@ -2,7 +2,7 @@ import { Check, ChevronsDown, ChevronsUp, X } from 'lucide-react';
 import { memo } from 'react';
 import type { CatalogItem } from '@/domain';
 import { t } from '@/i18n';
-import { useSimStore } from '@/store';
+import { useCircuitStore, useSimStore } from '@/store';
 import { ConditionBadge } from './ConditionBadge';
 import { batteryKey, ledOf, sccLcdKey, type ChargeDirection, type LedState } from './indicators';
 
@@ -90,6 +90,23 @@ function SocBar({ id, item }: NodeStatusProps) {
   );
 }
 
+/** Setelan daya beban, terlihat tanpa memilih komponennya; diatur lewat inspektur. */
+function LoadPowerChip({ id, item }: NodeStatusProps) {
+  const settingW = useCircuitStore(
+    (state) => state.doc.components.find((part) => part.id === id)?.powerSettingW,
+  );
+  if (item.category !== 'load-dc' && item.category !== 'load-ac') return null;
+  return (
+    <span
+      role="img"
+      aria-label={`${t.status.loadPowerSetting(item.name)}: ${t.status.loadPowerValue(settingW ?? item.electrical.maxPowerW)}`}
+      className="power-chip"
+    >
+      {t.status.loadPowerValue(settingW ?? item.electrical.maxPowerW)}
+    </span>
+  );
+}
+
 interface NodeStatusProps {
   id: string;
   item: CatalogItem;
@@ -97,12 +114,13 @@ interface NodeStatusProps {
 
 /**
  * Tampilan keadaan sebuah komponen di luar gambarnya: deret indikator di atas nama (LED, LCD, bar
- * SoC) serta tanda kondisi dan tombol reset di pojok kanan atas.
+ * SoC, setelan daya beban) serta tanda kondisi dan tombol reset di pojok kanan atas.
  */
 export const NodeStatus = memo(function NodeStatus({ id, item }: NodeStatusProps) {
   const { category } = item;
   const hasLed = category === 'scc-pwm' || category === 'inverter-offgrid';
-  const hasStrip = hasLed || category === 'battery';
+  const isLoad = category === 'load-dc' || category === 'load-ac';
+  const hasStrip = hasLed || isLoad || category === 'battery';
   return (
     <>
       {hasStrip && (
@@ -110,6 +128,7 @@ export const NodeStatus = memo(function NodeStatus({ id, item }: NodeStatusProps
           {hasLed && <StatusLed id={id} item={item} />}
           {category === 'scc-pwm' && <SccLcd id={id} item={item} />}
           {category === 'battery' && <SocBar id={id} item={item} />}
+          {isLoad && <LoadPowerChip id={id} item={item} />}
         </div>
       )}
       <ConditionBadge id={id} item={item} />

@@ -37,6 +37,9 @@ function referenceIssues(project: ProjectFile, catalog: readonly CatalogItem[]):
     if (!item || item.category === 'cable')
       issues.push(`components.${component.id}: "${component.catalogId}" bukan komponen katalog`);
     terminalsByComponent.set(component.id, new Set(item?.terminals.map((terminal) => terminal.id)));
+    const isLoad = item?.category === 'load-dc' || item?.category === 'load-ac';
+    if (component.powerSettingW !== undefined && !isLoad)
+      issues.push(`components.${component.id}: powerSettingW hanya untuk beban`);
   }
 
   for (const wire of project.wires) {

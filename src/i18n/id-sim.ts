@@ -74,6 +74,9 @@ export const status = {
     damaged: (name: string) => `Ganti ${name}`,
   },
   repairWire: (id: string) => `Ganti kabel ${id}`,
+  loadPower: 'Daya beban',
+  loadPowerValue: (powerW: number) => `${number(powerW)} W`,
+  loadPowerSetting: (name: string) => `Setelan daya ${name}`,
   wireDamaged: 'Kabel rusak',
 } as const;
 

@@ -10,7 +10,7 @@ import {
   type SolverEnvironment,
 } from '@/domain';
 import { cableItems, toPlacedComponents } from './catalog';
-import type { CircuitDoc } from './circuit-doc';
+import { loadPowerSettings, type CircuitDoc } from './circuit-doc';
 import { useCircuitStore } from './circuitStore';
 import {
   DEFAULT_ENV,
@@ -92,6 +92,7 @@ function solve(
     state,
     dtS,
     speed,
+    controls: { powerSettingWByLoadId: loadPowerSettings(doc) },
     maxSubsteps: MAX_SUBSTEPS_PER_TICK,
   });
   const { timeS } = result.state;

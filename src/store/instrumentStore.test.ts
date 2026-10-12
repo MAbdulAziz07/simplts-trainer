@@ -149,3 +149,18 @@ describe('instrumentStore — tang ampere dan solar power meter', () => {
     expect(meters().readings.solarWm2).toBeCloseTo(640 * 1.005, 9);
   });
 });
+
+describe('instrumentStore — setelan daya beban', () => {
+  it('fungsi ohm mengikuti setelan daya: 100 W terbaca 1,44 Ω, 0 W terbuka', () => {
+    meters().setMeterFunction('ohm');
+    meters().attachProbe('red', ref('c3', 'a'));
+    meters().attachProbe('black', ref('c3', 'b'));
+    circuit().setLoadPower('c3', 100);
+    meters().sample(MID);
+    // 12² / 100 = 1,44 Ω ditambah kabel probe 0,2 Ω.
+    expect(valueOf(meters().readings.multimeter)).toBeCloseTo(1.64, 2);
+    circuit().setLoadPower('c3', 0);
+    meters().sample(MID);
+    expect(meters().readings.multimeter).toEqual({ kind: 'overload' });
+  });
+});

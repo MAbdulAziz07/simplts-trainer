@@ -3,6 +3,7 @@
 import { create } from 'zustand';
 import {
   checkConnection,
+  loadSnapPowerW,
   type ConnectionCheck,
   type ConnectionLevel,
   type PackageId,
@@ -19,6 +20,7 @@ import {
   patchWire,
   removeItems,
   rotateParts,
+  setPartPower,
   toggleSwitch,
   type CircuitDoc,
   type PartMove,
@@ -61,6 +63,8 @@ export interface CircuitState {
   /** Memasang kabel bila aturan sambungan mengizinkan; hasil pemeriksaan dikembalikan. */
   connect: (from: TerminalRef, to: TerminalRef) => ConnectionCheck;
   updateWire: (wireId: string, patch: WirePatch) => void;
+  /** Setelan daya beban, dibulatkan ke langkah katalog dan dibatasi rentang bebannya. */
+  setLoadPower: (componentId: string, powerSettingW: number) => void;
   toggleSwitch: (componentId: string) => void;
   /** Tuas pindah ke OFF karena trip; bukan tindakan pengguna, jadi tidak masuk riwayat undo. */
   openSwitches: (componentIds: readonly string[]) => void;
@@ -155,6 +159,14 @@ export const useCircuitStore = create<CircuitState>()((set, get) => {
           lengthM: clampWireLengthM(patch.lengthM ?? wire.lengthM),
         }),
       );
+    },
+
+    setLoadPower: (componentId, powerSettingW) => {
+      const { doc } = get();
+      const part = doc.components.find((candidate) => candidate.id === componentId);
+      const item = part && findCatalogItem(part.catalogId);
+      if (item?.category !== 'load-dc' && item?.category !== 'load-ac') return;
+      commit(setPartPower(doc, componentId, loadSnapPowerW(item.electrical, powerSettingW)));
     },
 
     toggleSwitch: (componentId) => commit(toggleSwitch(get().doc, componentId, findCatalogItem)),

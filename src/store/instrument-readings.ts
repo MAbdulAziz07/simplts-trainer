@@ -19,7 +19,7 @@ import {
   type TerminalRef,
 } from '@/domain';
 import { cableItems, toPlacedComponents } from './catalog';
-import type { CircuitDoc } from './circuit-doc';
+import { loadPowerSettings, type CircuitDoc } from './circuit-doc';
 
 /** Keadaan yang dibaca alat ukur pada satu saat. */
 export interface MeasureContext {
@@ -68,7 +68,11 @@ export function multimeterReading(
   const resistanceOhm =
     fn === 'ohm' && probes.red && probes.black && red && black
       ? resistanceBetweenOhm(
-          buildResistiveNetwork({ ...circuit, cables: cableItems }),
+          buildResistiveNetwork({
+            ...circuit,
+            cables: cableItems,
+            powerSettingWByLoadId: loadPowerSettings(context.doc),
+          }),
           probes.red,
           probes.black,
         )

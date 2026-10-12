@@ -22,6 +22,8 @@ const componentSchema = z.strictObject({
   xPx: z.number(),
   yPx: z.number(),
   rotationDeg: z.union(ROTATIONS_DEG.map((deg) => z.literal(deg))),
+  /** Setelan daya beban; hanya untuk beban, tanpa nilai berarti daya maksimum. */
+  powerSettingW: z.number().nonnegative().optional(),
 });
 
 const wireSchema = z.strictObject({
