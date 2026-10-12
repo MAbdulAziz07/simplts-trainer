@@ -1,5 +1,14 @@
 import { expect, test } from '@playwright/test';
-import { clockMinutes, pause, play, setSpeed, slider } from './sim-helpers';
+import {
+  clockMinutes,
+  node,
+  pause,
+  play,
+  seedCircuit,
+  setSpeed,
+  slider,
+  wire,
+} from './sim-helpers';
 
 // Kendali simulasi pada layar acuan 1366x768 (docs/UX.md §2.1).
 
@@ -59,4 +68,57 @@ test('kontrol bilah simulasi memenuhi target sentuh 44 px', async ({ page }) => 
   for (const control of await bar.getByRole('slider').all()) {
     expect((await control.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   }
+});
+
+test('reset percobaan: konfirmasi dua ketukan; trip, SoC, dan jam kembali, rangkaian tetap', async ({
+  page,
+}) => {
+  // Dua beban 200 W di belakang MCB 16 A: sekitar 2 × arus rating.
+  await seedCircuit(
+    page,
+    [
+      ['bat', 'bat-vrla-agm-12v-100ah'],
+      ['mcb', 'mcb-dc-16a'],
+      ['l1', 'load-dc-12v-200w'],
+      ['pos', 'busbar-dc-pos'],
+      ['neg', 'busbar-dc-neg'],
+      ['l2', 'load-dc-12v-200w'],
+    ],
+    [
+      ['bat.pos', 'mcb.pos-in'],
+      ['bat.neg', 'mcb.neg-in'],
+      ['mcb.pos-out', 'pos.t1'],
+      ['mcb.neg-out', 'neg.t1'],
+      ['pos.t2', 'l1.a'],
+      ['neg.t2', 'l1.b'],
+      ['pos.t3', 'l2.a'],
+      ['neg.t3', 'l2.b'],
+    ],
+    { closed: ['mcb'] },
+  );
+  const lever = page.getByRole('switch', { name: 'Tuas MCB DC 16A' });
+  const soc = node(page, 'bat').getByRole('meter', { name: 'SoC VRLA AGM 100Ah' });
+  await setSpeed(page, 600);
+  await play(page);
+  await expect(lever).toHaveText('TRIP', { timeout: 15_000 });
+  await expect.poll(() => clockMinutes(page)).toBeGreaterThan(10 * 60 + 30);
+  expect(Number(await soc.getAttribute('aria-valuenow'))).toBeLessThan(80);
+
+  // Ketukan pertama hanya meminta konfirmasi.
+  await page.getByRole('button', { name: 'Reset percobaan' }).click();
+  const confirm = page.getByRole('button', { name: 'Ketuk lagi untuk mereset percobaan' });
+  await expect(confirm).toHaveText('Reset?');
+  await expect(lever).toHaveText('TRIP');
+
+  await confirm.click();
+  await expect(page.getByRole('status')).toHaveText('Percobaan direset');
+  await expect(page.getByRole('button', { name: 'Jalankan simulasi' })).toBeVisible();
+  expect(await clockMinutes(page)).toBe(10 * 60);
+  await expect(soc).toHaveAttribute('aria-valuenow', '80');
+  // Tuas MCB yang trip tetap OFF tetapi tanda trip-nya hilang; rangkaian tidak berubah.
+  await expect(lever).toHaveText('OFF');
+  await expect(node(page, 'mcb').locator('.status-badge')).toHaveCount(0);
+  await expect(page.locator('.react-flow__node')).toHaveCount(6);
+  await expect(wire(page, 'w8')).toHaveCount(1);
+  await expect(page.getByRole('button', { name: 'Reset percobaan' })).toBeVisible();
 });

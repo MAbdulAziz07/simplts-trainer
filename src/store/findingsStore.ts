@@ -87,6 +87,13 @@ useCircuitStore.subscribe((circuit, previous) => {
 
 let lastCheckMs = 0;
 useSimStore.subscribe((sim, previous) => {
+  // Reset percobaan menghapus riwayat pemasangan, jadi temuan urutan kerja ikut hilang.
+  if (sim.resetCount !== previous.resetCount) {
+    lastCheckMs = Date.now();
+    useFindingsStore.setState({ wiringLog: [] });
+    useFindingsStore.getState().refresh();
+    return;
+  }
   // Putar/jeda dan suhu lingkungan (KHA kabel) langsung diperiksa; selebihnya dua kali per detik.
   const immediate =
     sim.running !== previous.running ||

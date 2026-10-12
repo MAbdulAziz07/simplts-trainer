@@ -2,8 +2,10 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { loadPreset } from '@/data';
 import type { TerminalRef } from '@/domain';
 import { catalogItems } from './catalog';
+import { useChartStore } from './chartStore';
 import { EMPTY_DOC } from './circuit-doc';
 import { useCircuitStore } from './circuitStore';
+import { useFindingsStore } from './findingsStore';
 import { emptyHistory } from './history';
 import { docToProject } from './project-io';
 import { DEFAULT_ENV } from './sim-env';
@@ -138,5 +140,55 @@ describe('simStore — trip dan pemulihan', () => {
     expect(circuit().doc.closedSwitchIds).toContain('c2');
     expect(sim().snapshot.components.c2?.condition).toBe('ok');
     expect(sim().snapshot.wires.w1?.currentA).toBeGreaterThan(25);
+  });
+});
+
+describe('simStore — reset percobaan', () => {
+  it('mengembalikan trip, SoC, dan jam; mempertahankan rangkaian, tuas, dan setelan lingkungan', () => {
+    buildOverloadedCircuit();
+    circuit().toggleSwitch('c2');
+    sim().patchSettings({ cloudCoverPct: 40, manualAmbientTempC: 35 });
+    sim().setRunning(true);
+    sim().setSpeed(60);
+    for (let i = 0; i < 400 && sim().snapshot.components.c2?.condition === 'ok'; i += 1) {
+      sim().advance(0.05);
+    }
+    expect(sim().snapshot.components.c2?.condition).toBe('tripped');
+    expect(sim().state.thermalDoseBySwitchId.c2).toBeGreaterThan(0);
+    expect(useChartStore.getState().bins.some(Boolean)).toBe(true);
+    expect(useFindingsStore.getState().wiringLog.length).toBeGreaterThan(0);
+    const { doc } = circuit();
+
+    sim().resetExperiment();
+    expect(sim().running).toBe(false);
+    expect(sim().state.timeS).toBe(0);
+    expect(sim().clockHour).toBe(10);
+    expect(sim().snapshot.components.c1?.socPct).toBe(INITIAL_SOC_PCT);
+    expect(sim().state.trippedSwitchIds).toEqual([]);
+    expect(sim().state.thermalDoseBySwitchId).toEqual({});
+    // Tuas MCB yang trip tetap OFF, tanpa tanda trip.
+    expect(sim().snapshot.components.c2?.condition).toBe('off');
+    expect(circuit().doc).toBe(doc);
+    expect(sim().settings).toMatchObject({ cloudCoverPct: 40, manualAmbientTempC: 35 });
+    expect(useChartStore.getState().bins.some(Boolean)).toBe(false);
+    expect(useFindingsStore.getState().wiringLog).toEqual([]);
+  });
+
+  it('komponen dan kabel rusak pulih; jam yang digeser kembali ke 10:00', () => {
+    circuit().addComponent('bat-vrla-agm-12v-100ah', { xPx: 0, yPx: 0 });
+    circuit().addComponent('load-dc-12v-200w', { xPx: 240, yPx: 0 });
+    circuit().connect(ref('c1', 'pos'), ref('c2', 'a'));
+    circuit().connect(ref('c1', 'neg'), ref('c2', 'b'));
+    useSimStore.setState({
+      state: { ...sim().state, damagedComponentIds: ['c2'], damagedWireIds: ['w1'], timeS: 500 },
+    });
+    sim().setClockHour(21);
+    expect(sim().snapshot.components.c2?.condition).toBe('damaged');
+
+    sim().resetExperiment();
+    expect(sim().snapshot.components.c2?.condition).toBe('ok');
+    expect(sim().snapshot.wires.w1?.condition).toBe('ok');
+    expect(sim().snapshot.wires.w1?.currentA).toBeGreaterThan(10);
+    expect(sim().clockHour).toBe(10);
   });
 });

@@ -47,6 +47,8 @@ export interface SimStoreState extends Solved {
   running: boolean;
   speed: SimSpeed;
   settings: EnvSettings;
+  /** Naik tiap "Reset percobaan"; riwayat grafik dan pemasangan kabel ikut dikosongkan. */
+  resetCount: number;
 
   setRunning: (running: boolean) => void;
   setSpeed: (speed: SimSpeed) => void;
@@ -59,6 +61,12 @@ export interface SimStoreState extends Solved {
   repairComponent: (componentId: string) => void;
   /** Kabel rusak diganti baru. */
   repairWire: (wireId: string) => void;
+  /**
+   * Reset percobaan (docs/PRD.md §3.2): simulasi dijeda; komponen dan kabel rusak, tanda trip,
+   * dosis termal, SoC, dan jam kembali ke awal. Susunan komponen, kabel, tuas, awan, dan setelan
+   * manual dipertahankan; tuas MCB yang trip tetap OFF.
+   */
+  resetExperiment: () => void;
 }
 
 function partsOf(doc: CircuitDoc): CircuitParts {
@@ -117,6 +125,7 @@ export const useSimStore = create<SimStoreState>()((set, get) => {
     running: false,
     speed: 1,
     settings: DEFAULT_ENV,
+    resetCount: 0,
     ...solve(circuitDoc(), initialSimState(partsOf(circuitDoc())), DEFAULT_ENV),
 
     setRunning: (running) => set({ running }),
@@ -144,6 +153,17 @@ export const useSimStore = create<SimStoreState>()((set, get) => {
       apply(repairState(get().state, componentId, condition));
     },
     repairWire: (wireId) => apply(replaceWire(get().state, wireId)),
+
+    resetExperiment: () => {
+      const doc = circuitDoc();
+      const settings = { ...get().settings, startHour: DEFAULT_ENV.startHour };
+      set({
+        running: false,
+        settings,
+        resetCount: get().resetCount + 1,
+        ...solve(doc, initialSimState(partsOf(doc)), settings),
+      });
+    },
   };
 });
 

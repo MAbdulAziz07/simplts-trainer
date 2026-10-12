@@ -18,6 +18,10 @@ export const sim = {
   ambientValue: (tempC: number) => `${number(tempC, 1)} °C`,
   auto: (label: string) => `${label}: ikuti jam dan awan`,
   autoMark: 'A',
+  reset: 'Reset percobaan',
+  resetConfirm: 'Ketuk lagi untuk mereset percobaan',
+  resetConfirmMark: 'Reset?',
+  resetDone: 'Percobaan direset',
 } as const;
 
 // `conditions` ≤ 6 huruf: tampil di tanda status node (docs/UX.md §2.4: ikon + teks singkat).
