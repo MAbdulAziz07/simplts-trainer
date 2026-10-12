@@ -40,37 +40,40 @@ Acuan desain: jendela 1366x768. Area tampil browser di laptop 1366x768 umumnya l
 
 | Area | Ukuran | Aturan |
 |---|---|---|
-| Bilah atas | tinggi 56 px, lebar penuh | Logo + nama, pilihan paket, 4 tab mode (ikon + label), simpan / buka / reset |
+| Bilah atas | tinggi 56 px, lebar penuh | Logo + nama, pilihan paket, tingkat Pemula/Mahir, simpan / buka / preset, lalu reset percobaan yang dipisah garis dan meminta konfirmasi. Empat tab mode (ikon + label) ditambahkan saat mode selain Rakit Bebas dibuat (revisi 2026-10-12) |
 | Baki komponen | lebar 216 px; rel ikon 64 px saat dilipat | Ubin 92x92 px, dua kolom, sela 8 px, tepi 12 px; judul kategori 44 px; gulir vertikal |
-| Meja kerja | sisa ruang: 1150x640 px tanpa inspektur, 870x640 px dengan inspektur | Kisi 24 px, komponen menempel ke kisi; zoom 40–200% (terkecil 40%, bukan 50%, agar preset Terbaik dengan 16 panel muat), awal 100%, tombol "paskan"; alat ukur, temuan, dan status berupa cip atau panel mengambang di dalam meja |
+| Meja kerja | sisa ruang: 1150x640 px tanpa inspektur, 870x640 px dengan inspektur | Kisi 24 px, komponen menempel ke kisi; zoom 40–200% (terkecil 40%, bukan 50%, agar preset Terbaik dengan 16 panel muat), awal 100%, tombol "paskan"; legenda warna kabel, alat ukur, temuan, dan status berupa cip atau panel mengambang di dalam meja |
 | Inspektur | lebar 280 px, hanya muncul saat ada komponen terpilih | Isi tidak boleh terpotong pada tinggi 640 px; di bawah lebar 1024 px menjadi lembar bawah setinggi 40% layar |
-| Bilah simulasi | tinggi 72 px, lebar penuh | Putar/jeda 48 px, kecepatan (1×/60×/600×/3600×), jam, iradiasi, awan, suhu lingkungan, tombol grafik 24 jam, dan tombol reset percobaan yang dipisah garis dan meminta konfirmasi; selalu terlihat |
+| Bilah simulasi | tinggi 72 px, lebar penuh | Putar/jeda 48 px, kecepatan (1×/60×/600×/3600×), jam, iradiasi, awan, suhu lingkungan, dan tombol grafik 24 jam; selalu terlihat |
 | Toast | di tengah bawah meja, 16 px di atas bilah simulasi | Hilang sendiri setelah 3 detik; tidak menutupi terminal yang sedang dipakai |
 
-### 2.2 Kartu komponen di meja
+### 2.2 Komponen di meja
 
-| Jenis | Ukuran | Contoh |
+Revisi 2026-10-12: komponen tampil sebagai gambarnya sendiri, tanpa kartu. Kartu berukuran tetap (144x144, 192x168, 288x192 px) dibatalkan karena mengecilkan gambar, padahal terminal ditandai langsung di atas gambar.
+
+| Jenis | Sisi terpanjang gambar | Contoh |
 |---|---|---|
-| Kecil | 144x144 px | MCB, fuse, SPD, beban lampu |
-| Sedang | 192x168 px | Panel surya, baterai, kWh meter |
-| Besar | 288x192 px | SCC, inverter, busbar/terminal distribusi |
+| Kecil | 144 px (MCB AC 168 px) | MCB, fuse, SPD, beban |
+| Sedang | 216 px | Panel surya, baterai, kWh meter |
+| Besar | 288 px (SCC 264 px) | Inverter, busbar, combiner, panel beban |
 
-- Isi kartu: gambar, nama (14 px, maksimal 3 kata), cip angka LCD, ikon status di pojok kanan atas. Kode seperti "PV · 01" tidak ditampilkan di kartu; cukup di inspektur.
-- Kartu terpilih: garis tepi 3 px hijau toska. Kartu tidak boleh saling menimpa.
+- Rasio gambar dipertahankan, supaya posisi terminal (% terhadap gambar) tetap pas.
+- Di luar gambar: nama (12 px, maksimal 3 kata) di atas, deret indikator di atas nama, tanda status di pojok kanan atas (§2.4), tuas MCB dan tombol reset di kanan.
+- Komponen terpilih: garis tepi 3 px hijau toska. Komponen yang gambarnya belum ada tampil sebagai kotak berikon.
 
 ### 2.3 Terminal dan kabel
 
 | Hal | Keputusan |
 |---|---|
-| Terminal tampak | 24 px |
-| Area klik/sentuh terminal | 44 px, tetap 44 px di layar pada semua tingkat zoom |
-| Jarak antarpusat terminal | minimal 48 px (dua kisi) |
+| Terminal tampak | 14–24 px menurut jarak ke terminal terdekat pada gambar (revisi 2026-10-12: 24 px tetap membuat titik terminal yang rapat saling menimpa) |
+| Area klik/sentuh terminal | 44 px, tetap 44 px di layar pada semua tingkat zoom; untuk terminal yang rapat dipotong di garis tengah ke tetangganya supaya tidak bertumpuk |
+| Jarak antarpusat terminal | mengikuti letak terminal pada gambar (revisi 2026-10-12: minimal 48 px tidak tercapai pada gambar kecil) |
 | Bentuk terminal | DC bulat; AC persegi sudut tumpul; PE persegi dengan simbol pembumian |
-| Label terminal | 12 px tebal, selalu tampak, di luar lingkaran |
+| Label terminal | 12 px tebal, selalu tampak, di luar lingkaran. Label yang sama persis dengan tanda di dalam titik (+, −, L, N) baru muncul saat hover, komponen terpilih, atau kabel ditarik |
 | Tebal kabel | 3 px (≤ 2,5 mm²), 4 px (4–6 mm²), 6 px (≥ 10 mm²); area klik kabel 16 px |
 | Kabel terpilih | lingkar cahaya 3 px hijau toska |
 | Terminal tujuan sah saat menarik kabel | berdenyut; terminal lain meredup 40% |
-| Terminal penuh | ikon gembok + alasan satu kalimat (US3) |
+| Terminal penuh | ikon gembok selama kabel ditarik + alasan satu kalimat di toast (US3) |
 
 ### 2.4 Warna
 
@@ -128,22 +131,18 @@ Keputusan §2 yang sudah diterapkan apa adanya tidak diulang di sini. Tabel ini 
 | Alat ukur | Tiga tombol bergambar di kanan atas meja; panel alat di kanan bawah meja, tidak ikut zoom, angka LCD 30 px; probe dan jepitan diseret ke terminal/kabel atau diketuk lalu sasarannya diketuk |
 | Temuan pemeriksaan | Segitiga 44 px di kiri bawah meja dengan jumlah temuan; daftar baru muncul saat diklik, penjelasan lewat tombol "?" per baris |
 | Grafik 24 jam | Panel mengambang di atas bilah simulasi, dibuka dari tombol di bilah itu; daya (W) dan SoC (%) pada dua bidang bertumpuk |
-| Pengatur daya beban | Slider di inspektur saat satu beban terpilih |
+| Inspektur | Gambar, nama, paling banyak empat rating utama (tanda besaran + angka 20 px), penjelasan per kategori lewat "?", slider daya untuk beban, tombol hapus 44 px |
 | Warna terminal data | Ungu `#7C3AED` (belum ditetapkan di §2.4) [PERLU VERIFIKASI] |
 
 ### 4.2 Selisih terhadap §2
 
+Per 2026-10-12 kode sudah disesuaikan dengan §2: inspektur hanya saat satu komponen terpilih (lembar bawah di bawah 1024 px), baki bisa dilipat menjadi rel ikon 64 px, reset percobaan di bilah atas, label terminal selalu tampak, area sentuh terminal 44 px di layar, gembok pada terminal penuh, centang pada komponen yang bekerja, dan legenda warna kabel. Tiga keputusan direvisi di tempatnya (§2.1 tab mode, §2.2 komponen tanpa kartu, §2.3 ukuran titik dan jarak terminal). Yang masih berbeda:
+
 | Keputusan §2 | Di kode sekarang |
 |---|---|
-| §2.1 Bilah atas memuat 4 tab mode dan tombol reset | Belum ada tab mode (baru Rakit Bebas); bilah atas berisi paket, tingkat Pemula/Mahir, simpan, buka, preset; reset percobaan ada di bilah simulasi |
-| §2.1 Baki bisa dilipat menjadi rel ikon 64 px | Belum bisa dilipat |
-| §2.1 Inspektur hanya muncul saat ada komponen terpilih; lembar bawah di lebar < 1024 px | Kolom 280 px selalu tampil dan kosong kecuali saat satu beban terpilih; belum ada lembar bawah |
-| §2.1 Legenda warna kabel berupa cip mengambang | Belum ada legenda |
-| §2.2 Kartu 144x144, 192x168, 288x192 px berisi gambar dan nama | Komponen tampil sebagai gambarnya sendiri tanpa kartu; sisi terpanjang 144 px (kecil), 216 px (sedang), 288 px (besar), SCC 264 px, MCB AC 168 px, rasio gambar dipertahankan agar posisi terminal pas |
-| §2.3 Terminal tampak 24 px, area sentuh 44 px tetap di layar pada semua zoom, jarak antarpusat ≥ 48 px | Titik 14–24 px dan area sentuh 24–44 px menurut jarak antarterminal pada gambar, dan ikut zoom; terminal rapat pada gambar kecil berjarak di bawah 48 px |
-| §2.3 Label terminal selalu tampak | Tanda kutub (+, −, L, N, ⏚) selalu tampak di dalam titik; label lengkap muncul saat hover, komponen terpilih, atau kabel sedang ditarik |
-| §2.3 Terminal penuh diberi ikon gembok | Tanpa gembok; sambungan ditolak dengan alasan satu kalimat di toast |
-| §2.4 Status normal diberi ikon centang di komponen | Hanya SCC dan inverter yang punya LED; komponen lain tanpa tanda saat normal |
+| §2.1 Empat tab mode di bilah atas | Belum ada; ditambahkan saat mode selain Rakit Bebas dibuat |
+| §2.3 Area sentuh 44 px untuk tiap terminal | Terminal yang jaraknya di bawah 44 px berbagi ruang: tiap terminal mendapat area sampai garis tengah ke tetangganya (pada gambar terkecil sekitar 20 px lebar di zoom 100%) |
+| §2.4 Centang untuk status normal | Hanya komponen yang sedang dialiri arus; SCC dan inverter memakai LED bertanda centang; komponen normal tanpa arus tidak diberi tanda |
 
 ### 4.3 Bagian §3 yang kini ada tampilannya
 

@@ -1,6 +1,6 @@
 # Arsitektur — Trainer Virtual PLTS (SimPLTS)
 
-Status: mesin simulasi sudah tersambung ke tampilan. Yang sudah ada kodenya: katalog dan skemanya, model komponen, netlist dan pemeriksaan rangkaian, solver dan langkah waktu, meja kerja, kendali simulasi, alat ukur, temuan pemeriksaan, dan grafik 24 jam. Engine baru memodelkan paket Minimum (SCC PWM dan inverter off-grid); SCC MPPT, inverter grid-tie dan hibrida, serta SPD berstatus `unsupported`. Belum ada: skenario dan mode terpandu, isi inspektur selain pengatur daya beban, PWA.
+Status: mesin simulasi sudah tersambung ke tampilan. Yang sudah ada kodenya: katalog dan skemanya, model komponen, netlist dan pemeriksaan rangkaian, solver dan langkah waktu, meja kerja, kendali simulasi, alat ukur, temuan pemeriksaan, dan grafik 24 jam. Engine baru memodelkan paket Minimum (SCC PWM dan inverter off-grid); SCC MPPT, inverter grid-tie dan hibrida, serta SPD berstatus `unsupported`. Belum ada: skenario dan mode terpandu, PWA.
 
 Acuan: `AGENTS.md` (stack dan struktur folder), `docs/MODEL_FISIKA.md` §12 (penyelesaian jaringan dan langkah waktu), `docs/PRD.md` §3.2 (kontrak reset, jeda, simpan), `docs/UX.md` §2 (tata letak).
 
@@ -108,6 +108,7 @@ Akibat pemisahan ini: langkah simulasi bisa diuji dengan Vitest tanpa browser, d
 | `findingsStore` | Temuan `validateCircuit` dan riwayat pemasangan kabel (`wiringLog`) | Tiap rangkaian berubah; 2 kali per detik saat simulasi berjalan, dengan arus terukur |
 | `chartStore` | Daya PV, daya beban, dan SoC per ruas 5 menit (288 ruas) | Tiap simulasi maju |
 | `toastStore` | Pesan singkat yang hilang sendiri | Dipanggil fitur |
+| `uiStore` | Tata letak yang tidak ikut tersimpan: baki dilipat atau tidak | Aksi pengguna |
 
 Store turunan (`instrumentStore`, `findingsStore`, `chartStore`) hanya membaca `circuitStore` dan `simStore`; keduanya tidak tahu store turunan itu ada.
 
@@ -124,7 +125,7 @@ Store turunan (`instrumentStore`, `findingsStore`, `chartStore`) hanya membaca `
 
 Kolom "tidak boleh" dijaga otomatis oleh aturan `no-restricted-imports` di `eslint.config.js`; pelanggaran menggagalkan `npm run lint`. Tiga aturan berikut belum dijaga lint dan diperiksa saat review:
 
-- Fitur meng-import fitur lain hanya lewat `index.ts`-nya, dan tidak boleh melingkar. Saat ini: `workbench` → `instruments` (lapisan alat ukur, penanda probe dan jepitan), `workbench` → `inspector` (tombol temuan), `inspector` → `sim-controls` (slider).
+- Fitur meng-import fitur lain hanya lewat `index.ts`-nya, dan tidak boleh melingkar. Saat ini: `workbench` → `instruments` (lapisan alat ukur, penanda probe dan jepitan), `workbench` → `inspector` (tombol temuan), `inspector` → `sim-controls` (slider), `top-bar` → `sim-controls` (tombol reset percobaan).
 - `ui` mengambil data dari `domain` hanya berupa tipe.
 - Teks tampilan tidak ditulis langsung di komponen, tetapi diambil dari `src/i18n/`.
 
