@@ -1,0 +1,78 @@
+/* Panel langkah skenario: kartu mengambang di kiri atas meja kerja, di kanan bilah alat meja. */
+.scenario-panel {
+  position: fixed;
+  z-index: 15;
+  top: calc(var(--spacing-topbar) + 12px);
+  left: calc(var(--tray-col) + 76px);
+  display: flex;
+  width: min(320px, calc(100vw - var(--tray-col) - 92px));
+  max-height: calc(100vh - var(--spacing-topbar) - var(--spacing-simbar) - 24px);
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  background: var(--color-card);
+  box-shadow: 0 4px 16px rgb(17 24 39 / 0.12);
+}
+
+.scenario-dot {
+  height: 6px;
+  flex: 1;
+  border-radius: 999px;
+  background: var(--color-line);
+  transition: background-color 0.3s;
+}
+
+.scenario-dot[data-state='done'] {
+  background: var(--color-status-ok);
+}
+
+.scenario-dot[data-state='current'] {
+  background: var(--color-brand);
+  opacity: 0.45;
+}
+
+.scenario-backdrop {
+  position: fixed;
+  z-index: 40;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(17 24 39 / 0.35);
+}
+
+/* Cetak ringkasan: hanya dialog hasil yang dicetak. */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .scenario-print,
+  .scenario-print * {
+    visibility: visible;
+  }
+
+  .scenario-backdrop {
+    background: none;
+  }
+
+  .scenario-print {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-height: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  .scenario-print > div {
+    overflow: visible;
+  }
+
+  .scenario-print .no-print {
+    display: none;
+  }
+}

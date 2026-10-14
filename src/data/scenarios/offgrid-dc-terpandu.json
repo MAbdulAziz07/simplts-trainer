@@ -1,0 +1,186 @@
+{
+  "formatVersion": 1,
+  "id": "offgrid-dc-terpandu",
+  "version": 1,
+  "title": "Merangkai PLTS off-grid DC",
+  "package": "min",
+  "mode": "guided",
+  "goal": "Merangkai PLTS off-grid 12 V dengan urutan aman sampai baterai terisi. Beban DC menyala dari terminal beban SCC.",
+  "environment": {
+    "startHour": 10,
+    "cloudCoverPct": 0
+  },
+  "steps": [
+    {
+      "id": "ukur-baterai",
+      "text": "Ukur tegangan baterai dengan multimeter.",
+      "icon": "gauge",
+      "done": {
+        "kind": "multimeter",
+        "fn": "vdc",
+        "red": "battery.pos",
+        "black": "battery.neg",
+        "expected": {
+          "ref": "battery-ocv"
+        },
+        "tolerancePct": 5
+      },
+      "hints": [
+        "Buka multimeter, pilih V DC.",
+        "Probe merah ke + baterai, probe hitam ke − baterai."
+      ]
+    },
+    {
+      "id": "baterai-scc",
+      "text": "Sambungkan baterai ke terminal BAT SCC.",
+      "icon": "battery",
+      "done": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "connected",
+            "a": "scc.bat-pos",
+            "b": "battery.pos",
+            "throughSwitches": true
+          },
+          {
+            "kind": "connected",
+            "a": "scc.bat-neg",
+            "b": "battery.neg",
+            "throughSwitches": true
+          }
+        ]
+      },
+      "hints": [
+        "Baterai dipasang ke SCC sebelum panel.",
+        "+ baterai → fuse → busbar + → BAT+ SCC; − baterai → busbar − → BAT− SCC."
+      ]
+    },
+    {
+      "id": "ukur-voc",
+      "text": "Ukur Voc satu panel surya.",
+      "icon": "sun",
+      "done": {
+        "kind": "multimeter",
+        "fn": "vdc",
+        "red": "pv.pos",
+        "black": "pv.neg",
+        "expected": {
+          "ref": "module-voc"
+        },
+        "tolerancePct": 5
+      },
+      "hints": [
+        "Voc diukur saat panel belum dibebani.",
+        "Multimeter V DC: merah ke + panel, hitam ke − panel yang sama."
+      ]
+    },
+    {
+      "id": "panel-mcb",
+      "text": "Sambungkan panel ke SCC lewat MCB PV.",
+      "icon": "cable",
+      "done": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "connected",
+            "a": "mcb-pv.pos-in",
+            "b": "pv.pos"
+          },
+          {
+            "kind": "connected",
+            "a": "mcb-pv.neg-in",
+            "b": "pv.neg"
+          },
+          {
+            "kind": "connected",
+            "a": "mcb-pv.pos-out",
+            "b": "scc.pv-pos"
+          },
+          {
+            "kind": "connected",
+            "a": "mcb-pv.neg-out",
+            "b": "scc.pv-neg"
+          }
+        ]
+      },
+      "hints": [
+        "Panel → sisi IN MCB, sisi OUT MCB → terminal PV SCC.",
+        "+ panel → +IN MCB PV; +OUT → PV+ SCC. Lakukan sama untuk kutub −."
+      ]
+    },
+    {
+      "id": "mcb-on",
+      "text": "Nyalakan MCB PV.",
+      "icon": "toggle",
+      "done": {
+        "kind": "switch",
+        "component": "mcb-pv",
+        "on": true
+      },
+      "hints": ["Tuas MCB ada di tengah komponen.", "Ketuk tuas MCB PV sampai ON."]
+    },
+    {
+      "id": "beban-dc",
+      "text": "Pasang beban DC di terminal LOAD SCC.",
+      "icon": "lightbulb",
+      "done": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "connected",
+            "a": "scc.load-pos",
+            "b": "load-dc.a"
+          },
+          {
+            "kind": "connected",
+            "a": "scc.load-neg",
+            "b": "load-dc.b"
+          },
+          {
+            "kind": "value",
+            "quantity": "load-power-w",
+            "min": 1
+          }
+        ]
+      },
+      "hints": [
+        "Beban DC disambung ke terminal LOAD, bukan BAT.",
+        "LOAD+ SCC → terminal + beban DC; LOAD− → terminal −. Kecilkan daya beban bila SCC memutus beban."
+      ]
+    },
+    {
+      "id": "soc-naik",
+      "text": "Jalankan simulasi: SoC baterai naik selama 10 menit.",
+      "icon": "clock",
+      "done": {
+        "kind": "trend",
+        "quantity": "soc-pct",
+        "direction": "rise",
+        "durationS": 600
+      },
+      "hints": [
+        "Tekan tombol jalan; percepat waktu bila perlu.",
+        "Pilih kecepatan 60× agar 10 menit simulasi selesai dalam 10 detik. Kecilkan daya beban bila SoC turun."
+      ]
+    },
+    {
+      "id": "aman",
+      "text": "Pastikan tidak ada temuan bahaya.",
+      "icon": "shield",
+      "done": {
+        "kind": "no-finding",
+        "severity": "danger"
+      },
+      "hints": [
+        "Buka daftar temuan di inspektur.",
+        "Perbaiki rangkaian sampai tidak ada temuan merah."
+      ]
+    }
+  ],
+  "rubric": {
+    "stepPoints": 10,
+    "hintPenalty": [2, 5],
+    "passPct": 70
+  }
+}

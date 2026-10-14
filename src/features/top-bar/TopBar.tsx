@@ -1,4 +1,5 @@
 import { Sun } from 'lucide-react';
+import { ScenarioButton } from '@/features/scenarios';
 import { ResetButton } from '@/features/sim-controls';
 import { t } from '@/i18n';
 import { FileActions } from './FileActions';
@@ -20,6 +21,7 @@ export function TopBar() {
       </span>
       <LevelSelect />
       <FileActions />
+      <ScenarioButton />
       <span aria-hidden className="bg-line h-8 w-px shrink-0" />
       <ResetButton />
     </header>

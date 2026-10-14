@@ -1,0 +1,117 @@
+{
+  "formatVersion": 1,
+  "id": "asesmen-offgrid-dc",
+  "version": 1,
+  "title": "Asesmen merangkai off-grid DC",
+  "package": "min",
+  "mode": "assessment",
+  "goal": "Rangkai PLTS off-grid 12 V dengan beban DC tanpa petunjuk. Nilai dihitung dari langkah, keamanan, dan kerusakan.",
+  "environment": {
+    "startHour": 10,
+    "cloudCoverPct": 0
+  },
+  "steps": [
+    {
+      "id": "baterai-scc",
+      "text": "Sambungkan baterai ke SCC.",
+      "icon": "battery",
+      "done": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "connected",
+            "a": "scc.bat-pos",
+            "b": "battery.pos",
+            "throughSwitches": true
+          },
+          {
+            "kind": "connected",
+            "a": "scc.bat-neg",
+            "b": "battery.neg",
+            "throughSwitches": true
+          }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "panel-scc",
+      "text": "Sambungkan panel ke SCC lewat MCB PV yang ON.",
+      "icon": "cable",
+      "done": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "connected",
+            "a": "scc.pv-pos",
+            "b": "pv.pos",
+            "throughSwitches": true
+          },
+          {
+            "kind": "connected",
+            "a": "scc.pv-neg",
+            "b": "pv.neg",
+            "throughSwitches": true
+          },
+          {
+            "kind": "switch",
+            "component": "mcb-pv",
+            "on": true
+          }
+        ]
+      },
+      "hints": []
+    },
+    {
+      "id": "beban",
+      "text": "Nyalakan beban DC dari terminal LOAD SCC.",
+      "icon": "lightbulb",
+      "done": {
+        "kind": "value",
+        "quantity": "load-power-w",
+        "min": 1
+      },
+      "hints": []
+    },
+    {
+      "id": "arus-isi",
+      "text": "Ukur arus pengisian baterai dengan tang ampere.",
+      "icon": "gauge",
+      "done": {
+        "kind": "clamp",
+        "mode": "dc",
+        "wire": "scc.bat-pos",
+        "minA": 0.5
+      },
+      "hints": []
+    },
+    {
+      "id": "soc",
+      "text": "SoC baterai naik selama 10 menit simulasi.",
+      "icon": "clock",
+      "done": {
+        "kind": "trend",
+        "quantity": "soc-pct",
+        "direction": "rise",
+        "durationS": 600
+      },
+      "hints": []
+    },
+    {
+      "id": "aman",
+      "text": "Tidak ada temuan bahaya.",
+      "icon": "shield",
+      "done": {
+        "kind": "no-finding"
+      },
+      "hints": []
+    }
+  ],
+  "rubric": {
+    "stepPoints": 10,
+    "damagePenalty": 10,
+    "dangerFindingPenalty": 5,
+    "passPct": 75,
+    "timeLimitS": 1800
+  }
+}

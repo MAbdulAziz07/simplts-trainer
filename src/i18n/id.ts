@@ -1,6 +1,7 @@
 // Semua teks yang tampil ke pengguna, bahasa Indonesia.
 import { inspector, params, variant } from './id-inspector';
 import { instruments } from './id-instruments';
+import { scenarios } from './id-scenarios';
 import { chart, findingsPanel, sim, status } from './id-sim';
 
 export const id = {
@@ -121,6 +122,7 @@ export const id = {
   inspector,
   instruments,
   params,
+  scenarios,
   sim,
   status,
   variant,

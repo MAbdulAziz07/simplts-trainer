@@ -1,5 +1,6 @@
 import { ReactFlowProvider } from '@xyflow/react';
 import { Inspector } from '@/features/inspector';
+import { ScenarioLayer } from '@/features/scenarios';
 import { SimControls } from '@/features/sim-controls';
 import { TopBar } from '@/features/top-bar';
 import { Tray } from '@/features/tray';
@@ -25,6 +26,7 @@ export function App() {
         <Workbench />
         <Inspector />
         <SimControls />
+        <ScenarioLayer />
       </div>
     </ReactFlowProvider>
   );

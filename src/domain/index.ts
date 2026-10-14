@@ -39,3 +39,4 @@ export { DEFAULT_MAX_SUBSTEPS, stepSimulation } from './engine/stepper';
 export * from './engine/reset';
 export * from './instruments/multimeter';
 export * from './instruments/resistance';
+export * from './scenario';

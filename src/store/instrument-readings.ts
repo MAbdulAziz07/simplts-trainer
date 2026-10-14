@@ -3,6 +3,7 @@
 import {
   METER_NOISE_FRACTION,
   activeCircuit,
+  applyFaultsToState,
   buildNetlist,
   buildResistiveNetwork,
   deriveBridges,
@@ -11,6 +12,7 @@ import {
   resistanceBetweenOhm,
   supplyKindOf,
   type ClampMode,
+  type Fault,
   type MeterFunction,
   type MeterReading,
   type ProbePoint,
@@ -18,14 +20,17 @@ import {
   type Snapshot,
   type TerminalRef,
 } from '@/domain';
-import { cableItems, toPlacedComponents } from './catalog';
+import { cableItems } from './catalog';
 import { loadPowerSettings, type CircuitDoc } from './circuit-doc';
+import { faultedCircuit } from './faultStore';
 
 /** Keadaan yang dibaca alat ukur pada satu saat. */
 export interface MeasureContext {
   doc: CircuitDoc;
   state: SimState;
   snapshot: Snapshot;
+  /** Gangguan tersembunyi yang ikut terukur; bawaan tanpa gangguan. */
+  faults?: readonly Fault[];
 }
 
 export interface ProbeRefs {
@@ -33,10 +38,15 @@ export interface ProbeRefs {
   black?: TerminalRef;
 }
 
-/** Rangkaian yang masih menghantar: kabel rusak dibuang, fuse putus dan MCB rusak terbuka. */
-function conducting({ doc, state }: MeasureContext) {
-  const components = toPlacedComponents(doc);
-  const { wires, closedSwitchIds } = activeCircuit(state, doc.wires);
+/**
+ * Rangkaian yang masih menghantar: kabel rusak dibuang, fuse putus dan MCB rusak terbuka. Gangguan
+ * tersembunyi ikut diterapkan, jadi alat ukur membaca rangkaian yang sama dengan simulasi.
+ */
+function conducting({ doc, state, faults = [] }: MeasureContext) {
+  const circuit = faultedCircuit(doc, faults);
+  const { components } = circuit;
+  const faultedState = applyFaultsToState(state, components, faults);
+  const { wires, closedSwitchIds } = activeCircuit(faultedState, circuit.wires);
   const netlist = buildNetlist(components, wires, deriveBridges(components, closedSwitchIds));
   return { components, wires, closedSwitchIds, netlist };
 }

@@ -1,6 +1,6 @@
 # Arsitektur — Trainer Virtual PLTS (SimPLTS)
 
-Status: mesin simulasi sudah tersambung ke tampilan. Yang sudah ada kodenya: katalog dan skemanya, model komponen, netlist dan pemeriksaan rangkaian, solver dan langkah waktu, meja kerja, kendali simulasi, alat ukur, temuan pemeriksaan, dan grafik 24 jam. Engine baru memodelkan paket Minimum (SCC PWM dan inverter off-grid); SCC MPPT, inverter grid-tie dan hibrida, serta SPD berstatus `unsupported`. Belum ada: skenario dan mode terpandu, PWA.
+Status: mesin simulasi sudah tersambung ke tampilan. Yang sudah ada kodenya: katalog dan skemanya, model komponen, netlist dan pemeriksaan rangkaian, solver dan langkah waktu, meja kerja, kendali simulasi, alat ukur, temuan pemeriksaan, grafik 24 jam, dan skenario (Praktik Terpandu, Cari Gangguan, Asesmen; docs/SKENARIO.md). Engine baru memodelkan paket Minimum (SCC PWM dan inverter off-grid); SCC MPPT, inverter grid-tie dan hibrida, serta SPD berstatus `unsupported`. Belum ada: PWA.
 
 Acuan: `AGENTS.md` (stack dan struktur folder), `docs/MODEL_FISIKA.md` §12 (penyelesaian jaringan dan langkah waktu), `docs/PRD.md` §3.2 (kontrak reset, jeda, simpan), `docs/UX.md` §2 (tata letak).
 
@@ -39,10 +39,10 @@ Panah berarti "boleh meng-import". Lapisan bawah tidak tahu apa pun tentang lapi
 
 | Lapisan | Isi | Bergantung pada pustaka |
 |---|---|---|
-| `src/domain/` | `catalog/` tipe katalog; `components/` model komponen (PV, baterai, SCC, inverter, kabel, proteksi, beban, matahari); `circuit/` netlist, aturan sambungan, pemeriksaan rangkaian (`validateCircuit`); `engine/` titik kerja dan langkah waktu (`stepSimulation`), fungsi reset; `instruments/` bacaan multimeter dan tang ampere. Fungsi murni: masukan → keluaran, tanpa efek samping. | tidak ada |
-| `src/data/` | `catalog/` berkas JSON katalog, skema zod, dan pemuatnya (`loadCatalog`); `project/` skema dan validasi berkas rangkaian `.simplts.json`; `presets/` preset tiga paket. `profiles/` dan `scenarios/` masih kosong. | zod |
-| `src/store/` | State Zustand (§2.2): rangkaian di meja kerja, keadaan simulasi, alat ukur, temuan, riwayat grafik, toast. Satu-satunya tempat yang memanggil langkah simulasi. | zustand |
-| `src/i18n/` | Semua teks tampilan bahasa Indonesia (`id.ts`, dipecah ke `id-sim.ts` dan `id-instruments.ts`). | tidak ada |
+| `src/domain/` | `catalog/` tipe katalog; `components/` model komponen (PV, baterai, SCC, inverter, kabel, proteksi, beban, matahari); `circuit/` netlist, aturan sambungan, pemeriksaan rangkaian (`validateCircuit`); `engine/` titik kerja dan langkah waktu (`stepSimulation`), fungsi reset; `instruments/` bacaan multimeter dan tang ampere; `scenario/` aturan selesai langkah, gangguan tersembunyi (diterapkan pada masukan simulasi, bukan pada meja kerja), skor rubrik, dan log aksi. Fungsi murni: masukan → keluaran, tanpa efek samping. | tidak ada |
+| `src/data/` | `catalog/` berkas JSON katalog, skema zod, dan pemuatnya (`loadCatalog`); `project/` skema dan validasi berkas rangkaian `.simplts.json`; `presets/` preset tiga paket; `scenarios/` skenario JSON, skema zod, dan pemuatnya (`loadScenarios`). `profiles/` masih kosong. | zod |
+| `src/store/` | State Zustand (§2.2): rangkaian di meja kerja, keadaan simulasi, alat ukur, temuan, riwayat grafik, toast, gangguan aktif (`faultStore`, dipakai `simStore` dan alat ukur), dan skenario yang berjalan (`scenarioStore`). Satu-satunya tempat yang memanggil langkah simulasi. | zustand |
+| `src/i18n/` | Semua teks tampilan bahasa Indonesia (`id.ts`, dipecah ke `id-sim.ts`, `id-instruments.ts`, `id-inspector.ts`, dan `id-scenarios.ts`). | tidak ada |
 | `src/ui/` | Komponen kecil yang dipakai ulang (gambar komponen, titik terminal) serta ukuran, warna terminal, dan efek gambar. Hanya menerima props. | react, lucide-react |
 | `src/features/` | Satu folder per fitur; membaca store lewat selector dan memanggil aksinya. | react, @xyflow/react, lucide-react |
 

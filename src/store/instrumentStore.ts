@@ -3,6 +3,7 @@
 import { create } from 'zustand';
 import type { ClampMode, MeterFunction, MeterReading, TerminalRef } from '@/domain';
 import { useCircuitStore } from './circuitStore';
+import { useFaultStore } from './faultStore';
 import {
   clampReading,
   hasTerminal,
@@ -54,7 +55,8 @@ const ZERO: MeterReading = { kind: 'value', value: 0 };
 
 function context(): MeasureContext {
   const { state, snapshot } = useSimStore.getState();
-  return { doc: useCircuitStore.getState().doc, state, snapshot };
+  const { faults } = useFaultStore.getState();
+  return { doc: useCircuitStore.getState().doc, state, snapshot, faults };
 }
 
 export const useInstrumentStore = create<InstrumentState>()((set, get) => {

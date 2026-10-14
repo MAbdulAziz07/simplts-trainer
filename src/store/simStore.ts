@@ -3,8 +3,12 @@
 // bila rangkaian atau lingkungannya berubah, supaya alat ukur tetap membaca.
 import { create } from 'zustand';
 import {
+  applyFaultsToControls,
+  applyFaultsToState,
+  maskFaultSnapshot,
   replaceWire,
   stepSimulation,
+  stripFaultState,
   type SimState,
   type Snapshot,
   type SolverEnvironment,
@@ -12,6 +16,7 @@ import {
 import { cableItems, toPlacedComponents } from './catalog';
 import { loadPowerSettings, type CircuitDoc } from './circuit-doc';
 import { useCircuitStore } from './circuitStore';
+import { faultedCircuit, useFaultStore } from './faultStore';
 import {
   DEFAULT_ENV,
   clockHourAt,
@@ -77,6 +82,10 @@ function partsOf(doc: CircuitDoc): CircuitParts {
   };
 }
 
+/**
+ * Satu hitungan rangkaian. Gangguan tersembunyi (faultStore) diterapkan pada masukan dan dicabut
+ * lagi dari keadaan hasil, jadi keadaan yang disimpan tetap keadaan rangkaian tanpa gangguan.
+ */
 function solve(
   doc: CircuitDoc,
   state: SimState,
@@ -84,21 +93,25 @@ function solve(
   dtS = 0,
   speed = 1,
 ): Solved {
+  const { faults } = useFaultStore.getState();
+  const { components, wires } = faultedCircuit(doc, faults);
+  const input = applyFaultsToState(state, components, faults);
   const result = stepSimulation({
-    components: toPlacedComponents(doc),
-    wires: doc.wires,
+    components,
+    wires,
     cables: cableItems,
     environment: environmentAt(settings, state.timeS),
-    state,
+    state: input,
     dtS,
     speed,
-    controls: { powerSettingWByLoadId: loadPowerSettings(doc) },
+    controls: applyFaultsToControls({ powerSettingWByLoadId: loadPowerSettings(doc) }, faults),
     maxSubsteps: MAX_SUBSTEPS_PER_TICK,
   });
-  const { timeS } = result.state;
+  const nextState = stripFaultState(result.state, state, faults);
+  const { timeS } = nextState;
   return {
-    state: result.state,
-    snapshot: result.snapshot,
+    state: nextState,
+    snapshot: maskFaultSnapshot(result.snapshot, faults),
     environment: environmentAt(settings, timeS),
     clockHour: clockHourAt(settings, timeS),
   };
@@ -182,6 +195,13 @@ useCircuitStore.subscribe((circuit, previous) => {
   useSimStore.setState(solve(circuit.doc, state, sim.settings));
   // Tuas MCB rusak yang di-ON-kan pengguna kembali ke OFF.
   syncSwitches(state);
+});
+
+// Gangguan dipasang atau dicabut: rangkaian dihitung ulang tanpa memajukan waktu.
+useFaultStore.subscribe((faults, previous) => {
+  if (faults.faults === previous.faults) return;
+  const sim = useSimStore.getState();
+  useSimStore.setState(solve(circuitDoc(), sim.state, sim.settings));
 });
 
 // Putar/jeda menyalakan dan mematikan putaran bingkai.

@@ -2,6 +2,53 @@
 
 Entri terbaru di atas.
 
+## 2026-10-15 — Sistem skenario berbasis data: Praktik Terpandu, Cari Gangguan, Asesmen
+- Sumber: permintaan pengguna (format JSON skenario tervalidasi zod, panel langkah yang tercentang otomatis, petunjuk bertingkat, 8 gangguan tersembunyi, log/skor/CSV/cetak, docs/SKENARIO.md). Rencana 5 poin disetujui.
+- Commit: satu commit di master, tanpa push (diminta).
+- Dibuat:
+  - src/domain/scenario/{types, selectors, quantities, rules, faults, scoring, action-log, index, scenario-test-fixtures}.ts beserta 6 berkas test;
+  - src/data/scenarios/{schema, validate, index}.ts, scenarios.test.ts, dan 3 skenario JSON (offgrid-dc-terpandu, offgrid-cari-gangguan, asesmen-offgrid-dc);
+  - src/store/{faultStore, scenario-run, scenario-tracking, scenarioStore}.ts dan 2 berkas test;
+  - src/features/scenarios/{ScenarioButton, ScenarioPicker, FaultChooser, StepPanel, HintBox, DiagnosisBox, SummaryDialog, ScenarioLayer}.tsx, {export, icons}.ts, export.test.ts, scenarios.css;
+  - src/i18n/id-scenarios.ts, e2e/scenarios.spec.ts, docs/SKENARIO.md.
+- Diubah: src/domain/index.ts, src/data/index.ts, src/store/{index, simStore, instrumentStore, instrument-readings}.ts, src/features/scenarios/index.ts, src/features/top-bar/TopBar.tsx, src/App.tsx, src/i18n/id.ts, docs/ARSITEKTUR.md, docs/LOG_SESI.md.
+- Isi:
+  1. **Aturan selesai langkah.** Jenis aturan: `connected` (lewat kabel/busbar, opsional lewat MCB/fuse ON), `placed`, `switch`, `condition`, `multimeter` dan `clamp` (titik ukur + nilai ± toleransi, dengan acuan `module-voc`/`module-isc`/`battery-ocv` × faktor), `value`, `trend` (naik/turun selama N detik simulasi dari riwayat cuplikan tiap 5 s), `no-finding`, `fault-found`, serta gabungan `all`/`any`. Penunjuk komponen berupa id meja, kategori, alias (`scc`, `inverter`, `mcb`, `load`, `pv`), atau id katalog.
+  2. **Gangguan tersembunyi.** Diterapkan pada masukan simulasi dan alat ukur (`faultStore` → `simStore.solve`, `instrument-readings`), tidak pada meja kerja; jejaknya dicabut dari keadaan hasil, jadi gangguan bisa dipasang/dicabut kapan saja. Perincian per jenis:
+     - kabel putus: kabel dibuang dari perhitungan;
+     - fuse putus: masuk `blownFuseIds`, tetapi tampil `ok`;
+     - MC4 longgar: resistansi kontak dijadikan panjang kabel setara;
+     - modul teduh: `shadedFractionByPvId`;
+     - sel baterai lemah: kapasitas, resistansi dalam, dan OCV diubah;
+     - setelan SCC salah: `voltageScale` 24 V pada baterai 12 V, sehingga terminal beban diputus;
+     - MCB salah rating: `applyParams` In;
+     - grid padam: `gridAvailableById`.
+  3. **Panel langkah.** Panel mengambang di kiri atas meja: satu langkah per kali, bilah kemajuan, timer, petunjuk 1 lalu 2 dengan potongan yang tertera, Selesai / Mulai ulang / Keluar. Mode Cari Gangguan: ketuk kabel atau komponen, "Tunjuk penyebab", pilih ikon jenis, lalu Diagnosa. Jawaban benar mencabut gangguannya; jawaban tanpa bacaan alat ukur sebelumnya dinilai sebagian.
+  4. **Pemilih skenario** ("Skenario" di bilah atas). Isinya: nama peserta, "Pilihan instruktur" (pilih gangguan atau acak sejumlah `faultCount`, jenis diusahakan berbeda), dan "Buka berkas" untuk skenario .json tanpa mengubah kode.
+  5. **Log dan nilai.** Log mencatat aksi meja (komponen, kabel, tuas), bacaan ukur di titik baru, kejadian simulasi, temuan bahaya, petunjuk, dan diagnosa, dengan detik nyata + detik simulasi. Skor rubrik: langkah − petunjuk + gangguan − salah − rusak − temuan bahaya, tidak negatif. Ringkasan dapat diekspor ke CSV (titik koma, BOM UTF-8) dan dicetak lewat `window.print` (hanya dialog hasil; log ikut dibuka).
+- Keputusan:
+  - Kunci JSON berbahasa Inggris (`title`, `steps`, `done`, …) sesuai aturan kode; teks tampilan tetap bahasa Indonesia.
+  - `goal` divalidasi maksimal 2 kalimat; teks langkah maksimal 120 huruf.
+  - Rangkaian awal memakai format `.simplts.json` yang sama, atau preset paket bila tidak ada.
+  - Temuan pemeriksaan tetap dihitung dari meja kerja tanpa gangguan, supaya gangguan tidak terbongkar lewat panel temuan.
+  - Kotak diagnosa dilipat bawaan supaya panel tidak menutupi meja.
+- Validasi:
+  - `npm run check` lolos (lint, 1245 test, build); 87 test baru.
+  - `npm run test:e2e` lolos, 47 test (3 baru: terpandu dengan petunjuk + multimeter + ekspor CSV, cari gangguan dengan jawaban salah lalu benar, asesmen tanpa petunjuk).
+  - Tampilan diperiksa lewat tangkapan layar Playwright 1366x768: pemilih, panel terpandu, panel cari gangguan terlipat/terbuka, ringkasan, dan media cetak.
+- Batasan:
+  - Panel langkah (lebar 320 px) bisa menutupi komponen di kiri atas meja; tersedia tombol ringkas.
+  - Waktu asesmen memakai jam nyata dan tetap berjalan saat simulasi dijeda (PRD §3.2 meminta jeda ikut menghentikan).
+  - Skenario dari berkas hilang saat halaman dimuat ulang.
+  - `grid-outage` belum berdampak karena jaringan dan inverter grid-tie/hibrida belum dimodelkan.
+  - Lokasi jawaban harus tepat sama dengan sasaran gangguan (kabel w4, bukan komponen di ujungnya).
+- [PERLU VERIFIKASI]:
+  - resistansi MC4 longgar 0,5 Ω;
+  - sel lemah: 30% kapasitas, 5× resistansi, −0,6 V OCV;
+  - bagian teduh bawaan 0,7;
+  - MCB salah rating bawaan ¼ In;
+  - bobot rubrik bawaan dan batas lulus 70%.
+
 ## 2026-10-15 — Tujuh LKPD berbasis SimPLTS dengan tangkapan layar
 - Sumber: permintaan pengguna (7 LKPD yang memanfaatkan SimPLTS, dengan screenshot langkah kerja). Rencana 5 poin disetujui, format Word .docx.
 - Commit: BELUM di-commit (tidak diminta). Kode aplikasi tidak diubah.
