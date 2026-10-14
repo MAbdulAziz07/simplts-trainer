@@ -1,0 +1,187 @@
+{
+  "app": "simplts",
+  "formatVersion": 1,
+  "packageId": "min",
+  "components": [
+    {
+      "id": "pv1",
+      "catalogId": "pv-generic-100wp",
+      "xPx": 48,
+      "yPx": 48,
+      "rotationDeg": 0
+    },
+    {
+      "id": "mcb-pv",
+      "catalogId": "mcb-dc-16a",
+      "xPx": 480,
+      "yPx": 48,
+      "rotationDeg": 0
+    },
+    {
+      "id": "scc",
+      "catalogId": "scc-pwm-rbl-20a",
+      "xPx": 648,
+      "yPx": 48,
+      "rotationDeg": 0
+    },
+    {
+      "id": "bat",
+      "catalogId": "bat-vrla-agm-12v-100ah",
+      "xPx": 48,
+      "yPx": 384,
+      "rotationDeg": 0
+    },
+    {
+      "id": "fuse-bat",
+      "catalogId": "fuse-bat-100a",
+      "xPx": 336,
+      "yPx": 384,
+      "rotationDeg": 0
+    },
+    {
+      "id": "bus-pos",
+      "catalogId": "busbar-dc-pos",
+      "xPx": 528,
+      "yPx": 384,
+      "rotationDeg": 0
+    },
+    {
+      "id": "bus-neg",
+      "catalogId": "busbar-dc-neg",
+      "xPx": 48,
+      "yPx": 744,
+      "rotationDeg": 0
+    }
+  ],
+  "wires": [
+    {
+      "id": "w1",
+      "from": {
+        "componentId": "bat",
+        "terminalId": "pos"
+      },
+      "to": {
+        "componentId": "fuse-bat",
+        "terminalId": "in"
+      },
+      "cableId": "cable-pv-h1z2z2k",
+      "areaMm2": 4,
+      "lengthM": 1
+    },
+    {
+      "id": "w2",
+      "from": {
+        "componentId": "fuse-bat",
+        "terminalId": "out"
+      },
+      "to": {
+        "componentId": "bus-pos",
+        "terminalId": "t1"
+      },
+      "cableId": "cable-pv-h1z2z2k",
+      "areaMm2": 4,
+      "lengthM": 1
+    },
+    {
+      "id": "w3",
+      "from": {
+        "componentId": "bat",
+        "terminalId": "neg"
+      },
+      "to": {
+        "componentId": "bus-neg",
+        "terminalId": "t1"
+      },
+      "cableId": "cable-pv-h1z2z2k",
+      "areaMm2": 4,
+      "lengthM": 1
+    },
+    {
+      "id": "w4",
+      "from": {
+        "componentId": "bus-pos",
+        "terminalId": "t2"
+      },
+      "to": {
+        "componentId": "scc",
+        "terminalId": "bat-pos"
+      },
+      "cableId": "cable-pv-h1z2z2k",
+      "areaMm2": 4,
+      "lengthM": 1
+    },
+    {
+      "id": "w5",
+      "from": {
+        "componentId": "bus-neg",
+        "terminalId": "t2"
+      },
+      "to": {
+        "componentId": "scc",
+        "terminalId": "bat-neg"
+      },
+      "cableId": "cable-pv-h1z2z2k",
+      "areaMm2": 4,
+      "lengthM": 1
+    },
+    {
+      "id": "w6",
+      "from": {
+        "componentId": "pv1",
+        "terminalId": "pos"
+      },
+      "to": {
+        "componentId": "mcb-pv",
+        "terminalId": "pos-in"
+      },
+      "cableId": "cable-pv-h1z2z2k",
+      "areaMm2": 4,
+      "lengthM": 1
+    },
+    {
+      "id": "w7",
+      "from": {
+        "componentId": "pv1",
+        "terminalId": "neg"
+      },
+      "to": {
+        "componentId": "mcb-pv",
+        "terminalId": "neg-in"
+      },
+      "cableId": "cable-pv-h1z2z2k",
+      "areaMm2": 4,
+      "lengthM": 1
+    },
+    {
+      "id": "w8",
+      "from": {
+        "componentId": "mcb-pv",
+        "terminalId": "pos-out"
+      },
+      "to": {
+        "componentId": "scc",
+        "terminalId": "pv-pos"
+      },
+      "cableId": "cable-pv-h1z2z2k",
+      "areaMm2": 4,
+      "lengthM": 1
+    },
+    {
+      "id": "w9",
+      "from": {
+        "componentId": "mcb-pv",
+        "terminalId": "neg-out"
+      },
+      "to": {
+        "componentId": "scc",
+        "terminalId": "pv-neg"
+      },
+      "cableId": "cable-pv-h1z2z2k",
+      "areaMm2": 4,
+      "lengthM": 1
+    }
+  ],
+  "closedSwitchIds": [
+    "fuse-bat"
+  ]
+}

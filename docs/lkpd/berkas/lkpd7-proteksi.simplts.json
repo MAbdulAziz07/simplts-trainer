@@ -1,0 +1,88 @@
+{
+  "app": "simplts",
+  "formatVersion": 1,
+  "packageId": "min",
+  "components": [
+    {
+      "id": "bat",
+      "catalogId": "bat-vrla-agm-12v-100ah",
+      "xPx": 0,
+      "yPx": 0,
+      "rotationDeg": 0
+    },
+    {
+      "id": "mcb",
+      "catalogId": "mcb-dc-16a",
+      "xPx": 384,
+      "yPx": 0,
+      "rotationDeg": 0
+    },
+    {
+      "id": "lamp",
+      "catalogId": "load-dc-12v-200w",
+      "xPx": 720,
+      "yPx": 0,
+      "rotationDeg": 0,
+      "powerSettingW": 100
+    }
+  ],
+  "wires": [
+    {
+      "id": "w1",
+      "from": {
+        "componentId": "bat",
+        "terminalId": "pos"
+      },
+      "to": {
+        "componentId": "mcb",
+        "terminalId": "pos-in"
+      },
+      "cableId": "cable-pv-h1z2z2k",
+      "areaMm2": 4,
+      "lengthM": 1
+    },
+    {
+      "id": "w2",
+      "from": {
+        "componentId": "bat",
+        "terminalId": "neg"
+      },
+      "to": {
+        "componentId": "mcb",
+        "terminalId": "neg-in"
+      },
+      "cableId": "cable-pv-h1z2z2k",
+      "areaMm2": 4,
+      "lengthM": 1
+    },
+    {
+      "id": "w3",
+      "from": {
+        "componentId": "mcb",
+        "terminalId": "pos-out"
+      },
+      "to": {
+        "componentId": "lamp",
+        "terminalId": "a"
+      },
+      "cableId": "cable-pv-h1z2z2k",
+      "areaMm2": 4,
+      "lengthM": 1
+    },
+    {
+      "id": "w4",
+      "from": {
+        "componentId": "mcb",
+        "terminalId": "neg-out"
+      },
+      "to": {
+        "componentId": "lamp",
+        "terminalId": "b"
+      },
+      "cableId": "cable-pv-h1z2z2k",
+      "areaMm2": 4,
+      "lengthM": 1
+    }
+  ],
+  "closedSwitchIds": []
+}

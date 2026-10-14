@@ -2,6 +2,17 @@
 
 Entri terbaru di atas.
 
+## 2026-10-15 — Tujuh LKPD berbasis SimPLTS dengan tangkapan layar
+- Sumber: permintaan pengguna (7 LKPD yang memanfaatkan SimPLTS, dengan screenshot langkah kerja). Rencana 5 poin disetujui, format Word .docx.
+- Commit: BELUM di-commit (tidak diminta). Kode aplikasi tidak diubah.
+- Dibuat (semua di docs/lkpd/): README.md; lkpd1–lkpd7 masing-masing .docx dan .md; kunci-instruktur.docx dan .md; berkas/ (9 berkas .simplts.json: lkpd2-modul-surya, lkpd3-seri-paralel, lkpd5-sistem-dc, lkpd6-jatuh-tegangan, lkpd7-proteksi, lkpd7-sistem-normal, lkpd7-gangguan-A/B/C); gambar/ (52 tangkapan layar .jpg). Diubah: docs/LOG_SESI.md.
+- Isi: (1) mengenal komponen, terminal, rating; (2) Voc dan arus modul terhadap iradiasi dan suhu; (3) seri dan paralel, termasuk Voc seri 39 V yang merusak SCC PWM 12 V; (4) merangkai off-grid 12 V dengan urutan aman dan beban lebih terminal BEBAN SCC; (5) inverter, beban AC, LVD, grafik 24 jam; (6) jatuh tegangan kabel terhadap penampang dan panjang; (7) MCB trip, polaritas terbalik, dan tiga berkas gangguan tersembunyi (MCB inverter 16 A, kabel BAT SCC 15 m 2,5 mm², kabel − panel 2 lepas).
+- Cara: tangkapan layar dan angka kunci diambil dengan skrip Playwright sementara (di luar repo) terhadap server pengembangan pada 1366×768; .docx dibuat dengan pustaka docx, lolos validasi skema, dan diperiksa lewat ekspor PDF Word.
+- Validasi: npm run check lolos (lint, 1158 test, build). Pada jalankan kedua satu unit test gagal, lalu lolos saat diulang (85 berkas, 1158 test); sama dengan test lambat yang tercatat di entri 2026-10-14. Semua berkas .simplts.json berhasil dibuka lewat tombol Buka.
+- Temuan saat menyusun: modul surya yang disambung langsung ke beban atau dihubung singkat tidak disimulasikan (Voc tetap terbaca, arus 0; temuan "Modul surya langsung ke inverter atau beban"), jadi Isc tidak bisa diukur langsung dan LKPD 2–3 mengukur arus PV saat mengisi baterai lewat SCC. Fuse baterai dalam berkas proyek harus tercantum di `closedSwitchIds`, kalau tidak SCC tidak mendapat tegangan baterai. MCB PV 16 A untuk dua panel paralel memunculkan temuan arus melebihi rating, jadi berkas LKPD 5 memakai MCB 20 A. Polaritas terbalik pada BAT SCC (tingkat Mahir) membuat SCC padam tanpa rusak. Gangguan B dan C tidak memunculkan temuan pemeriksaan.
+- Batasan: angka kunci adalah hasil simulasi per tanggal ini dan bisa bergeser bila katalog atau model berubah; skrip pembuat gambar tidak disimpan, jadi gambar perlu diambil ulang secara manual bila tampilan berubah; mode Praktik Terpandu dan Cari Gangguan belum ada, sehingga pemandu langkah ada di LKPD, bukan di aplikasi.
+- [PERLU VERIFIKASI]: faktor rating proteksi PV terhadap Isc (LKPD 3), akibat polaritas terbalik per datasheet SCC, pemetaan LKPD ke CP/ATP dan SKKNI.
+
 ## 2026-10-12 — Kode mengikuti keputusan tata letak UX.md
 - Sumber: docs/UX.md §2 dan tabel selisih §4.2 (entri di bawah). Rencana 5 poin disetujui sebelum mulai ("pakai usulan"), termasuk tiga keputusan yang direvisi alih-alih diikuti kode: komponen tanpa kartu (§2.2), titik terminal 14–24 px dan jarak mengikuti gambar (§2.3), tab mode ditunda sampai modenya ada (§2.1).
 - Commit (4 + penutup, di master, tanpa push): `0822e51` inspektur dan baki, `d7211b2` reset ke bilah atas, `3d484d1` terminal, `6f3e312` centang dan legenda, lalu commit dokumen.
