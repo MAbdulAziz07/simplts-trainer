@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { node, seedCircuit } from './sim-helpers';
 
 // Ukuran area pada layar acuan 1366x768 (docs/UX.md §2.1).
 
@@ -102,4 +103,89 @@ test('di bawah 1024 px inspektur menjadi lembar bawah setinggi 40% layar', async
   // Tepat di atas bilah simulasi 72 px; meja kerja tidak menyempit.
   expect(sheet.y + sheet.height).toBe(700 - 72);
   expect((await size(page, 'workbench')).width).toBe(900 - 216);
+});
+
+// Rangkaian selebar tiga kolom: pada meja 1150 px muat di zoom yang lebih besar daripada di 870 px.
+async function seedWide(page: Page) {
+  await seedCircuit(
+    page,
+    [
+      ['pv', 'pv-generic-100wp'],
+      ['scc', 'scc-pwm-rbl-20a'],
+      ['inv', 'inv-offgrid-500w-12v'],
+      ['bat', 'bat-vrla-agm-12v-100ah'],
+    ],
+    [],
+  );
+  await page.waitForTimeout(400);
+}
+
+const viewport = (page: Page) =>
+  page.locator('.react-flow__viewport').evaluate((element) => element.style.transform);
+
+/** `true` bila komponen seluruhnya berada di dalam meja kerja. */
+async function isInsideWorkbench(page: Page, nodeId: string) {
+  const bench = (await areas(page).workbench.boundingBox())!;
+  const box = (await node(page, nodeId).boundingBox())!;
+  return box.x >= bench.x && box.x + box.width <= bench.x + bench.width;
+}
+
+test('tampilan dipaskan ulang saat inspektur muncul dan hilang bila semua komponen terlihat', async ({
+  page,
+}) => {
+  await seedWide(page);
+  const fitted = await viewport(page);
+  expect(await isInsideWorkbench(page, 'inv')).toBe(true);
+
+  // Memilih komponen paling kiri memunculkan inspektur; komponen paling kanan tetap terlihat.
+  await node(page, 'pv').locator('.node-picture').click();
+  await expect(areas(page).inspector).toBeVisible();
+  await expect.poll(() => viewport(page)).not.toBe(fitted);
+  await page.waitForTimeout(400);
+  expect(await isInsideWorkbench(page, 'inv')).toBe(true);
+  expect(await isInsideWorkbench(page, 'pv')).toBe(true);
+
+  // Pilihan dilepas: meja melebar lagi dan tampilan kembali seperti semula.
+  await page.keyboard.press('Escape');
+  await expect(areas(page).inspector).toHaveCount(0);
+  await expect.poll(() => viewport(page)).toBe(fitted);
+});
+
+test('tampilan yang sedang diperbesar ke satu bagian tidak diubah saat inspektur muncul', async ({
+  page,
+}) => {
+  await seedWide(page);
+  await page.getByRole('button', { name: 'Perbesar' }).click();
+  await page.getByRole('button', { name: 'Perbesar' }).click();
+  await page.waitForTimeout(400);
+  const zoomed = await viewport(page);
+  // Sebagian rangkaian kini di luar layar.
+  expect(await isInsideWorkbench(page, 'inv')).toBe(false);
+
+  await node(page, 'scc').locator('.node-picture').click();
+  await expect(areas(page).inspector).toBeVisible();
+  await page.waitForTimeout(700);
+  expect(await viewport(page)).toBe(zoomed);
+});
+
+test('komponen yang dipilih sambil diseret: tampilan baru dipaskan ulang setelah dilepas', async ({
+  page,
+}) => {
+  await seedWide(page);
+  const fitted = await viewport(page);
+  const box = (await node(page, 'bat').locator('.node-picture').boundingBox())!;
+  const start = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+
+  await page.mouse.move(start.x, start.y);
+  await page.mouse.down();
+  await page.mouse.move(start.x + 60, start.y - 30, { steps: 6 });
+  // Inspektur sudah muncul, tetapi kanvas tidak bergeser selama komponen masih dipegang.
+  await expect(areas(page).inspector).toBeVisible();
+  await page.waitForTimeout(600);
+  expect(await viewport(page)).toBe(fitted);
+
+  await page.mouse.up();
+  await expect.poll(() => viewport(page)).not.toBe(fitted);
+  await page.waitForTimeout(400);
+  expect(await isInsideWorkbench(page, 'inv')).toBe(true);
 });
