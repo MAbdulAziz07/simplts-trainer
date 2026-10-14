@@ -60,6 +60,8 @@ describe('sameCircuit', () => {
     expect(sameCircuit(doc, { ...doc, closedSwitchIds: ['c1'] })).toBe(false);
     const swapped = { ...doc, components: [{ ...part, catalogId: 'mcb-dc-20a' }] };
     expect(sameCircuit(doc, swapped)).toBe(false);
+    const tuned = { ...doc, components: [{ ...part, params: { ratedA: 25 } }] };
+    expect(sameCircuit(doc, tuned)).toBe(false);
   });
 });
 

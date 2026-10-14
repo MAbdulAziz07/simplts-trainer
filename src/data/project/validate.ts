@@ -1,5 +1,5 @@
 // Memeriksa berkas proyek: bentuk (zod), versi format, lalu rujukan ke katalog dan antarbagian.
-import type { CatalogItem } from '@/domain';
+import { paramIssues, type CatalogItem } from '@/domain';
 import {
   PROJECT_APP_ID,
   PROJECT_FORMAT_VERSION,
@@ -40,6 +40,9 @@ function referenceIssues(project: ProjectFile, catalog: readonly CatalogItem[]):
     const isLoad = item?.category === 'load-dc' || item?.category === 'load-ac';
     if (component.powerSettingW !== undefined && !isLoad)
       issues.push(`components.${component.id}: powerSettingW hanya untuk beban`);
+    if (item && component.params)
+      for (const { key, code } of paramIssues(item, component.params))
+        issues.push(`components.${component.id}.params.${key}: ${code}`);
   }
 
   for (const wire of project.wires) {

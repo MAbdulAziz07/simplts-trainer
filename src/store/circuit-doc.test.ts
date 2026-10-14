@@ -10,7 +10,9 @@ import {
   nextId,
   patchWire,
   removeItems,
+  replaceVariant,
   rotateParts,
+  setPartParams,
   setPartPower,
   toggleSwitch,
   type CircuitDoc,
@@ -171,5 +173,50 @@ describe('setPartPower dan loadPowerSettings', () => {
     let doc = setPartPower(sample(), 'c1', 0);
     doc = rotateParts(moveParts(doc, [{ id: 'c1', xPx: 96, yPx: 96 }]), ['c1']);
     expect(loadPowerSettings(doc)).toEqual({ c1: 0 });
+  });
+});
+
+describe('replaceVariant', () => {
+  it('mengganti item katalog, menjaga kabel di terminal yang dipertahankan, dan tuas OFF', () => {
+    const doc = toggleSwitch(sample(), 'c2', findItem);
+    const next = replaceVariant(doc, 'c2', 'mcb-dc-32a', ['pos-in']);
+    expect(next.components[1]).toMatchObject({ id: 'c2', catalogId: 'mcb-dc-32a', xPx: 24 });
+    expect(next.wires.map((wire) => wire.id)).toEqual(['w1', 'w2']);
+    expect(next.closedSwitchIds).not.toContain('c2');
+  });
+
+  it('kabel di terminal yang tidak dipertahankan dilepas; kabel lain tetap', () => {
+    let doc = sample();
+    doc = addWire(doc, { ...wireSpec('c1', 'c3'), to: { componentId: 'c3', terminalId: 'a' } }).doc;
+    const next = replaceVariant(doc, 'c2', 'mcb-ac-10a', []);
+    expect(next.wires.map((wire) => wire.id)).toEqual(['w3']);
+  });
+
+  it('ubahan parameter varian lama dibuang', () => {
+    const doc = setPartParams(sample(), 'c2', { ratedA: 25 });
+    expect(replaceVariant(doc, 'c2', 'mcb-dc-32a', []).components[1]?.params).toBeUndefined();
+  });
+
+  it('varian sama atau komponen tidak ada: dokumen sama', () => {
+    const doc = sample();
+    expect(replaceVariant(doc, 'c2', 'mcb-dc-16a', [])).toBe(doc);
+    expect(replaceVariant(doc, 'c9', 'mcb-dc-32a', [])).toBe(doc);
+  });
+});
+
+describe('setPartParams', () => {
+  it('mengisi, mengganti, dan menghapus ubahan', () => {
+    const doc = setPartParams(sample(), 'c2', { ratedA: 25 });
+    expect(doc.components[1]?.params).toEqual({ ratedA: 25 });
+    const cleared = setPartParams(doc, 'c2', undefined);
+    expect(cleared.components[1]).not.toHaveProperty('params');
+  });
+
+  it('ubahan sama atau komponen tidak ada: dokumen sama', () => {
+    const doc = setPartParams(sample(), 'c2', { ratedA: 25 });
+    expect(setPartParams(doc, 'c2', { ratedA: 25 })).toBe(doc);
+    expect(setPartParams(doc, 'c9', { ratedA: 30 })).toBe(doc);
+    const plain = sample();
+    expect(setPartParams(plain, 'c2', undefined)).toBe(plain);
   });
 });

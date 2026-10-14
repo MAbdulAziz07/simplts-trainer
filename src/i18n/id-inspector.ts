@@ -17,6 +17,10 @@ export const inspector = {
     dischargeA: { symbol: 'Ilepas', name: 'Arus lepas maksimum' },
     loadA: { symbol: 'Ibeban', name: 'Arus terminal beban maksimum' },
     pvVocMax: { symbol: 'Voc maks', name: 'Batas Voc masukan PV' },
+    pvVocMax12: { symbol: 'Voc maks 12', name: 'Batas Voc masukan PV pada sistem 12 V' },
+    pvVocMax24: { symbol: 'Voc maks 24', name: 'Batas Voc masukan PV pada sistem 24 V' },
+    mpptMin: { symbol: 'MPPT min', name: 'Tegangan MPPT terendah' },
+    mpptMax: { symbol: 'MPPT maks', name: 'Tegangan MPPT tertinggi' },
     pvPowerMax: { symbol: 'PV maks', name: 'Daya PV maksimum' },
     mpptRange: { symbol: 'MPPT', name: 'Rentang tegangan MPPT' },
     inputA: { symbol: 'Imasuk', name: 'Arus masukan DC maksimum' },
@@ -25,7 +29,7 @@ export const inspector = {
     dcV: { symbol: 'Vdc', name: 'Tegangan DC nominal' },
     acV: { symbol: 'Vac', name: 'Tegangan keluaran AC' },
     lvd: { symbol: 'LVD', name: 'Putus tegangan baterai rendah' },
-    ratedA: { symbol: 'In', name: 'Arus nominal' },
+    ratedA: { symbol: 'In', name: 'Arus pengenal' },
     curve: { symbol: 'Kurva', name: 'Kurva trip' },
     fuseClass: { symbol: 'Kelas', name: 'Kelas fuse' },
     breaking: { symbol: 'Icu', name: 'Kemampuan memutus' },
@@ -79,5 +83,57 @@ export const inspector = {
     'load-ac':
       'Beban AC 220 V yang dayanya bisa diatur. Harus disambung ke keluaran AC inverter atau jaringan.',
     grid: 'Jaringan PLN 220 V sebagai sumber AC; bisa padam sewaktu-waktu.',
+  },
+} as const;
+
+// Keluarga varian: satu ubin di baki, jenis dan arus pengenal dipilih di inspektur.
+// Kunci = `VariantFamily` dan `VariantKind` (src/domain/catalog/variants.ts).
+export const variant = {
+  families: { mcb: 'MCB', panel: 'Panel Listrik' },
+  kind: 'Jenis',
+  ratedCurrent: 'Arus pengenal',
+  kinds: {
+    dc: 'DC',
+    ac: 'AC',
+    'dc+': 'DC+',
+    'dc-': 'DC−',
+    acL: 'L',
+    acN: 'N',
+    pe: 'PE',
+    'load-panel': 'Panel Beban',
+  },
+  kindTitles: {
+    dc: 'MCB arus searah',
+    ac: 'MCB arus bolak-balik',
+    'dc+': 'Busbar kutub positif DC',
+    'dc-': 'Busbar kutub negatif DC',
+    acL: 'Busbar fasa AC',
+    acN: 'Busbar netral AC',
+    pe: 'Busbar pembumian',
+    'load-panel': 'Panel distribusi AC dengan MCB tiap sirkuit',
+  },
+  ratingA: (ratedCurrentA: number) => `${ratedCurrentA} A`,
+} as const;
+
+// Pengaturan parameter manual di inspektur. Kunci `issues` = `ParamIssueCode` (src/domain).
+export const params = {
+  edit: 'Atur parameter',
+  done: 'Selesai mengatur',
+  editor: 'Parameter komponen',
+  defaultValue: (value: string) => `Default: ${value}`,
+  reset: (name: string) => `Kembalikan ${name} ke default`,
+  resetAll: 'Kembalikan semua ke default',
+  fixed: 'Tetap: terikat bentuk komponen atau model fisikanya',
+  tuned: 'Parameter diubah dari default',
+  issues: {
+    unknown: 'Parameter tidak dikenal',
+    fixed: 'Parameter ini tidak bisa diubah',
+    'not-number': 'Isi dengan angka',
+    'not-option': 'Pilih dari daftar',
+    'not-positive': 'Harus lebih dari 0',
+    'too-large': 'Terlalu besar (maks. 10× default)',
+    'pv-vmp-above-voc': 'Vmp harus di bawah Voc',
+    'pv-imp-above-isc': 'Arus Imp harus di bawah Isc',
+    'load-max-below-min': 'Di bawah daya minimum beban',
   },
 } as const;

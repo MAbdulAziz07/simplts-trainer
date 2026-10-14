@@ -1,6 +1,6 @@
 // Isi meja kerja sebagai objek biasa dan perubahannya sebagai fungsi murni: tiap fungsi
 // mengembalikan dokumen baru, atau dokumen yang sama bila tidak ada yang berubah.
-import { SWITCH_CATEGORIES, type CatalogItem, type Wire } from '@/domain';
+import { SWITCH_CATEGORIES, type CatalogItem, type ComponentParams, type Wire } from '@/domain';
 import { ROTATIONS_DEG, type ProjectComponent } from '@/data';
 
 /** Satu komponen di meja kerja; `id` unik per rangkaian, `catalogId` merujuk katalog. */
@@ -125,6 +125,34 @@ export function setPartPower(doc: CircuitDoc, id: string, powerSettingW: number)
   return { ...doc, components };
 }
 
+/** Mengganti ubahan parameter sebuah komponen; `undefined` = kembali ke nilai katalog. */
+export function setPartParams(
+  doc: CircuitDoc,
+  id: string,
+  params: ComponentParams | undefined,
+): CircuitDoc {
+  const current = doc.components.find((part) => part.id === id);
+  if (!current || sameParams(current.params, params)) return doc;
+  const components = doc.components.map((part) => {
+    if (part !== current) return part;
+    return params ? { ...part, params: { ...params } } : withoutParams(part);
+  });
+  return { ...doc, components };
+}
+
+function withoutParams(part: PlacedPart): PlacedPart {
+  const copy = { ...part };
+  delete copy.params;
+  return copy;
+}
+
+function sameParams(a: ComponentParams | undefined, b: ComponentParams | undefined): boolean {
+  const aKeys = Object.keys(a ?? {});
+  return (
+    aKeys.length === Object.keys(b ?? {}).length && aKeys.every((key) => a?.[key] === b?.[key])
+  );
+}
+
 /** Setelan daya tiap beban yang sudah diatur; beban tanpa setelan bekerja pada daya maksimum. */
 export function loadPowerSettings(doc: CircuitDoc): Record<string, number> {
   const settings: Record<string, number> = {};
@@ -153,4 +181,28 @@ export function toggleSwitch(
     ? doc.closedSwitchIds.filter((closedId) => closedId !== id)
     : [...doc.closedSwitchIds, id];
   return { ...doc, closedSwitchIds };
+}
+
+/**
+ * Mengganti varian sebuah komponen (mis. MCB DC 16 A → 32 A). Kabel tetap di terminal yang disebut
+ * `keptTerminalIds`; kabel di terminal lain dilepas. Tuas kembali OFF; ubahan parameter dibuang.
+ */
+export function replaceVariant(
+  doc: CircuitDoc,
+  id: string,
+  catalogId: string,
+  keptTerminalIds: readonly string[],
+): CircuitDoc {
+  const current = doc.components.find((part) => part.id === id);
+  if (!current || current.catalogId === catalogId) return doc;
+  const keeps = (end: Wire['from']) =>
+    end.componentId !== id || keptTerminalIds.includes(end.terminalId);
+  return {
+    // Ubahan parameter milik varian lama tidak dibawa ke varian baru.
+    components: doc.components.map((part) =>
+      part === current ? { ...withoutParams(part), catalogId } : part,
+    ),
+    wires: doc.wires.filter((wire) => keeps(wire.from) && keeps(wire.to)),
+    closedSwitchIds: doc.closedSwitchIds.filter((closedId) => closedId !== id),
+  };
 }

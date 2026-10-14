@@ -10,6 +10,8 @@ export type ComponentNodeData = {
   rotationDeg: RotationDeg;
   /** MCB/fuse dalam keadaan ON; tidak berarti untuk komponen lain. */
   closed: boolean;
+  /** Ada parameter yang diatur manual (item sudah memuat nilai ubahan). */
+  tuned: boolean;
 };
 export type ComponentFlowNode = Node<ComponentNodeData, 'component'>;
 

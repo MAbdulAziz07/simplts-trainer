@@ -8,6 +8,7 @@ export * from './findingsStore';
 export * from './history';
 export * from './instrument-readings';
 export * from './instrumentStore';
+export * from './param-edit';
 export * from './project-io';
 export * from './sim-env';
 export * from './sim-reconcile';

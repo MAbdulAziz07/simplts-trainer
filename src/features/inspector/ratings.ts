@@ -1,6 +1,6 @@
 // Rating utama sebuah item katalog untuk inspektur: paling banyak empat angka yang paling
 // menentukan cara merangkainya (docs/UX.md §1 butir 8).
-import type { CatalogItem } from '@/domain';
+import type { CatalogItem, ComponentParams, ParamValue } from '@/domain';
 import { t } from '@/i18n';
 
 export type RatingKey = keyof typeof t.inspector.rating;
@@ -179,4 +179,40 @@ function allRatings(item: CatalogItem): Rating[] {
 /** Paling banyak `MAX_RATINGS` rating utama sebuah item. */
 export function ratingsOf(item: CatalogItem): Rating[] {
   return allRatings(item).slice(0, MAX_RATINGS);
+}
+
+/** Tanda dan nama sebuah rating/parameter; kunci yang belum punya teks tampil apa adanya. */
+export function ratingText(key: string): { symbol: string; name: string } {
+  return (
+    (t.inspector.rating as Record<string, { symbol: string; name: string }>)[key] ?? {
+      symbol: key,
+      name: key,
+    }
+  );
+}
+
+/** Nilai parameter untuk isian dan teks default: desimal koma tanpa pemisah ribuan. */
+export function formatParam(value: ParamValue): string {
+  const one = (part: number | string) =>
+    typeof part === 'number'
+      ? part.toLocaleString('id-ID', { maximumFractionDigits: 4, useGrouping: false })
+      : part;
+  return Array.isArray(value) ? value.map(one).join('/') : one(value as number | string);
+}
+
+// Rating gabungan di kotak rating ↔ parameter terpisahnya di pengaturan.
+const RATING_PARAM_KEYS: Partial<Record<RatingKey, readonly string[]>> = {
+  pvVocMax: ['pvVocMax', 'pvVocMax12', 'pvVocMax24'],
+  mpptRange: ['mpptMin', 'mpptMax'],
+};
+
+/** `true` bila nilai rating ini berasal dari ubahan manual. */
+export function isRatingChanged(key: RatingKey, params: ComponentParams | undefined): boolean {
+  return (RATING_PARAM_KEYS[key] ?? [key]).some((paramKey) => params?.[paramKey] !== undefined);
+}
+
+/** Angka dari isian; koma dan titik desimal diterima. `NaN` bila bukan angka. */
+export function parseParamNumber(text: string): number {
+  const cleaned = text.trim().replace(',', '.');
+  return cleaned === '' ? Number.NaN : Number(cleaned);
 }

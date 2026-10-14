@@ -26,6 +26,14 @@
   pointer-events: none;
 }
 
+/* Tanda parameter diatur manual, di depan nama komponen. */
+.component-tuned {
+  display: inline;
+  margin-right: 4px;
+  color: var(--color-brand);
+  vertical-align: -1px;
+}
+
 /* Handle sebesar titik di pusat terminal; area sentuhnya `.terminal-hit` di bawah titiknya. */
 .react-flow__handle.terminal {
   width: 2px;

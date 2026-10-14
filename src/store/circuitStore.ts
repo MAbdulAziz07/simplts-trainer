@@ -3,14 +3,23 @@
 import { create } from 'zustand';
 import {
   checkConnection,
+  familyOf,
   loadSnapPowerW,
+  retainedTerminalIds,
   type ConnectionCheck,
   type ConnectionLevel,
+  type ParamIssue,
   type PackageId,
   type TerminalRef,
 } from '@/domain';
 import type { ProjectFile } from '@/data';
-import { cableItems, catalogItems, findCatalogItem, toPlacedComponents } from './catalog';
+import {
+  cableItems,
+  catalogItems,
+  effectiveItem,
+  findCatalogItem,
+  toPlacedComponents,
+} from './catalog';
 import {
   EMPTY_DOC,
   addPart,
@@ -19,6 +28,7 @@ import {
   openSwitches,
   patchWire,
   removeItems,
+  replaceVariant,
   rotateParts,
   setPartPower,
   toggleSwitch,
@@ -27,6 +37,7 @@ import {
   type PointPx,
   type WirePatch,
 } from './circuit-doc';
+import { withParam, withoutParam } from './param-edit';
 import { emptyHistory, record, redo, undo, type History } from './history';
 import {
   browserStorage,
@@ -65,6 +76,15 @@ export interface CircuitState {
   updateWire: (wireId: string, patch: WirePatch) => void;
   /** Setelan daya beban, dibulatkan ke langkah katalog dan dibatasi rentang bebannya. */
   setLoadPower: (componentId: string, powerSettingW: number) => void;
+  /** Mengganti varian dalam keluarga yang sama (MCB, panel); satu langkah undo. */
+  setVariant: (componentId: string, catalogId: string) => void;
+  /**
+   * Mengubah satu parameter (kunci `PARAM_SPECS`); nilai sama dengan katalog menghapus ubahannya.
+   * Ubahan yang tidak sah tidak disimpan dan masalahnya dikembalikan.
+   */
+  setParam: (componentId: string, key: string, value: number | string) => ParamIssue[];
+  /** Kembali ke nilai katalog: satu parameter, atau semua bila `key` tidak diberikan. */
+  resetParams: (componentId: string, key?: string) => void;
   toggleSwitch: (componentId: string) => void;
   /** Tuas pindah ke OFF karena trip; bukan tindakan pengguna, jadi tidak masuk riwayat undo. */
   openSwitches: (componentIds: readonly string[]) => void;
@@ -164,10 +184,27 @@ export const useCircuitStore = create<CircuitState>()((set, get) => {
     setLoadPower: (componentId, powerSettingW) => {
       const { doc } = get();
       const part = doc.components.find((candidate) => candidate.id === componentId);
-      const item = part && findCatalogItem(part.catalogId);
+      const item = part && effectiveItem(part);
       if (item?.category !== 'load-dc' && item?.category !== 'load-ac') return;
       commit(setPartPower(doc, componentId, loadSnapPowerW(item.electrical, powerSettingW)));
     },
+
+    setVariant: (componentId, catalogId) => {
+      const { doc } = get();
+      const part = doc.components.find((candidate) => candidate.id === componentId);
+      const from = part && findCatalogItem(part.catalogId);
+      const to = findCatalogItem(catalogId);
+      const family = from && familyOf(from.category);
+      if (!from || !to || !family || familyOf(to.category) !== family) return;
+      commit(replaceVariant(doc, componentId, catalogId, retainedTerminalIds(from, to)));
+    },
+
+    setParam: (componentId, key, value) => {
+      const { doc, issues } = withParam(get().doc, componentId, key, value);
+      commit(doc);
+      return issues;
+    },
+    resetParams: (componentId, key) => commit(withoutParam(get().doc, componentId, key)),
 
     toggleSwitch: (componentId) => commit(toggleSwitch(get().doc, componentId, findCatalogItem)),
     openSwitches: (componentIds) => set({ doc: openSwitches(get().doc, componentIds) }),

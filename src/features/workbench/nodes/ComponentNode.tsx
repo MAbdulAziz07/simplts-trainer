@@ -1,5 +1,7 @@
 import { useStore, useUpdateNodeInternals, type NodeProps } from '@xyflow/react';
+import { SlidersHorizontal } from 'lucide-react';
 import { memo, useEffect, useMemo } from 'react';
+import { t } from '@/i18n';
 import { itemSizePx } from '@/ui';
 import type { ComponentFlowNode } from '../flow-types';
 import { NodePicture } from '../status/NodePicture';
@@ -47,7 +49,17 @@ export const ComponentNode = memo(function ComponentNode({
       data-selected={selected || undefined}
       style={{ width: box.widthPx, height: box.heightPx }}
     >
-      <span className="component-name">{item.name}</span>
+      <span className="component-name">
+        {data.tuned && (
+          <SlidersHorizontal
+            aria-label={t.params.tuned}
+            role="img"
+            size={12}
+            className="component-tuned"
+          />
+        )}
+        {item.name}
+      </span>
       <NodePicture id={id} item={item} size={size} rotationDeg={rotationDeg} />
       <NodeStatus id={id} item={item} />
       <SwitchToggle

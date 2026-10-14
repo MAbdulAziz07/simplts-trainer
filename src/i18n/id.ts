@@ -1,5 +1,5 @@
 // Semua teks yang tampil ke pengguna, bahasa Indonesia.
-import { inspector } from './id-inspector';
+import { inspector, params, variant } from './id-inspector';
 import { instruments } from './id-instruments';
 import { chart, findingsPanel, sim, status } from './id-sim';
 
@@ -120,8 +120,10 @@ export const id = {
   findingsPanel,
   inspector,
   instruments,
+  params,
   sim,
   status,
+  variant,
   severities: {
     info: 'Info',
     warning: 'Peringatan',

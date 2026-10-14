@@ -142,7 +142,7 @@ test.describe('layar sentuh', () => {
 
 test('tuas MCB, putar, hapus, dan undo/redo', async ({ page }) => {
   await page.goto('/');
-  await tile(page, 'MCB DC 16A').click();
+  await tile(page, 'MCB').click();
   const lever = page.getByRole('switch', { name: 'Tuas MCB DC 16A' });
   await expect(lever).toHaveText('OFF');
   await lever.click();

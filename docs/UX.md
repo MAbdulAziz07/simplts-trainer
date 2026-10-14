@@ -131,7 +131,9 @@ Keputusan §2 yang sudah diterapkan apa adanya tidak diulang di sini. Tabel ini 
 | Alat ukur | Tiga tombol bergambar di kanan atas meja; panel alat di kanan bawah meja, tidak ikut zoom, angka LCD 30 px; probe dan jepitan diseret ke terminal/kabel atau diketuk lalu sasarannya diketuk |
 | Temuan pemeriksaan | Segitiga 44 px di kiri bawah meja dengan jumlah temuan; daftar baru muncul saat diklik, penjelasan lewat tombol "?" per baris |
 | Grafik 24 jam | Panel mengambang di atas bilah simulasi, dibuka dari tombol di bilah itu; daya (W) dan SoC (%) pada dua bidang bertumpuk |
-| Inspektur | Gambar, nama, paling banyak empat rating utama (tanda besaran + angka 20 px), penjelasan per kategori lewat "?", slider daya untuk beban, tombol hapus 44 px |
+| Inspektur | Gambar, nama, paling banyak empat rating utama (tanda besaran + angka 20 px), penjelasan per kategori lewat "?", slider daya untuk beban, tombol hapus 44 px; untuk MCB dan Panel Listrik deret tombol 44 px "Jenis" dan "Arus pengenal"; tombol "Atur parameter" (ikon penggeser, 44 px) mengganti kotak rating dengan isian per parameter: angka 20 px + satuan, "Default: …" di bawahnya, tombol kembalikan per parameter, dan "Kembalikan semua"; disimpan saat Enter atau pindah isian, Escape membatalkan, nilai tidak sah ditolak dengan pesan singkat. Rating yang diubah berlatar warna merek |
+| Tanda parameter diubah | Ikon penggeser kecil warna merek di depan nama komponen di meja |
+| Keluarga varian di baki | Satu ubin "MCB" (kelompok Proteksi) dan satu ubin "Panel Listrik" (busbar + Panel Beban, kelompok Distribusi); ubin menaruh varian pertama di katalog, nama di meja ikut varian terpilih |
 | Warna terminal data | Ungu `#7C3AED` (belum ditetapkan di §2.4) [PERLU VERIFIKASI] |
 
 ### 4.2 Selisih terhadap §2

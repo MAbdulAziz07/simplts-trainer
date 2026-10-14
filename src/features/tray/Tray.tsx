@@ -95,12 +95,12 @@ export function Tray() {
             {t.tray.groups[group.id]}
           </h2>
           <ul className="grid grid-cols-2 gap-2">
-            {group.items.map((item) => (
-              <li key={item.id}>
+            {group.entries.map(({ item, family }) => (
+              <li key={family ?? item.id}>
                 <button
                   type="button"
-                  aria-label={t.tray.add(item.name)}
-                  title={item.name}
+                  aria-label={t.tray.add(family ? t.variant.families[family] : item.name)}
+                  title={family ? t.variant.families[family] : item.name}
                   data-catalog-id={item.id}
                   className="border-line hover:border-brand focus-visible:outline-brand flex size-[92px] cursor-grab touch-pan-y flex-col items-center gap-1 rounded-lg border bg-white p-1.5 select-none focus-visible:outline-2 active:cursor-grabbing"
                   {...tileHandlers(item.id)}
@@ -109,7 +109,7 @@ export function Tray() {
                     <ComponentPicture item={item} />
                   </span>
                   <span className="line-clamp-2 w-full text-center text-xs leading-[14px] font-medium">
-                    {item.name}
+                    {family ? t.variant.families[family] : item.name}
                   </span>
                 </button>
               </li>

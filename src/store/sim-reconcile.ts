@@ -27,7 +27,7 @@ export interface CircuitParts {
 }
 
 /**
- * `true` bila kedua dokumen sama secara listrik: komponen, setelan daya beban, kabel, dan tuas
+ * `true` bila kedua dokumen sama secara listrik: komponen, setelan daya beban, ubahan parameter, kabel, dan tuas
  * (posisi dan putaran tidak dihitung).
  */
 export function sameCircuit(a: CircuitDoc, b: CircuitDoc): boolean {
@@ -41,7 +41,8 @@ export function sameCircuit(a: CircuitDoc, b: CircuitDoc): boolean {
       return (
         part.id === other?.id &&
         part.catalogId === other.catalogId &&
-        part.powerSettingW === other.powerSettingW
+        part.powerSettingW === other.powerSettingW &&
+        part.params === other.params
       );
     })
   );

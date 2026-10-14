@@ -9,7 +9,13 @@ import {
   Sun,
   type LucideIcon,
 } from 'lucide-react';
-import type { CatalogItem, ComponentCategory, PackageId } from '@/domain';
+import {
+  familyOf,
+  type CatalogItem,
+  type ComponentCategory,
+  type PackageId,
+  type VariantFamily,
+} from '@/domain';
 import type { t } from '@/i18n';
 
 export type TrayGroupId = keyof typeof t.tray.groups;
@@ -43,16 +49,36 @@ export const TRAY_GROUPS: readonly TrayGroupSpec[] = [
   { id: 'load', icon: Lightbulb, categories: ['load-dc', 'load-ac'] },
 ];
 
+/** Satu ubin baki. Untuk keluarga varian, `item` = varian bawaan yang ditaruh saat diseret. */
+export interface TrayEntry {
+  item: CatalogItem;
+  family?: VariantFamily;
+}
+
 export interface TrayGroup extends TrayGroupSpec {
-  items: CatalogItem[];
+  entries: TrayEntry[];
+}
+
+/** Anggota keluarga varian (MCB, panel) menjadi satu ubin di tempat anggota pertamanya. */
+function collapseFamilies(items: readonly CatalogItem[]): TrayEntry[] {
+  const shown = new Set<VariantFamily>();
+  return items.flatMap((item) => {
+    const family = familyOf(item.category);
+    if (!family) return [{ item }];
+    if (shown.has(family)) return [];
+    shown.add(family);
+    return [{ item, family }];
+  });
 }
 
 /** Isi baki untuk satu paket; kelompok tanpa item tidak disertakan (docs/UX.md §1 butir 7). */
 export function trayGroups(catalog: readonly CatalogItem[], packageId: PackageId): TrayGroup[] {
   return TRAY_GROUPS.map((group) => ({
     ...group,
-    items: group.categories.flatMap((category) =>
-      catalog.filter((item) => item.category === category && item.packages.includes(packageId)),
+    entries: collapseFamilies(
+      group.categories.flatMap((category) =>
+        catalog.filter((item) => item.category === category && item.packages.includes(packageId)),
+      ),
     ),
-  })).filter((group) => group.items.length > 0);
+  })).filter((group) => group.entries.length > 0);
 }

@@ -111,3 +111,29 @@ describe('validateProject — setelan daya beban', () => {
     expect(validateProject(negative, catalog).rejection).toBe('invalid');
   });
 });
+
+describe('validateProject — ubahan parameter', () => {
+  const withParams = (params: Record<string, number | string>) =>
+    project((draft) => {
+      const [, mcb] = draft.components;
+      if (mcb) draft.components[1] = { ...mcb, params };
+    });
+
+  it('menerima ubahan yang sah', () => {
+    const result = validateProject(withParams({ ratedA: 25, curve: 'B' }), catalog);
+    expect(result.issues).toEqual([]);
+    expect(result.project?.components[1]?.params).toEqual({ ratedA: 25, curve: 'B' });
+  });
+
+  it('menolak kunci tak dikenal, nilai di luar batas, dan bentuk yang salah', () => {
+    expect(validateProject(withParams({ hilang: 1, ratedA: -2 }), catalog).issues).toEqual([
+      'components.mcb1.params.hilang: unknown',
+      'components.mcb1.params.ratedA: not-positive',
+    ]);
+    const wrongShape = project((draft) => {
+      const [, mcb] = draft.components;
+      if (mcb) draft.components[1] = { ...mcb, params: { ratedA: true } as never };
+    });
+    expect(validateProject(wrongShape, catalog).rejection).toBe('invalid');
+  });
+});

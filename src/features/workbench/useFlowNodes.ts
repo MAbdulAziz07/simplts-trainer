@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import type { CatalogItem } from '@/domain';
 import type { RotationDeg } from '@/data';
 import { t } from '@/i18n';
-import { findCatalogItem, useCircuitStore } from '@/store';
+import { effectiveItem, useCircuitStore } from '@/store';
 import { itemSizePx } from '@/ui';
 import type { ComponentFlowNode, ComponentNodeData } from './flow-types';
 import { rotatedSizePx } from './nodes/geometry';
@@ -13,12 +13,17 @@ const dataByItem = new WeakMap<CatalogItem, Map<string, ComponentNodeData>>();
  * `data` node yang sama untuk isi yang sama, sehingga menyeret satu komponen tidak menggambar
  * ulang isi komponen lain.
  */
-function nodeData(item: CatalogItem, rotationDeg: RotationDeg, closed: boolean): ComponentNodeData {
+function nodeData(
+  item: CatalogItem,
+  rotationDeg: RotationDeg,
+  closed: boolean,
+  tuned: boolean,
+): ComponentNodeData {
   let variants = dataByItem.get(item);
   if (!variants) dataByItem.set(item, (variants = new Map()));
-  const key = `${rotationDeg}|${closed}`;
+  const key = `${rotationDeg}|${closed}|${tuned}`;
   let data = variants.get(key);
-  if (!data) variants.set(key, (data = { item, rotationDeg, closed }));
+  if (!data) variants.set(key, (data = { item, rotationDeg, closed, tuned }));
   return data;
 }
 
@@ -31,7 +36,8 @@ export function useFlowNodes(): ComponentFlowNode[] {
   return useMemo(
     () =>
       components.flatMap((part): ComponentFlowNode[] => {
-        const item = findCatalogItem(part.catalogId);
+        // Item dengan ubahan parameter, agar indikator (mis. cip daya beban) memakai nilai ubahan.
+        const item = effectiveItem(part);
         if (!item) return [];
         const box = rotatedSizePx(itemSizePx(item), part.rotationDeg);
         return [
@@ -43,7 +49,12 @@ export function useFlowNodes(): ComponentFlowNode[] {
             height: box.heightPx,
             selected: selectedIds.includes(part.id),
             ariaLabel: t.workbench.component(item.name, part.id),
-            data: nodeData(item, part.rotationDeg, closedSwitchIds.includes(part.id)),
+            data: nodeData(
+              item,
+              part.rotationDeg,
+              closedSwitchIds.includes(part.id),
+              part.params !== undefined,
+            ),
           },
         ];
       }),

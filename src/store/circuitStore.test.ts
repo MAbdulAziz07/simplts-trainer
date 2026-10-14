@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { loadPreset } from '@/data';
-import { catalogItems } from './catalog';
+import { catalogItems, toPlacedComponents } from './catalog';
 import { EMPTY_DOC } from './circuit-doc';
 import { useCircuitStore } from './circuitStore';
 import { emptyHistory } from './history';
@@ -196,5 +196,84 @@ describe('circuitStore — setelan daya beban', () => {
     store().setLoadPower('c1', 50);
     store().setLoadPower('hilang', 50);
     expect(store().doc).toBe(doc);
+  });
+});
+
+describe('circuitStore — varian MCB dan panel', () => {
+  it('arus pengenal lain: kabel tetap; satu langkah undo', () => {
+    placeThree();
+    store().connect(ref('c1', 'pos'), ref('c3', 'pos-in'));
+    store().toggleSwitch('c3');
+    store().setVariant('c3', 'mcb-dc-32a');
+    expect(store().doc.components[2]?.catalogId).toBe('mcb-dc-32a');
+    expect(store().doc.wires).toHaveLength(1);
+    expect(store().doc.closedSwitchIds).not.toContain('c3');
+    store().undo();
+    expect(store().doc.components[2]?.catalogId).toBe('mcb-dc-16a');
+    expect(store().doc.closedSwitchIds).toContain('c3');
+  });
+
+  it('DC → AC melepas kabel yang terminalnya tidak ada lagi', () => {
+    placeThree();
+    store().connect(ref('c1', 'pos'), ref('c3', 'pos-in'));
+    store().setVariant('c3', 'mcb-ac-10a');
+    expect(store().doc.components[2]?.catalogId).toBe('mcb-ac-10a');
+    expect(store().doc.wires).toHaveLength(0);
+  });
+
+  it('busbar ke panel beban dalam keluarga panel', () => {
+    store().addComponent('busbar-dc-pos', { xPx: 0, yPx: 0 });
+    store().setVariant('c1', 'load-panel-3c');
+    expect(store().doc.components[0]?.catalogId).toBe('load-panel-3c');
+  });
+
+  it('keluarga lain, item tidak dikenal, atau bukan anggota keluarga: tidak berubah', () => {
+    placeThree();
+    const { doc } = store();
+    store().setVariant('c3', 'busbar-dc-pos');
+    store().setVariant('c3', 'tidak-ada');
+    store().setVariant('c1', 'pv-generic-200wp');
+    store().setVariant('hilang', 'mcb-dc-32a');
+    expect(store().doc).toBe(doc);
+  });
+});
+
+describe('circuitStore — ubahan parameter', () => {
+  it('menyimpan ubahan sah dalam satu langkah undo; komponen memakai nilai ubahan', () => {
+    placeThree();
+    expect(store().setParam('c3', 'ratedA', 25)).toEqual([]);
+    expect(store().doc.components[2]?.params).toEqual({ ratedA: 25 });
+    const mcb = toPlacedComponents(store().doc)[2]?.item;
+    expect(mcb?.category === 'mcb-dc' && mcb.protection.ratedCurrentA).toBe(25);
+    store().undo();
+    expect(store().doc.components[2]?.params).toBeUndefined();
+  });
+
+  it('ubahan tidak sah ditolak dan dokumen tidak berubah', () => {
+    placeThree();
+    const { doc } = store();
+    expect(store().setParam('c3', 'ratedA', 0)).toEqual([{ key: 'ratedA', code: 'not-positive' }]);
+    expect(store().doc).toBe(doc);
+  });
+
+  it('nilai sama dengan katalog dan reset menghapus ubahan', () => {
+    placeThree();
+    store().setParam('c3', 'ratedA', 25);
+    store().setParam('c3', 'curve', 'B');
+    store().setParam('c3', 'ratedA', 16);
+    expect(store().doc.components[2]?.params).toEqual({ curve: 'B' });
+    store().resetParams('c3', 'curve');
+    expect(store().doc.components[2]?.params).toBeUndefined();
+    store().setParam('c3', 'curve', 'D');
+    store().setParam('c3', 'ratedA', 20);
+    store().resetParams('c3');
+    expect(store().doc.components[2]?.params).toBeUndefined();
+  });
+
+  it('beban: setelan daya ikut dibatasi daya maksimum baru', () => {
+    store().addComponent('load-dc-12v-200w', { xPx: 0, yPx: 0 });
+    store().setLoadPower('c1', 180);
+    store().setParam('c1', 'maxPower', 100);
+    expect(store().doc.components[0]?.powerSettingW).toBe(100);
   });
 });

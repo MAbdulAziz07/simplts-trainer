@@ -1,8 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import { COMPONENT_CATEGORIES } from '@/domain';
+import { COMPONENT_CATEGORIES, PARAM_SPECS } from '@/domain';
 import { t } from '@/i18n';
 import { catalogItems, findCatalogItem } from '@/store';
-import { MAX_RATINGS, ratingsOf } from './ratings';
+import {
+  MAX_RATINGS,
+  formatParam,
+  isRatingChanged,
+  parseParamNumber,
+  ratingText,
+  ratingsOf,
+} from './ratings';
 
 const ratings = (catalogId: string) => {
   const item = findCatalogItem(catalogId);
@@ -64,5 +71,37 @@ describe('teks inspektur', () => {
       expect(text.length).toBeGreaterThan(20);
       expect(text.length).toBeLessThan(200);
     }
+  });
+});
+
+describe('teks dan format parameter', () => {
+  it('setiap parameter yang bisa diatur punya tanda dan nama', () => {
+    for (const specs of Object.values(PARAM_SPECS))
+      for (const spec of specs) expect(Object.keys(t.inspector.rating)).toContain(spec.key);
+    expect(ratingText('ratedA')).toEqual({ symbol: 'In', name: 'Arus pengenal' });
+    expect(ratingText('tak-ada')).toEqual({ symbol: 'tak-ada', name: 'tak-ada' });
+  });
+
+  it('format desimal koma tanpa pemisah ribuan; daftar dengan garis miring', () => {
+    expect(formatParam(5.97)).toBe('5,97');
+    expect(formatParam(1000)).toBe('1000');
+    expect(formatParam([12, 24])).toBe('12/24');
+    expect(formatParam('C')).toBe('C');
+  });
+
+  it('isian: koma atau titik desimal; kosong atau teks = NaN', () => {
+    expect(parseParamNumber(' 5,5 ')).toBe(5.5);
+    expect(parseParamNumber('5.5')).toBe(5.5);
+    expect(parseParamNumber('')).toBeNaN();
+    expect(parseParamNumber('abc')).toBeNaN();
+    expect(parseParamNumber(formatParam(1000))).toBe(1000);
+  });
+
+  it('rating gabungan ditandai bila salah satu parameternya diubah', () => {
+    expect(isRatingChanged('ratedA', { ratedA: 25 })).toBe(true);
+    expect(isRatingChanged('ratedA', undefined)).toBe(false);
+    expect(isRatingChanged('pvVocMax', { pvVocMax24: 60 })).toBe(true);
+    expect(isRatingChanged('mpptRange', { mpptMin: 100 })).toBe(true);
+    expect(isRatingChanged('curve', { ratedA: 25 })).toBe(false);
   });
 });

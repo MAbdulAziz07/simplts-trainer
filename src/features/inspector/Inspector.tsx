@@ -1,11 +1,13 @@
-import { CircleHelp, Trash2, Zap } from 'lucide-react';
+import { CircleHelp, SlidersHorizontal, Trash2, Zap } from 'lucide-react';
 import { useState } from 'react';
-import type { CatalogItem } from '@/domain';
+import { familyOf, type CatalogItem, type ComponentParams } from '@/domain';
 import { SliderField } from '@/features/sim-controls';
 import { t } from '@/i18n';
-import { findCatalogItem, useCircuitStore } from '@/store';
+import { effectiveItem, findCatalogItem, useCircuitStore, type PlacedPart } from '@/store';
 import { ComponentPicture } from '@/ui';
-import { ratingsOf } from './ratings';
+import { ParamEditor } from './ParamEditor';
+import { isRatingChanged, ratingsOf } from './ratings';
+import { VariantPicker } from './VariantPicker';
 import './inspector.css';
 
 type LoadItem = Extract<CatalogItem, { category: 'load-dc' | 'load-ac' }>;
@@ -44,11 +46,16 @@ function LoadPowerControl({ id, item }: { id: string; item: LoadItem }) {
 }
 
 /** Paling banyak empat rating utama: tanda besaran, angka 20 px, dan satuan (UX.md §1 butir 8). */
-function Ratings({ item }: { item: CatalogItem }) {
+function Ratings({ item, params }: { item: CatalogItem; params: ComponentParams | undefined }) {
   return (
     <dl aria-label={t.inspector.ratings} className="grid grid-cols-2 gap-2">
       {ratingsOf(item).map(({ key, text, unit }) => (
-        <div key={key} className="rating" title={t.inspector.rating[key].name}>
+        <div
+          key={key}
+          className="rating"
+          data-changed={isRatingChanged(key, params) || undefined}
+          title={t.inspector.rating[key].name}
+        >
           <dt>
             <abbr title={t.inspector.rating[key].name}>{t.inspector.rating[key].symbol}</abbr>
           </dt>
@@ -62,9 +69,17 @@ function Ratings({ item }: { item: CatalogItem }) {
   );
 }
 
-/** Isi inspektur untuk satu komponen; `key` di pemanggil menutup penjelasan saat pilihan berganti. */
-function InspectorBody({ id, item }: { id: string; item: CatalogItem }) {
+/**
+ * Isi inspektur untuk satu komponen; `key` di pemanggil menutup penjelasan dan pengaturan saat
+ * pilihan berganti. `item` = item katalog (default), `applied` = dengan ubahan parameter.
+ */
+function InspectorBody({ part, item }: { part: PlacedPart; item: CatalogItem }) {
   const [helpOpen, setHelpOpen] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const { id, params } = part;
+  const applied = effectiveItem(part) ?? item;
+  const family = familyOf(item.category);
+  const editLabel = editing ? t.params.done : t.params.edit;
   return (
     <>
       <div className="flex items-start gap-2">
@@ -86,14 +101,31 @@ function InspectorBody({ id, item }: { id: string; item: CatalogItem }) {
         >
           <CircleHelp aria-hidden size={22} />
         </button>
+        <button
+          type="button"
+          aria-label={editLabel}
+          title={editLabel}
+          aria-pressed={editing}
+          onClick={() => setEditing((isEditing) => !isEditing)}
+          className={`flex size-11 shrink-0 items-center justify-center rounded-lg ${
+            editing ? 'bg-brand text-white' : 'hover:bg-app text-ink-muted'
+          }`}
+        >
+          <SlidersHorizontal aria-hidden size={22} />
+        </button>
       </div>
       {helpOpen && (
         <p className="text-ink-muted text-sm leading-snug">
           {t.inspector.explanations[item.category]}
         </p>
       )}
-      <Ratings item={item} />
-      {isLoad(item) && <LoadPowerControl id={id} item={item} />}
+      {family && <VariantPicker id={id} item={item} family={family} />}
+      {editing ? (
+        <ParamEditor id={id} item={item} params={params} />
+      ) : (
+        <Ratings item={applied} params={params} />
+      )}
+      {isLoad(applied) && <LoadPowerControl id={id} item={applied} />}
       <button
         type="button"
         aria-label={t.inspector.remove(item.name)}
@@ -108,23 +140,23 @@ function InspectorBody({ id, item }: { id: string; item: CatalogItem }) {
 }
 
 /**
- * Inspeksi komponen terpilih: gambar, nama, rating utama, penjelasan lewat "?", pengatur daya
- * untuk beban, dan tombol hapus. Hanya muncul saat tepat satu komponen terpilih; di lebar layar
+ * Inspeksi komponen terpilih: gambar, nama, rating utama (bisa diatur manual), penjelasan lewat
+ * "?", pengatur daya untuk beban, dan tombol hapus. Hanya muncul saat tepat satu komponen terpilih; di lebar layar
  * di bawah 1024 px menjadi lembar bawah (docs/UX.md §2.1).
  */
 export function Inspector() {
   const selectedId = useCircuitStore((state) =>
     state.selectedComponentIds.length === 1 ? state.selectedComponentIds[0] : undefined,
   );
-  const catalogId = useCircuitStore(
-    (state) => state.doc.components.find((part) => part.id === selectedId)?.catalogId,
+  const part = useCircuitStore((state) =>
+    state.doc.components.find((candidate) => candidate.id === selectedId),
   );
-  const item = catalogId === undefined ? undefined : findCatalogItem(catalogId);
-  if (selectedId === undefined || !item) return null;
+  const item = part && findCatalogItem(part.catalogId);
+  if (selectedId === undefined || !part || !item) return null;
 
   return (
     <aside aria-label={t.areas.inspector} className="inspector border-line bg-card">
-      <InspectorBody key={selectedId} id={selectedId} item={item} />
+      <InspectorBody key={selectedId} part={part} item={item} />
     </aside>
   );
 }

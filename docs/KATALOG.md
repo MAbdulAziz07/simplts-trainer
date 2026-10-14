@@ -109,6 +109,17 @@ Setiap item yang `coverage`-nya bukan `full` atau `verify`-nya tidak kosong memu
 
 ## 6. Parameter listrik per kategori
 
+### 6.0 Parameter yang bisa diatur manual
+
+Rating utama tiap kategori (yang tampil di kotak rating inspektur) bisa diubah per komponen lewat tombol "Atur parameter". Daftarnya ada di `PARAM_SPECS` (`src/domain/catalog/params.ts`). Nilai katalog adalah nilai default dan tidak pernah berubah. Ubahan disimpan per komponen di berkas rangkaian sebagai field opsional `params` (mis. `{"ratedA": 25, "curve": "B"}`), jadi berkas lama tetap sah dan `formatVersion` tetap 1.
+
+- Satu ubahan mengisi field dengan nama yang sama di `electrical` dan `protection` sekaligus (mis. `ratedCurrentA` MCB).
+- Angka harus > 0 dan paling besar 10× default [PERLU VERIFIKASI]; kurva trip MCB dan kelas fuse dipilih dari daftar.
+- Tetap (hanya tampil): tegangan sistem SCC PWM, tegangan nominal baterai (ditentukan jumlah sel dan kurva OCV), jumlah masukan combiner, jumlah posisi busbar, jumlah sirkuit Panel Beban (terikat terminal dan gambar).
+- Keterkaitan [PERLU VERIFIKASI]: PV memakai Vmp/Imp/Voc/Isc, jadi Pmax baru menskala Imp (dan Isc bila tidak diatur), dan Vmp baru memperbarui Pmax; Vmp ≥ Voc atau Imp ≥ Isc ditolak. Beban: `resistanceAtMaxOhm = V²/Pmaks` dihitung ulang; daya maksimum di bawah daya minimum ditolak.
+- Sebagian rating hanya dipakai pemeriksaan rangkaian atau tampilan, belum oleh model simulasi (mis. tegangan nominal SCC MPPT dan inverter, rating SPD, kelas akurasi kWh meter).
+- Mengganti varian MCB/Panel Listrik membuang ubahan parameter komponen itu.
+
 Simbol mengikuti `docs/MODEL_FISIKA.md` (kolom "Simbol"). Bagian `protection` yang memakai nama sama dengan `electrical` (mis. `ratedCurrentA`) adalah salinan nilai rating untuk tampilan peringatan.
 
 ### 6.1 `pv-module` — modul PV (MODEL_FISIKA §1)
@@ -248,6 +259,8 @@ Simbol mengikuti `docs/MODEL_FISIKA.md` (kolom "Simbol"). Bagian `protection` ya
 | `polarized` | boolean | Ikuti polaritas; polaritas terbalik menurunkan kemampuan putus |
 | `minOperatingVoltageV` | V | Tegangan operasi minimum |
 
+Di baki semua MCB tampil sebagai satu ubin "MCB"; jenis (DC/AC) dan arus pengenal dipilih di inspektur dari item yang ada di paket (`src/domain/catalog/variants.ts`). Tiap arus pengenal tetap item sendiri dengan datasheet-nya, jadi menambah pilihan arus = menambah item.
+
 ### 6.7 `fuse`, `spd`, `combiner` (MODEL_FISIKA §9.2–9.3)
 
 | Field | Satuan | Arti |
@@ -309,6 +322,8 @@ Panjang dan penampang dipilih per kabel di meja kerja, bukan di katalog.
 | | `ratedVoltageV` | V | Tegangan pada daya maksimum |
 | | `maxPowerW`, `minPowerW`, `stepW` | W | Rentang dan langkah yang dapat diatur peserta (PRD F8) |
 | | `resistanceAtMaxOhm` | Ω | `V²/Pmax`; daya sebenarnya `P = V²/R` |
+
+`busbar` dan `load-panel` tampil di baki sebagai satu ubin "Panel Listrik"; jenisnya (DC+, DC−, L, N, PE dari jenis terminal busbar, atau Panel Beban) dipilih di inspektur. Saat jenis atau arus diganti, kabel tetap di terminal yang id dan jenisnya sama; kabel lain dilepas.
 
 Setelan daya tiap beban disimpan di berkas rangkaian (`powerSettingW`), bukan di katalog. `load-ac-fan-50w` (Kipas AC 50W) juga dimodelkan resistif; gambarnya `load-ac-fan.webp`.
 
