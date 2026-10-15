@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { node, pause, play, seedCircuit, setSpeed } from './sim-helpers';
+import { node, openParams, pause, play, seedCircuit, setSpeed } from './sim-helpers';
 
 // Pengatur daya beban di inspektur (docs/PRD.md F8) dan cip setelan di node beban.
 
@@ -21,6 +21,7 @@ test('slider daya di inspektur mengatur beban, tersimpan, dan bisa dibatalkan', 
       ['scc.load-neg', 'lamp.b'],
     ],
   );
+  await openParams(page);
   const inspector = page.getByRole('complementary', { name: 'Inspeksi' });
   const chip = node(page, 'lamp').locator('.power-chip');
   const glow = node(page, 'lamp').locator('.lamp-glow');
@@ -54,6 +55,7 @@ test('slider daya di inspektur mengatur beban, tersimpan, dan bisa dibatalkan', 
   // Setelan ikut simpan otomatis.
   await page.reload();
   await expect(node(page, 'lamp').locator('.power-chip')).toHaveText('100 W');
+  await openParams(page);
 
   // 0 W memadamkan lampu; undo mengembalikan setelan sebelumnya.
   await node(page, 'lamp').locator('.node-picture').click();

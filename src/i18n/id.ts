@@ -55,6 +55,9 @@ export const id = {
     legendKinds: { 'dc+': 'DC+', 'dc-': 'DC−', acL: 'L', acN: 'N', pe: 'PE' },
   },
   file: {
+    params: 'Parameter',
+    paramsHint: 'Buka/tutup panel parameter komponen terpilih',
+    paramsHintNone: 'Pilih satu komponen untuk melihat parameternya',
     save: 'Simpan',
     open: 'Buka',
     preset: 'Preset',

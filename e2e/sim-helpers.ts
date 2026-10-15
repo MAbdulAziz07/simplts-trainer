@@ -12,6 +12,9 @@ export const wire = (page: Page, wireId: string) =>
 export const terminal = (page: Page, nodeId: string, terminalId: string) =>
   page.locator(`[data-id="${nodeId}"] [data-handleid="${terminalId}"] .terminal-hit`);
 export const slider = (page: Page, name: string) => page.getByRole('slider', { name });
+/** Menyalakan tombol "Parameter" di bilah atas; inspektur tidak terbuka otomatis. */
+export const openParams = (page: Page) =>
+  page.getByRole('button', { name: 'Parameter', exact: true }).click();
 
 /** Menaruh komponen berurutan lewat ketukan ubin; id-nya c1, c2, … */
 export async function place(page: Page, ...names: string[]) {

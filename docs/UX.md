@@ -42,8 +42,8 @@ Acuan desain: jendela 1366x768. Area tampil browser di laptop 1366x768 umumnya l
 |---|---|---|
 | Bilah atas | tinggi 56 px, lebar penuh | Logo + nama, pilihan paket, tingkat Pemula/Mahir, simpan / buka / preset, lalu reset percobaan yang dipisah garis dan meminta konfirmasi. Empat tab mode (ikon + label) ditambahkan saat mode selain Rakit Bebas dibuat (revisi 2026-10-12) |
 | Baki komponen | lebar 216 px; rel ikon 64 px saat dilipat | Ubin 92x92 px, dua kolom, sela 8 px, tepi 12 px; judul kategori 44 px; gulir vertikal |
-| Meja kerja | sisa ruang: 1150x640 px tanpa inspektur, 870x640 px dengan inspektur | Kisi 24 px, komponen menempel ke kisi; zoom 40–200% (terkecil 40%, bukan 50%, agar preset Terbaik dengan 16 panel muat), awal 100%, tombol "paskan"; legenda warna kabel, alat ukur, temuan, dan status berupa cip atau panel mengambang di dalam meja |
-| Inspektur | lebar 280 px, hanya muncul saat ada komponen terpilih | Isi tidak boleh terpotong pada tinggi 640 px; di bawah lebar 1024 px menjadi lembar bawah setinggi 40% layar |
+| Meja kerja | sisa ruang: 1150x640 px tanpa inspektur, 870x640 px dengan inspektur | Kisi 24 px, komponen menempel ke kisi; zoom 15–200% (terkecil 15% agar rangkaian besar bisa dilihat utuh), awal 100%, tombol "paskan"; legenda warna kabel, alat ukur, temuan, dan status berupa cip atau panel mengambang di dalam meja |
+| Inspektur | lebar 280 px, tidak terbuka otomatis: muncul saat tombol "Parameter" (ikon penggeser) di bilah atas dinyalakan dan tepat satu komponen terpilih | Isi tidak boleh terpotong pada tinggi 640 px; di bawah lebar 1024 px menjadi lembar bawah setinggi 40% layar |
 | Bilah simulasi | tinggi 72 px, lebar penuh | Putar/jeda 48 px, kecepatan (1×/60×/600×/3600×), jam, iradiasi, awan, suhu lingkungan, dan tombol grafik 24 jam; selalu terlihat |
 | Toast | di tengah bawah meja, 16 px di atas bilah simulasi | Hilang sendiri setelah 3 detik; tidak menutupi terminal yang sedang dipakai |
 

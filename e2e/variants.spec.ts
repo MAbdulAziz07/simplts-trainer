@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { connect, node, place, tile } from './sim-helpers';
+import { connect, node, openParams, place, tile } from './sim-helpers';
 
 // Satu ubin MCB dan satu ubin Panel Listrik; jenis dan arus pengenal dipilih di inspektur.
 
@@ -18,6 +18,7 @@ test('MCB: ganti arus pengenal menjaga kabel, ganti jenis melepasnya, undo kemba
   page,
 }) => {
   await page.goto('/');
+  await openParams(page);
   await place(page, 'Panel 100 Wp', 'MCB');
   await connect(page, ['c1.pos', 'c2.pos-in']);
   await node(page, 'c2').click({ position: { x: 10, y: 10 } });
@@ -43,6 +44,7 @@ test('MCB: ganti arus pengenal menjaga kabel, ganti jenis melepasnya, undo kemba
 
 test('Panel Listrik: jenis busbar dipilih di inspektur', async ({ page }) => {
   await page.goto('/');
+  await openParams(page);
   await place(page, 'Panel Listrik');
   await expect(node(page, 'c1').locator('.component-name')).toHaveText('Busbar DC+');
   await expect(page.getByRole('group', { name: 'Arus pengenal' })).toHaveCount(0);

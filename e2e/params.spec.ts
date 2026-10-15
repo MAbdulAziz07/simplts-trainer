@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { node, pause, place, play, seedCircuit, setSpeed } from './sim-helpers';
+import { node, openParams, pause, place, play, seedCircuit, setSpeed } from './sim-helpers';
 
 // Rating utama tiap komponen bisa diatur manual dari inspektur; nilai default selalu tampak.
 
@@ -18,6 +18,7 @@ test('MCB: ubah In, default tampak, tanda di meja, kembalikan, undo, dan tersimp
   page,
 }) => {
   await page.goto('/');
+  await openParams(page);
   await place(page, 'MCB');
   await editButton(page).click();
 
@@ -46,6 +47,7 @@ test('MCB: ubah In, default tampak, tanda di meja, kembalikan, undo, dan tersimp
   // Tersimpan otomatis: masih ada setelah halaman dimuat ulang.
   await page.reload();
   await expect(tunedMark(page, 'c1')).toBeVisible();
+  await openParams(page);
 
   await node(page, 'c1').click({ position: { x: 10, y: 10 } });
   await editButton(page).click();
@@ -80,6 +82,7 @@ test('In MCB diturunkan saat beban jalan: MCB trip', async ({ page }) => {
   await page.waitForTimeout(3000);
   await expect(lever).toHaveAttribute('aria-checked', 'true');
 
+  await openParams(page);
   await node(page, 'mcb').click({ position: { x: 10, y: 10 } });
   await editButton(page).click();
   await setNumber(page, 'ratedA', '8');

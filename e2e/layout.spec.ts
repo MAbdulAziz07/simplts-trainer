@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { node, seedCircuit } from './sim-helpers';
+import { node, openParams, seedCircuit } from './sim-helpers';
 
 // Ukuran area pada layar acuan 1366x768 (docs/UX.md §2.1).
 
@@ -31,12 +31,14 @@ test('tanpa komponen terpilih: empat area, meja kerja selebar 1150 px', async ({
   await expect(areas(page).topBar).toContainText('Trainer Virtual PLTS');
 });
 
-test('inspektur 280 px muncul saat satu komponen terpilih dan hilang saat pilihan dilepas', async ({
+test('inspektur 280 px muncul lewat tombol Parameter dan hilang saat pilihan dilepas', async ({
   page,
 }) => {
   await page.goto('/');
-  // Komponen yang baru ditaruh langsung terpilih.
+  // Komponen yang baru ditaruh langsung terpilih, tetapi inspektur tidak terbuka otomatis.
   await page.getByRole('button', { name: 'Tambah Panel 100 Wp' }).click();
+  await expect(areas(page).inspector).toHaveCount(0);
+  await openParams(page);
   await expect(areas(page).inspector).toBeVisible();
   expect(await size(page, 'inspector')).toEqual({ width: 280, height: 640 });
   expect(await size(page, 'workbench')).toEqual({ width: 870, height: 640 });
@@ -50,6 +52,7 @@ test('inspektur: rating utama, penjelasan lewat "?", dan hapus yang bisa dibatal
   page,
 }) => {
   await page.goto('/');
+  await openParams(page);
   await page.getByRole('button', { name: 'Tambah Panel 100 Wp' }).click();
   const inspector = areas(page).inspector;
   await expect(inspector.getByRole('heading', { name: 'Panel 100 Wp' })).toBeVisible();
@@ -96,6 +99,7 @@ test('baki dilipat menjadi rel ikon 64 px dan dibuka lagi', async ({ page }) => 
 test('di bawah 1024 px inspektur menjadi lembar bawah setinggi 40% layar', async ({ page }) => {
   await page.setViewportSize({ width: 900, height: 700 });
   await page.goto('/');
+  await openParams(page);
   await page.getByRole('button', { name: 'Tambah Panel 100 Wp' }).click();
   const sheet = (await areas(page).inspector.boundingBox())!;
   expect(sheet.width).toBe(900);
@@ -117,6 +121,7 @@ async function seedWide(page: Page) {
     ],
     [],
   );
+  await openParams(page);
   await page.waitForTimeout(400);
 }
 

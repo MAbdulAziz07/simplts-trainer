@@ -1,6 +1,6 @@
 import { useReactFlow, useStore, useStoreApi, type Viewport } from '@xyflow/react';
 import { useEffect, useRef } from 'react';
-import { useCircuitStore } from '@/store';
+import { useCircuitStore, useInspectorVisible } from '@/store';
 import { fitBounds, isFullyVisible } from './fit-bounds';
 import { occupiedBoxes } from './placement';
 import { FIT_DURATION_MS, useFitWorkbench } from './useFitWorkbench';
@@ -21,7 +21,7 @@ function useRefitOnInspector(fit: () => void): void {
   const flowStore = useStoreApi();
   const { getViewport, setViewport } = useReactFlow();
   const width = useStore((state) => state.width);
-  const hasInspector = useCircuitStore((state) => state.selectedComponentIds.length === 1);
+  const hasInspector = useInspectorVisible();
   const lastWidth = useRef(width);
   const lastInspector = useRef(hasInspector);
   const awaitingResize = useRef(false);

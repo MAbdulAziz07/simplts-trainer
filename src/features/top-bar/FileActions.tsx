@@ -11,6 +11,7 @@ import {
   useCircuitStore,
   useToastStore,
 } from '@/store';
+import { ParamsButton } from './ParamsButton';
 
 interface BarButtonProps {
   icon: LucideIcon;
@@ -78,6 +79,7 @@ export function FileActions() {
 
   return (
     <div className="ml-auto flex items-center gap-1">
+      <ParamsButton />
       <BarButton icon={Save} label={t.file.save} hint={t.file.saveHint} onClick={save} />
       <BarButton
         icon={FolderOpen}

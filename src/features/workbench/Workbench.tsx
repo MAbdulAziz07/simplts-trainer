@@ -27,9 +27,9 @@ import { WorkbenchToolbar } from './WorkbenchToolbar';
 import './workbench.css';
 import './status/status.css';
 
-// docs/UX.md §2.1: kisi 24 px, zoom awal 100%, paling besar 200%. Zoom terkecil 40% (UX.md
-// menyebut 50%) agar preset Terbaik dengan 16 panel muat di meja 870x640 px.
-const MIN_ZOOM = 0.4;
+// docs/UX.md §2.1: kisi 24 px, zoom awal 100%, paling besar 200%. Zoom terkecil 15% agar
+// rangkaian besar bisa dilihat utuh; tombol "paskan" tetap memilih zoom sebesar mungkin yang muat.
+const MIN_ZOOM = 0.15;
 const MAX_ZOOM = 2;
 const SNAP_GRID: [number, number] = [GRID_PX, GRID_PX];
 const DEFAULT_VIEWPORT = { x: 0, y: 0, zoom: 1 };

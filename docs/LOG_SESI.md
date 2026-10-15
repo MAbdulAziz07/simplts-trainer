@@ -2,6 +2,18 @@
 
 Entri terbaru di atas.
 
+## 2026-10-15 — Tombol Parameter di bilah atas dan zoom out kanvas sampai 15%
+- Sumber: permintaan pengguna (panel parameter jangan terbuka otomatis; tombol ikon penggeser di samping Simpan; zoom out lebih jauh). Arti zoom out dikonfirmasi: kanvas saja, bukan skala seluruh aplikasi.
+- Commit: satu commit di master, tanpa push.
+- Dibuat: src/features/top-bar/ParamsButton.tsx, src/store/uiStore.test.ts.
+- Diubah: src/store/uiStore.ts, src/App.tsx, src/features/inspector/Inspector.tsx, src/features/top-bar/FileActions.tsx, src/features/workbench/FitOnLoad.tsx, src/features/workbench/Workbench.tsx, src/i18n/id.ts, docs/UX.md, e2e/sim-helpers.ts, e2e/layout.spec.ts, e2e/load-power.spec.ts, e2e/params.spec.ts, e2e/variants.spec.ts, docs/LOG_SESI.md.
+- Isi:
+  1. `uiStore.inspectorOpen` (awal tertutup, tidak disimpan) + `toggleInspector`; hook `useInspectorVisible()` = terbuka dan tepat satu komponen terpilih. Kolom inspektur, panel, dan paskan-ulang kanvas memakai hook ini.
+  2. Tombol "Parameter" (ikon `SlidersHorizontal`) di kiri Simpan; menyala seperti Skenario saat panel dibuka. Panel tetap terbuka saat berganti pilihan komponen.
+  3. `MIN_ZOOM` meja kerja 0,4 → 0,15; area sentuh terminal tetap 44 px di layar.
+  4. Uji e2e membuka panel lewat pembantu `openParams` (juga setelah muat ulang).
+- Pemeriksaan: npm run check lulus; npm run test:e2e 47 lulus.
+
 ## 2026-10-15 — Skenario P1 dari LKPD 1 (mengenal komponen, terminal, rating)
 - Sumber: permintaan pengguna (p1.json dari docs/SKENARIO.md dan LKPD 1: 5–8 langkah ≤12 kata, aturan selesai otomatis, 2 petunjuk per langkah, rubrik 100 poin, 3 gangguan Cari Gangguan, lalu commit).
 - Commit: satu commit di master, tanpa push.

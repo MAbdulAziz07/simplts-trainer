@@ -3,7 +3,13 @@ import { useState } from 'react';
 import { familyOf, type CatalogItem, type ComponentParams } from '@/domain';
 import { SliderField } from '@/features/sim-controls';
 import { t } from '@/i18n';
-import { effectiveItem, findCatalogItem, useCircuitStore, type PlacedPart } from '@/store';
+import {
+  effectiveItem,
+  findCatalogItem,
+  useCircuitStore,
+  useInspectorVisible,
+  type PlacedPart,
+} from '@/store';
 import { ComponentPicture } from '@/ui';
 import { ParamEditor } from './ParamEditor';
 import { isRatingChanged, ratingsOf } from './ratings';
@@ -141,8 +147,9 @@ function InspectorBody({ part, item }: { part: PlacedPart; item: CatalogItem }) 
 
 /**
  * Inspeksi komponen terpilih: gambar, nama, rating utama (bisa diatur manual), penjelasan lewat
- * "?", pengatur daya untuk beban, dan tombol hapus. Hanya muncul saat tepat satu komponen terpilih; di lebar layar
- * di bawah 1024 px menjadi lembar bawah (docs/UX.md §2.1).
+ * "?", pengatur daya untuk beban, dan tombol hapus. Hanya muncul saat panel parameter dibuka lewat
+ * bilah atas dan tepat satu komponen terpilih; di lebar layar di bawah 1024 px menjadi lembar bawah
+ * (docs/UX.md §2.1).
  */
 export function Inspector() {
   const selectedId = useCircuitStore((state) =>
@@ -151,11 +158,16 @@ export function Inspector() {
   const part = useCircuitStore((state) =>
     state.doc.components.find((candidate) => candidate.id === selectedId),
   );
+  const isVisible = useInspectorVisible();
   const item = part && findCatalogItem(part.catalogId);
-  if (selectedId === undefined || !part || !item) return null;
+  if (!isVisible || selectedId === undefined || !part || !item) return null;
 
   return (
-    <aside aria-label={t.areas.inspector} className="inspector border-line bg-card">
+    <aside
+      id="inspector-panel"
+      aria-label={t.areas.inspector}
+      className="inspector border-line bg-card"
+    >
       <InspectorBody key={selectedId} part={part} item={item} />
     </aside>
   );
