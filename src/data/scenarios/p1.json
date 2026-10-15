@@ -1,0 +1,306 @@
+{
+  "formatVersion": 1,
+  "id": "p1",
+  "version": 1,
+  "title": "P1 Mengenal komponen, terminal, dan rating",
+  "package": "min",
+  "mode": "troubleshoot",
+  "goal": "Mengenali terminal, polaritas, dan rating komponen off-grid paket Minimum dengan mengukur. Temukan satu komponen yang bacaannya tidak sesuai rating.",
+  "initialCircuit": {
+    "app": "simplts",
+    "formatVersion": 1,
+    "packageId": "min",
+    "components": [
+      {
+        "id": "pv1",
+        "catalogId": "pv-generic-100wp",
+        "xPx": 48,
+        "yPx": 48,
+        "rotationDeg": 0
+      },
+      {
+        "id": "pv2",
+        "catalogId": "pv-generic-100wp",
+        "xPx": 264,
+        "yPx": 48,
+        "rotationDeg": 0
+      },
+      {
+        "id": "mcb-pv",
+        "catalogId": "mcb-dc-16a",
+        "xPx": 480,
+        "yPx": 48,
+        "rotationDeg": 0
+      },
+      {
+        "id": "scc",
+        "catalogId": "scc-pwm-rbl-20a",
+        "xPx": 648,
+        "yPx": 48,
+        "rotationDeg": 0
+      },
+      {
+        "id": "load-dc",
+        "catalogId": "load-dc-12v-200w",
+        "xPx": 984,
+        "yPx": 48,
+        "rotationDeg": 0
+      },
+      {
+        "id": "bat",
+        "catalogId": "bat-vrla-agm-12v-100ah",
+        "xPx": 48,
+        "yPx": 384,
+        "rotationDeg": 0
+      },
+      {
+        "id": "fuse-bat",
+        "catalogId": "fuse-bat-100a",
+        "xPx": 336,
+        "yPx": 384,
+        "rotationDeg": 0
+      },
+      {
+        "id": "bus-pos",
+        "catalogId": "busbar-dc-pos",
+        "xPx": 528,
+        "yPx": 384,
+        "rotationDeg": 0
+      },
+      {
+        "id": "mcb-inv",
+        "catalogId": "mcb-dc-63a",
+        "xPx": 888,
+        "yPx": 384,
+        "rotationDeg": 0
+      },
+      {
+        "id": "inv",
+        "catalogId": "inv-offgrid-500w-12v",
+        "xPx": 1056,
+        "yPx": 384,
+        "rotationDeg": 0
+      },
+      {
+        "id": "mcb-ac",
+        "catalogId": "mcb-ac-6a",
+        "xPx": 1416,
+        "yPx": 384,
+        "rotationDeg": 0
+      },
+      {
+        "id": "load-ac",
+        "catalogId": "load-ac-500w",
+        "xPx": 1536,
+        "yPx": 384,
+        "rotationDeg": 0
+      },
+      {
+        "id": "bus-neg",
+        "catalogId": "busbar-dc-neg",
+        "xPx": 48,
+        "yPx": 744,
+        "rotationDeg": 0
+      },
+      {
+        "id": "bus-pe",
+        "catalogId": "busbar-pe",
+        "xPx": 408,
+        "yPx": 744,
+        "rotationDeg": 0
+      },
+      {
+        "id": "rod",
+        "catalogId": "ground-rod",
+        "xPx": 768,
+        "yPx": 744,
+        "rotationDeg": 0
+      }
+    ],
+    "wires": [],
+    "closedSwitchIds": ["fuse-bat"]
+  },
+  "environment": {
+    "startHour": 10,
+    "cloudCoverPct": 0
+  },
+  "steps": [
+    {
+      "id": "ukur-baterai",
+      "text": "Ukur tegangan baterai: probe merah ke +, hitam ke −.",
+      "icon": "battery",
+      "done": {
+        "kind": "multimeter",
+        "fn": "vdc",
+        "red": "battery.pos",
+        "black": "battery.neg",
+        "expected": {
+          "ref": "battery-ocv"
+        },
+        "tolerancePct": 3
+      },
+      "hints": [
+        "Tanda bulat merah = +, hitam = −. Multimeter pada V DC.",
+        "Baterai sehat pada awal praktik terbaca sekitar 12,6 V. Bila jauh lebih rendah, curigai baterai dan tunjuk penyebabnya."
+      ],
+      "points": 10
+    },
+    {
+      "id": "ukur-voc",
+      "text": "Ukur Voc satu panel surya, bandingkan dengan rating inspektur.",
+      "icon": "sun",
+      "done": {
+        "kind": "multimeter",
+        "fn": "vdc",
+        "red": "pv.pos",
+        "black": "pv.neg",
+        "expected": {
+          "ref": "module-voc"
+        },
+        "tolerancePct": 5
+      },
+      "hints": [
+        "Voc = tegangan panel tanpa beban. Lihat rating Voc di inspektur panel.",
+        "Multimeter V DC: merah ke + panel, hitam ke − panel yang sama. Panel panas terbaca sedikit di bawah Voc label 22 V."
+      ],
+      "points": 10
+    },
+    {
+      "id": "ukur-fuse",
+      "text": "Ukur resistansi fuse baterai dengan multimeter fungsi Ω.",
+      "icon": "shield",
+      "done": {
+        "kind": "any",
+        "rules": [
+          {
+            "kind": "multimeter",
+            "fn": "ohm",
+            "red": "fuse.in",
+            "black": "fuse.out"
+          },
+          {
+            "kind": "multimeter",
+            "fn": "ohm",
+            "red": "fuse.out",
+            "black": "fuse.in"
+          }
+        ]
+      },
+      "hints": [
+        "Fuse melindungi kabel baterai. Fuse utuh menghantar, fuse putus tidak.",
+        "Probe di kedua ujung fuse. Fuse utuh ≈ 0 Ω; OL berarti putus: tunjuk fuse sebagai penyebab."
+      ],
+      "points": 10
+    },
+    {
+      "id": "baterai-scc",
+      "text": "Sambungkan baterai ke terminal BAT SCC lewat fuse.",
+      "icon": "cable",
+      "done": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "connected",
+            "a": "scc.bat-pos",
+            "b": "battery.pos",
+            "throughSwitches": true
+          },
+          {
+            "kind": "connected",
+            "a": "scc.bat-neg",
+            "b": "battery.neg",
+            "throughSwitches": true
+          }
+        ]
+      },
+      "hints": [
+        "Kabel merah untuk +, hitam untuk −. Jangan tertukar.",
+        "+ baterai → fuse → BAT+ SCC; − baterai → BAT− SCC."
+      ],
+      "points": 15
+    },
+    {
+      "id": "ukur-beban-scc",
+      "text": "Jalankan simulasi, lalu ukur tegangan terminal BEBAN SCC.",
+      "icon": "gauge",
+      "done": {
+        "kind": "all",
+        "rules": [
+          {
+            "kind": "value",
+            "quantity": "sim-time-s",
+            "min": 30
+          },
+          {
+            "kind": "multimeter",
+            "fn": "vdc",
+            "red": "scc.load-pos",
+            "black": "scc.load-neg",
+            "expected": {
+              "ref": "battery-ocv"
+            },
+            "tolerancePct": 5
+          }
+        ]
+      },
+      "hints": [
+        "Tekan jalan sedikitnya 30 detik simulasi. Terminal BEBAN SCC mengeluarkan tegangan baterai bila SCC normal.",
+        "Merah ke LOAD+, hitam ke LOAD−. Bacaan 0 V padahal baterai tersambung: curigai fuse atau setelan SCC."
+      ],
+      "points": 15
+    },
+    {
+      "id": "tunjuk",
+      "text": "Tunjuk komponen yang bacaannya janggal, lalu tekan Diagnosa.",
+      "icon": "search",
+      "done": {
+        "kind": "fault-found"
+      },
+      "hints": [
+        "Gangguan ada pada langkah yang bacaannya tidak sesuai rating.",
+        "Ketuk komponen yang dicurigai, tekan Tunjuk penyebab, pilih jenis gangguan, lalu Diagnosa."
+      ],
+      "points": 5
+    },
+    {
+      "id": "aman",
+      "text": "Pastikan tidak ada temuan bahaya di meja.",
+      "icon": "check",
+      "done": {
+        "kind": "no-finding",
+        "severity": "danger"
+      },
+      "hints": [
+        "Buka tombol segitiga temuan di pojok kiri bawah meja.",
+        "Perbaiki sambungan yang terbalik atau tanpa fuse sampai tidak ada temuan merah."
+      ],
+      "points": 5
+    }
+  ],
+  "faults": [
+    {
+      "kind": "battery-weak-cell",
+      "target": "bat"
+    },
+    {
+      "kind": "fuse-blown",
+      "target": "fuse-bat"
+    },
+    {
+      "kind": "scc-setting-wrong",
+      "target": "scc"
+    }
+  ],
+  "faultCount": 1,
+  "rubric": {
+    "stepPoints": 10,
+    "hintPenalty": [2, 4],
+    "faultPoints": 30,
+    "faultNoEvidencePoints": 15,
+    "wrongAnswerPenalty": 5,
+    "damagePenalty": 10,
+    "dangerFindingPenalty": 5,
+    "passPct": 70,
+    "timeLimitS": 5400
+  }
+}

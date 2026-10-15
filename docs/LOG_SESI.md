@@ -2,6 +2,42 @@
 
 Entri terbaru di atas.
 
+## 2026-10-15 — Skenario P1 dari LKPD 1 (mengenal komponen, terminal, rating)
+- Sumber: permintaan pengguna (p1.json dari docs/SKENARIO.md dan LKPD 1: 5–8 langkah ≤12 kata, aturan selesai otomatis, 2 petunjuk per langkah, rubrik 100 poin, 3 gangguan Cari Gangguan, lalu commit).
+- Commit: satu commit di master, tanpa push.
+- Dibuat: src/data/scenarios/p1.json.
+- Diubah: src/data/scenarios/scenarios.test.ts (urutan skenario bawaan kini memuat p1; test baru mengunci ketentuan P1), docs/LOG_SESI.md.
+- Isi:
+  1. Mode `troubleshoot`, karena hanya mode ini yang memasang gangguan. Rangkaian awal = preset Minimum tanpa kabel, seperti LKPD 1.
+  2. Tujuh langkah:
+     - ukur tegangan baterai (bertanda, toleransi 3%);
+     - ukur Voc satu panel (acuan `module-voc`, 5%);
+     - ukur resistansi fuse baterai (Ω, kedua arah probe);
+     - sambung baterai ke BAT SCC lewat fuse;
+     - jalankan simulasi ≥ 30 s lalu ukur terminal BEBAN SCC;
+     - tunjuk penyebab (`fault-found`);
+     - tanpa temuan bahaya.
+  3. Gangguan: `battery-weak-cell` (bat), `fuse-blown` (fuse-bat), `scc-setting-wrong` (scc); `faultCount` 1.
+  4. Rubrik: langkah 10+10+10+15+15+5+5 = 70, gangguan 30 (15 tanpa bukti ukur), potongan petunjuk [2, 4], lulus 70%, batas waktu 90 menit (2 × 45 menit LKPD).
+- Keputusan:
+  - Toleransi baterai 3% supaya sel lemah (≈12,05 V lawan 12,65 V, −4,7%) menahan langkah 1. Dengan 5% langkah itu tetap tercentang.
+  - Langkah BEBAN SCC mensyaratkan waktu simulasi ≥ 30 s, karena SCC baru memutus beban (setelan 24 V) setelah stepper berjalan.
+  - `pv-shaded`, `mcb-wrong-rating`, dan `wire-open` tidak dipakai: pada rangkaian tanpa kabel/beban gejalanya tidak terukur dengan multimeter.
+- Validasi:
+  - Uji store sementara (sudah dihapus) memastikan hal berikut:
+    - tanpa gangguan, langkah 1–5 tercentang;
+    - sel lemah menahan langkah 1, fuse putus menahan langkah 3 (bacaan OL), setelan SCC salah menahan langkah 5 (0 V);
+    - setelah diagnosa benar, skenario selesai.
+  - `npm run check` lolos (lint, 1246 test, build).
+  - Tampilan di browser tidak diperiksa, karena tidak ada kode UI yang berubah.
+- Bagian LKPD 1 yang tidak diperiksa otomatis:
+  - E1–E2: mengenal area layar dan memuat preset (preset dimuat oleh skenario);
+  - Tabel 1, tujuan 1, dan E5: nama, jumlah, dan fungsi komponen, serta membuka tombol "?";
+  - Tabel 2, E4, E7, dan E8: membaca rating dari inspektur dan arus pengenal MCB (hanya Voc yang diukur);
+  - Tabel 3: warna tanda dan terminal panel/inverter (hanya baterai–SCC yang diperiksa);
+  - Tabel 4 dan E9: warna kabel dan legenda;
+  - pertanyaan analisis G1–G4 dan kesimpulan H.
+
 ## 2026-10-15 — Sistem skenario berbasis data: Praktik Terpandu, Cari Gangguan, Asesmen
 - Sumber: permintaan pengguna (format JSON skenario tervalidasi zod, panel langkah yang tercentang otomatis, petunjuk bertingkat, 8 gangguan tersembunyi, log/skor/CSV/cetak, docs/SKENARIO.md). Rencana 5 poin disetujui.
 - Commit: satu commit di master, tanpa push (diminta).

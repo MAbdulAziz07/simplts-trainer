@@ -10,12 +10,31 @@ const raw = (id: string) => structuredClone(rawScenarioFiles[id]) as Record<stri
 const issuesOf = (value: unknown) => validateScenario(value, catalog).issues;
 
 describe('skenario bawaan', () => {
-  it('semua sah, satu per mode, urut mode', () => {
-    expect(scenarios.map((scenario) => scenario.mode)).toEqual([
-      'guided',
-      'troubleshoot',
-      'assessment',
+  it('semua sah, urut mode lalu judul', () => {
+    expect(scenarios.map((scenario) => `${scenario.mode}:${scenario.id}`)).toEqual([
+      'guided:offgrid-dc-terpandu',
+      'troubleshoot:offgrid-cari-gangguan',
+      'troubleshoot:p1',
+      'assessment:asesmen-offgrid-dc',
     ]);
+  });
+
+  it('P1 (LKPD 1): 5–8 langkah singkat, 2 petunjuk, total 100 poin, 3 gangguan', () => {
+    const p1 = scenarios.find((scenario) => scenario.id === 'p1');
+    if (!p1) throw new Error('p1');
+    const words = (text: string) => text.split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w));
+    expect(p1.steps.length).toBeGreaterThanOrEqual(5);
+    expect(p1.steps.length).toBeLessThanOrEqual(8);
+    for (const step of p1.steps) {
+      expect(words(step.text).length).toBeLessThanOrEqual(12);
+      expect(step.hints).toHaveLength(2);
+    }
+    const stepTotal = p1.steps.reduce(
+      (sum, step) => sum + (step.points ?? p1.rubric.stepPoints),
+      0,
+    );
+    expect(stepTotal + p1.rubric.faultPoints).toBe(100);
+    expect(new Set(p1.faults.map((fault) => fault.kind)).size).toBe(3);
   });
 
   it('nilai bawaan rubrik dan petunjuk terisi', () => {
