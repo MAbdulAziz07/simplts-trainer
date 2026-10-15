@@ -10,7 +10,13 @@ import { useState } from 'react';
 import { FindingsButton } from '@/features/inspector';
 import { InstrumentLayer } from '@/features/instruments';
 import { t } from '@/i18n';
-import { useCircuitStore, useInstrumentStore, useSimStore, useToastStore } from '@/store';
+import {
+  useCircuitStore,
+  useInstrumentStore,
+  useSimStore,
+  useToastStore,
+  useUiStore,
+} from '@/store';
 import { SelectedWirePanel } from './edges/SelectedWirePanel';
 import { WireEdge } from './edges/WireEdge';
 import { FitOnLoad } from './FitOnLoad';
@@ -68,6 +74,7 @@ export function Workbench() {
   const [selectMode, setSelectMode] = useState(false);
   const running = useSimStore((state) => state.running);
   const placing = useInstrumentStore((state) => state.placing);
+  const pointingCause = useUiStore((state) => state.pointingCause);
   useWorkbenchShortcuts();
   const isEmpty = nodes.length === 0;
 
@@ -77,6 +84,7 @@ export function Workbench() {
       className="workbench relative"
       data-sim-running={running || undefined}
       data-placing={placing}
+      data-pointing-cause={pointingCause || undefined}
       {...{ [WORKBENCH_ATTRIBUTE]: '' }}
     >
       <ReactFlow<ComponentFlowNode, WireFlowEdge>

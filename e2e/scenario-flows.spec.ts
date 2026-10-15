@@ -47,20 +47,13 @@ const freePoint = (page: Page, componentId: string) =>
   });
 
 /**
- * Mengetuk badan komponen. Pada zoom kecil area sentuh terminal 44 px menutupi seluruh komponen
- * kecil (mis. fuse), jadi kanvas diperbesar dulu seperti yang dilakukan pengguna.
+ * Mengetuk badan komponen tanpa memperbesar kanvas: inti badan komponen kecil (mis. fuse) tidak
+ * tertutup area sentuh terminal pada zoom berapa pun.
  */
 async function clickNodeBody(page: Page, componentId: string) {
-  for (let attempt = 0; attempt < 5; attempt += 1) {
-    const point = await freePoint(page, componentId);
-    if (point) {
-      await page.mouse.click(point.x, point.y);
-      return;
-    }
-    await page.getByRole('button', { name: 'Perbesar' }).click();
-    await page.waitForTimeout(300);
-  }
-  throw new Error(`badan ${componentId} tertutup terminal`);
+  const point = await freePoint(page, componentId);
+  if (!point) throw new Error(`badan ${componentId} tertutup terminal`);
+  await page.mouse.click(point.x, point.y);
 }
 
 /** Tunjuk komponen sebagai penyebab dengan jenis gangguan `kind`, lalu Diagnosa. */

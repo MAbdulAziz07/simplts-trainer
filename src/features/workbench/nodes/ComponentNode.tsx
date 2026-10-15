@@ -7,7 +7,7 @@ import type { ComponentFlowNode } from '../flow-types';
 import { NodePicture } from '../status/NodePicture';
 import { NodeStatus } from '../status/NodeStatus';
 import { layoutTerminals, rotatedSizePx } from './geometry';
-import { hitClipPath, hitPolygon, hitSidePx, quantizeZoom } from './hit-area';
+import { bodyCore, clipToCore, hitClipPath, hitPolygon, hitSidePx, quantizeZoom } from './hit-area';
 import { SwitchToggle } from './SwitchToggle';
 import { TerminalHandle, type TerminalHit } from './TerminalHandle';
 import { useTerminalRoles } from './useTerminalRoles';
@@ -29,15 +29,18 @@ export const ComponentNode = memo(function ComponentNode({
     [item, size, rotationDeg],
   );
   const roles = useTerminalRoles(id, spots);
-  // Area sentuh terminal tetap 44 px di layar: ukurannya di ruang meja mengikuti zoom.
+  // Area sentuh terminal tetap 44 px di layar: ukurannya di ruang meja mengikuti zoom. Inti badan
+  // komponen dibiarkan bebas supaya komponen kecil tetap bisa dipilih pada zoom kecil.
   const zoom = useStore((state) => quantizeZoom(state.transform[2]));
+  const { widthPx, heightPx } = box;
   const hits = useMemo((): TerminalHit[] => {
     const sidePx = hitSidePx(zoom);
+    const core = bodyCore({ widthPx, heightPx }, zoom);
     return spots.map((spot) => ({
       sidePx,
-      clipPath: hitClipPath(hitPolygon(spot, spots, sidePx), sidePx),
+      clipPath: hitClipPath(clipToCore(hitPolygon(spot, spots, sidePx), spot, core), sidePx),
     }));
-  }, [spots, zoom]);
+  }, [spots, zoom, widthPx, heightPx]);
 
   // Posisi handle berubah saat komponen diputar atau katalog diperbarui.
   const updateNodeInternals = useUpdateNodeInternals();

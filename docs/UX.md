@@ -66,7 +66,7 @@ Revisi 2026-10-12: komponen tampil sebagai gambarnya sendiri, tanpa kartu. Kartu
 | Hal | Keputusan |
 |---|---|
 | Terminal tampak | 14–24 px menurut jarak ke terminal terdekat pada gambar (revisi 2026-10-12: 24 px tetap membuat titik terminal yang rapat saling menimpa) |
-| Area klik/sentuh terminal | 44 px, tetap 44 px di layar pada semua tingkat zoom; untuk terminal yang rapat dipotong di garis tengah ke tetangganya supaya tidak bertumpuk |
+| Area klik/sentuh terminal | 44 px, tetap 44 px di layar pada semua tingkat zoom; untuk terminal yang rapat dipotong di garis tengah ke tetangganya supaya tidak bertumpuk (revisi 2026-10-15: area sentuh juga tidak masuk ke inti badan komponen, kotak 24 px di layar di tengah komponen dan paling besar separuh lebar/tingginya, supaya komponen kecil tetap bisa dipilih pada zoom kecil; ke arah luar dan ke samping tetap 22 px. Saat "Tunjuk penyebab" terbuka, area sentuh terminal dimatikan kecuali probe sedang dipasang) |
 | Jarak antarpusat terminal | mengikuti letak terminal pada gambar (revisi 2026-10-12: minimal 48 px tidak tercapai pada gambar kecil) |
 | Bentuk terminal | DC bulat; AC persegi sudut tumpul; PE persegi dengan simbol pembumian |
 | Label terminal | 12 px tebal, selalu tampak, di luar lingkaran. Label yang sama persis dengan tanda di dalam titik (+, −, L, N) baru muncul saat hover, komponen terpilih, atau kabel ditarik |
@@ -143,7 +143,7 @@ Per 2026-10-12 kode sudah disesuaikan dengan §2: inspektur hanya saat satu komp
 | Keputusan §2 | Di kode sekarang |
 |---|---|
 | §2.1 Empat tab mode di bilah atas | Belum ada; ditambahkan saat mode selain Rakit Bebas dibuat |
-| §2.3 Area sentuh 44 px untuk tiap terminal | Terminal yang jaraknya di bawah 44 px berbagi ruang: tiap terminal mendapat area sampai garis tengah ke tetangganya (pada gambar terkecil sekitar 20 px lebar di zoom 100%) |
+| §2.3 Area sentuh 44 px untuk tiap terminal | Terminal yang jaraknya di bawah 44 px berbagi ruang: tiap terminal mendapat area sampai garis tengah ke tetangganya (pada gambar terkecil sekitar 20 px lebar di zoom 100%); ke arah dalam area berhenti di inti badan komponen |
 | §2.4 Centang untuk status normal | Hanya komponen yang sedang dialiri arus; SCC dan inverter memakai LED bertanda centang; komponen normal tanpa arus tidak diberi tanda |
 
 ### 4.3 Bagian §3 yang kini ada tampilannya

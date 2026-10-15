@@ -12,6 +12,12 @@ export interface UiState {
    */
   inspectorOpen: boolean;
   toggleInspector: () => void;
+  /**
+   * Kotak "Tunjuk penyebab" (mode Cari Gangguan) terbuka: ketukan di meja memilih komponen, jadi
+   * area sentuh terminal tidak menghalangi (kecuali saat probe sedang dipasang).
+   */
+  pointingCause: boolean;
+  setPointingCause: (pointing: boolean) => void;
 }
 
 export const useUiStore = create<UiState>()((set) => ({
@@ -19,6 +25,8 @@ export const useUiStore = create<UiState>()((set) => ({
   setTrayCollapsed: (trayCollapsed) => set({ trayCollapsed }),
   inspectorOpen: false,
   toggleInspector: () => set((state) => ({ inspectorOpen: !state.inspectorOpen })),
+  pointingCause: false,
+  setPointingCause: (pointingCause) => set({ pointingCause }),
 }));
 
 /** Inspektur tampil: panel parameter dibuka dan tepat satu komponen terpilih. */

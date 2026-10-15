@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import {
+  SCREEN_CORE_PX,
   SCREEN_HIT_PX,
+  bodyCore,
+  clipToCore,
   hitClipPath,
   hitPolygon,
   hitSidePx,
@@ -69,6 +72,64 @@ describe('hitPolygon', () => {
     expect(Math.max(...xs(polygon))).toBeCloseTo(4, 9);
     expect(Math.min(...ys(polygon))).toBeCloseTo(-4, 9);
     expect(Math.max(...ys(polygon))).toBeCloseTo(4, 9);
+  });
+});
+
+describe('bodyCore', () => {
+  it('kotak di tengah node, tampil 24 px di layar', () => {
+    expect(bodyCore({ widthPx: 200, heightPx: 100 }, 1)).toEqual({
+      leftPx: 88,
+      topPx: 38,
+      rightPx: 112,
+      bottomPx: 62,
+    });
+    const core = bodyCore({ widthPx: 400, heightPx: 400 }, 0.5);
+    expect((core.rightPx - core.leftPx) * 0.5).toBeCloseTo(SCREEN_CORE_PX, 9);
+  });
+
+  it('paling besar separuh lebar dan tinggi node', () => {
+    const core = bodyCore({ widthPx: 40, heightPx: 60 }, 0.2);
+    expect(core.rightPx - core.leftPx).toBeCloseTo(20, 9);
+    expect(core.bottomPx - core.topPx).toBeCloseTo(30, 9);
+  });
+});
+
+describe('clipToCore', () => {
+  // Fuse Baterai 100A ±48×60 px dengan terminal IN di atas dan OUT di bawah, pada zoom 0,8 (±38×48
+  // px di layar): tanpa inti, kedua area sentuh bertemu di tengah dan menutupi seluruh badan.
+  const box = { widthPx: 48, heightPx: 60 };
+  const zoom = 0.8;
+  const sidePx = hitSidePx(zoom);
+  const input = { xPx: 23, yPx: 4, side: 'top' as const, dotPx: 14 };
+  const output = { xPx: 24, yPx: 57, side: 'bottom' as const, dotPx: 14 };
+  const core = bodyCore(box, zoom);
+
+  it('area sentuh terminal kecil tidak masuk ke inti badan', () => {
+    const top = clipToCore(hitPolygon(input, [output], sidePx), input, core);
+    const bottom = clipToCore(hitPolygon(output, [input], sidePx), output, core);
+    expect(input.yPx + Math.max(...ys(top))).toBeCloseTo(core.topPx, 9);
+    expect(output.yPx + Math.min(...ys(bottom))).toBeCloseTo(core.bottomPx, 9);
+    // Inti bebas tampil 24 px di layar.
+    expect((core.bottomPx - core.topPx) * zoom).toBeCloseTo(SCREEN_CORE_PX, 9);
+  });
+
+  it('ke arah luar dan ke samping tetap 22 px di layar', () => {
+    const top = clipToCore(hitPolygon(input, [output], sidePx), input, core);
+    expect(Math.min(...ys(top)) * zoom).toBeCloseTo(-SCREEN_HIT_PX / 2, 9);
+    expect(Math.max(...xs(top)) * zoom).toBeCloseTo(SCREEN_HIT_PX / 2, 9);
+  });
+
+  it('terminal di dalam inti tetap memiliki titiknya', () => {
+    const center = { xPx: 24, yPx: 30, side: 'left' as const, dotPx: 14 };
+    const polygon = clipToCore(hitPolygon(center, [], 44), center, core);
+    expect(Math.max(...xs(polygon))).toBeCloseTo(7, 9);
+    expect(Math.min(...xs(polygon))).toBe(-22);
+  });
+
+  it('terminal jauh dari inti tidak terpotong', () => {
+    const big = bodyCore({ widthPx: 300, heightPx: 200 }, 1);
+    const spot = { xPx: 20, yPx: 190, side: 'bottom' as const, dotPx: 24 };
+    expect(clipToCore(hitPolygon(spot, [], 44), spot, big)).toHaveLength(4);
   });
 });
 

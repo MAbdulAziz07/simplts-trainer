@@ -11,4 +11,12 @@ describe('uiStore', () => {
     useUiStore.getState().toggleInspector();
     expect(useUiStore.getState().inspectorOpen).toBe(false);
   });
+
+  it('mode tunjuk penyebab awalnya mati dan diatur lewat setPointingCause', () => {
+    expect(useUiStore.getState().pointingCause).toBe(false);
+    useUiStore.getState().setPointingCause(true);
+    expect(useUiStore.getState().pointingCause).toBe(true);
+    useUiStore.getState().setPointingCause(false);
+    expect(useUiStore.getState().pointingCause).toBe(false);
+  });
 });

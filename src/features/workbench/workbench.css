@@ -56,6 +56,11 @@
   cursor: crosshair;
 }
 
+/* Saat menunjuk penyebab gangguan, ketukan jatuh ke badan komponen; probe tetap bisa dipasang. */
+.workbench[data-pointing-cause]:not([data-placing]) .terminal-hit {
+  pointer-events: none;
+}
+
 /* Titik tidak menangkap penunjuk: kejadian jatuh ke area sentuh di bawahnya. */
 .terminal-dot-wrap {
   position: absolute;

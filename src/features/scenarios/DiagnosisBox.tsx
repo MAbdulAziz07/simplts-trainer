@@ -1,8 +1,14 @@
 import { Stethoscope } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FAULT_KINDS, type FaultKind } from '@/domain';
 import { t } from '@/i18n';
-import { findCatalogItem, useCircuitStore, useScenarioStore, type ScenarioRun } from '@/store';
+import {
+  findCatalogItem,
+  useCircuitStore,
+  useScenarioStore,
+  useUiStore,
+  type ScenarioRun,
+} from '@/store';
 import { FAULT_ICON } from './icons';
 
 const text = t.scenarios;
@@ -25,8 +31,11 @@ function useSelectedTarget(): { id: string; name: string } | undefined {
 /** Mode Cari Gangguan: tunjuk lokasi di meja, pilih jenis gangguan, lalu kirim. */
 export function DiagnosisBox({ run }: { run: ScenarioRun }) {
   const [kind, setKind] = useState<FaultKind>();
-  // Dilipat bawaan supaya panel tidak menutupi meja; dibuka saat peserta siap menjawab.
-  const [isOpen, setIsOpen] = useState(false);
+  // Dilipat bawaan supaya panel tidak menutupi meja; dibuka saat peserta siap menjawab. Selama
+  // terbuka, ketukan di meja memilih komponen walau terminalnya menutupi badan komponen.
+  const isOpen = useUiStore((state) => state.pointingCause);
+  const setIsOpen = useUiStore((state) => state.setPointingCause);
+  useEffect(() => () => setIsOpen(false), [setIsOpen]);
   const target = useSelectedTarget();
   const lastDiagnosis = useScenarioStore((state) => state.lastDiagnosis);
   const diagnose = useScenarioStore((state) => state.diagnose);

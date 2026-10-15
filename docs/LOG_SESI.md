@@ -2,6 +2,17 @@
 
 Entri terbaru di atas.
 
+## 2026-10-15 — Badan komponen kecil tidak lagi tertutup area sentuh terminal
+- Sumber: temuan sesi sebelumnya (fuse di skenario Cari Gangguan hanya bisa dipilih setelah kanvas diperbesar); usulan 4 poin disetujui pengguna.
+- Commit: satu commit di master atas permintaan pengguna, tanpa push.
+- Diubah: src/features/workbench/nodes/hit-area.ts (+test), ComponentNode.tsx, src/features/workbench/Workbench.tsx, workbench.css, src/store/uiStore.ts (+test), src/features/scenarios/DiagnosisBox.tsx, e2e/terminals.spec.ts, e2e/scenario-flows.spec.ts, docs/UX.md, docs/LOG_SESI.md.
+- Isi:
+  1. `bodyCore` + `clipToCore`: area sentuh terminal dipotong di batas inti badan komponen (24 px di layar, paling besar separuh lebar/tinggi node) ke arah dalam dari sisi terminalnya; titik terminal tetap utuh. Ke luar dan ke samping tetap 22 px di layar.
+  2. `uiStore.pointingCause`: kotak "Tunjuk penyebab" kini disimpan di store; selama terbuka `.workbench[data-pointing-cause]` mematikan area sentuh terminal, kecuali saat probe sedang dipasang. Akibatnya kabel tidak bisa ditarik dari terminal selama kotak itu terbuka (kotak belum punya tombol tutup).
+  3. Uji unit inti badan (kasus fuse 48×60 di zoom 0,8) dan uji e2e baru: fuse yang diperkecil sampai < 48 px tinggi tetap bisa diketuk dan terpilih (gagal bila inti dimatikan).
+  4. Uji alur 5: `clickNodeBody` tidak lagi menekan Perbesar.
+- Pemeriksaan: npm run check lulus (1262 unit test); npm run test:e2e 61 lulus (fps 46,5).
+
 ## 2026-10-15 — Perbaikan empat kegagalan uji alur utama
 - Sumber: persetujuan pengguna atas usulan perbaikan dari sesi uji Playwright (entri di bawah).
 - Commit: satu commit di master bersama entri di bawah, tanpa push.
