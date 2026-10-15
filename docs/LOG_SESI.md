@@ -2,6 +2,32 @@
 
 Entri terbaru di atas.
 
+## 2026-10-15 — Perbaikan empat kegagalan uji alur utama
+- Sumber: persetujuan pengguna atas usulan perbaikan dari sesi uji Playwright (entri di bawah).
+- Commit: satu commit di master bersama entri di bawah, tanpa push.
+- Dibuat: src/ui/SegmentedRadio.tsx, src/ui/radio-keys.ts, src/ui/radio-keys.test.ts.
+- Diubah: src/features/workbench/fit-bounds.ts (+test), useFitWorkbench.ts, FitOnLoad.tsx, src/features/top-bar/PackageSelect.tsx, LevelSelect.tsx, src/ui/index.ts, playwright.config.ts, package.json (skrip `test:perf`), e2e/scenario-flows.spec.ts, e2e/a11y.spec.ts, e2e/performance.spec.ts, docs/LOG_SESI.md.
+- Isi:
+  1. Panel skenario: selama skenario berjalan rangkaian dipaskan di kanan panel langkah (sisih kiri 408 px; diabaikan bila sisa meja < 400 px), dan dipaskan ulang saat panel muncul/hilang. Uji P1 kini memeriksa terminal yang diminta bisa diketuk tanpa menggeser kanvas.
+  2. Kinerja: proyek Playwright `performance` berjalan sendiri setelah proyek `chromium` (dilewati bila ada uji lain yang gagal); `npm run test:perf` menjalankannya saja.
+  3. Tombol paket dan tingkat di bilah atas setinggi 44 px.
+  4. Kedua kelompok radio memakai `SegmentedRadio`: satu titik Tab, panah/Home/End memindah pilihan.
+- Temuan baru (belum diperbaiki): pada zoom kecil (mis. skenario Cari Gangguan setelah butir 1) area sentuh terminal 44 px menutupi seluruh badan fuse, sehingga fuse hanya bisa dipilih setelah diperbesar. Uji alur 5 menekan Perbesar dulu.
+- Pemeriksaan: npm run check lulus (1255 unit test); npm run test:e2e 60 lulus (fps 34,9 saat berjalan sendiri).
+
+## 2026-10-15 — Uji Playwright alur utama, kinerja, dan aksesibilitas dasar
+- Sumber: permintaan pengguna (6 alur utama, 40 komponen/60 kabel di 600× > 30 fps, kontras, target sentuh, keyboard bilah atas; laporkan yang gagal, jangan perbaiki dulu).
+- Commit: satu commit di master bersama entri di atas, tanpa push.
+- Dibuat: e2e/main-flows.spec.ts, e2e/scenario-flows.spec.ts, e2e/performance.spec.ts, e2e/a11y.spec.ts.
+- Diubah: e2e/sim-helpers.ts (pembantu `center` dan `dragTile`), docs/LOG_SESI.md.
+- Isi:
+  1. Alur 1–3 dan 6 (preset → jalan, rakit inti DC off-grid Minimum dengan seret ubin, Voc multimeter vs datasheet, simpan → buka) lulus. Alur 2 menurunkan beban DC ke 60 W karena terminal BEBAN SCC dibatasi 10 A.
+  2. Alur 5 (Cari Gangguan, fuse putus: ukur Ω = OL, jawaban salah, lalu fuse) lulus.
+  3. Alur 4 (P1 dengan gangguan sel baterai lemah) bisa diselesaikan, tetapi gagal karena panel skenario menutupi terminal bat dan pv1 pada tata letak awal; uji menggeser kanvas supaya langkah berikutnya tetap diuji.
+  4. Kinerja: 34–40 fps bila dijalankan sendiri; 14 fps saat seluruh suite berjalan paralel (berebut CPU).
+  5. Aksesibilitas: kontras teks tiga area lulus; tab bilah atas dan tanda fokus lulus; gagal: tombol paket/tingkat 36 px tinggi, panah kiri/kanan tidak berpindah di radiogroup paket.
+- Pemeriksaan: npm run check lulus; npm run test:e2e 56 lulus, 4 gagal (dilaporkan, belum diperbaiki menunggu persetujuan).
+
 ## 2026-10-15 — Tombol Parameter di bilah atas dan zoom out kanvas sampai 15%
 - Sumber: permintaan pengguna (panel parameter jangan terbuka otomatis; tombol ikon penggeser di samping Simpan; zoom out lebih jauh). Arti zoom out dikonfirmasi: kanvas saja, bukan skala seluruh aplikasi.
 - Commit: satu commit di master, tanpa push.

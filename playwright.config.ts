@@ -15,6 +15,14 @@ export default defineConfig({
     {
       // Layar acuan docs/UX.md §2: 1366x768.
       name: 'chromium',
+      testIgnore: /performance\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1366, height: 768 } },
+    },
+    {
+      // Uji fps berjalan sendiri setelah uji lain selesai, supaya tidak berebut CPU.
+      name: 'performance',
+      testMatch: /performance\.spec\.ts/,
+      dependencies: ['chromium'],
       use: { ...devices['Desktop Chrome'], viewport: { width: 1366, height: 768 } },
     },
   ],

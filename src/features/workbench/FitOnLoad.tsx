@@ -1,9 +1,9 @@
 import { useReactFlow, useStore, useStoreApi, type Viewport } from '@xyflow/react';
 import { useEffect, useRef } from 'react';
-import { useCircuitStore, useInspectorVisible } from '@/store';
-import { fitBounds, isFullyVisible } from './fit-bounds';
+import { useCircuitStore, useInspectorVisible, useScenarioStore } from '@/store';
+import { fitBounds, fitLeftInsetPx, isFullyVisible } from './fit-bounds';
 import { occupiedBoxes } from './placement';
-import { FIT_DURATION_MS, useFitWorkbench } from './useFitWorkbench';
+import { FIT_DURATION_MS, hasScenarioPanel, useFitWorkbench } from './useFitWorkbench';
 
 /** Lama menunggu lebar meja berubah setelah inspektur muncul atau hilang. */
 const RESIZE_WAIT_MS = 500;
@@ -68,7 +68,13 @@ function useRefitOnInspector(fit: () => void): void {
     const bounds = fitBounds(occupiedBoxes(useCircuitStore.getState().doc));
     if (!bounds) return;
     const isVisible = (view: Viewport, widthPx: number): boolean =>
-      isFullyVisible(bounds, { xPx: view.x, yPx: view.y, zoom: view.zoom }, widthPx, height);
+      isFullyVisible(
+        bounds,
+        { xPx: view.x, yPx: view.y, zoom: view.zoom },
+        widthPx,
+        height,
+        fitLeftInsetPx(widthPx, hasScenarioPanel()),
+      );
     const current = getViewport();
 
     let change: (() => void) | undefined;
@@ -104,21 +110,26 @@ function useRefitOnInspector(fit: () => void): void {
 }
 
 /**
- * Memaskan tampilan sekali tiap rangkaian lain dimuat (simpanan otomatis, berkas, preset), dan
- * menjaga rangkaian tetap terlihat saat inspektur muncul atau hilang. Menambah atau menggeser
+ * Memaskan tampilan sekali tiap rangkaian lain dimuat (simpanan otomatis, berkas, preset, skenario)
+ * dan saat panel langkah skenario muncul atau hilang, serta menjaga rangkaian tetap terlihat saat
+ * inspektur muncul atau hilang. Menambah atau menggeser
  * komponen tidak mengubah tampilan.
  */
 export function FitOnLoad() {
   const loadCount = useCircuitStore((state) => state.loadCount);
   const isCanvasReady = useStore((state) => state.panZoom !== null && state.width > 0);
   const fit = useFitWorkbench();
-  const fittedCount = useRef(0);
+  const hasPanel = useScenarioStore(
+    (state) => state.run !== undefined && state.run.finishedAtMs === undefined,
+  );
+  const fitted = useRef({ loadCount: 0, hasPanel: false });
 
   useEffect(() => {
-    if (!isCanvasReady || fittedCount.current === loadCount) return;
-    fittedCount.current = loadCount;
+    const last = fitted.current;
+    if (!isCanvasReady || (last.loadCount === loadCount && last.hasPanel === hasPanel)) return;
+    fitted.current = { loadCount, hasPanel };
     fit();
-  }, [loadCount, isCanvasReady, fit]);
+  }, [loadCount, hasPanel, isCanvasReady, fit]);
   useRefitOnInspector(fit);
 
   return null;

@@ -15,8 +15,26 @@ export const FIT_MARGIN_PX = {
 };
 /** Lebar layar yang ditempati bilah alat di tepi kiri meja; tidak ikut zoom. */
 export const FIT_TOOLBAR_WIDTH_PX = 80;
+/**
+ * Lebar layar di kiri meja yang tertutup panel langkah skenario (bilah alat 76 px + panel 320 px +
+ * jarak 12 px; scenarios.css). Rangkaian dipaskan di kanannya supaya terminal tidak tertutup.
+ */
+export const SCENARIO_PANEL_INSET_PX = 408;
+/** Lebar bebas paling kecil yang masih layak dipakai untuk memaskan rangkaian. */
+const MIN_FREE_WIDTH_PX = 400;
+
 /** Kelonggaran pembulatan (px layar) saat memeriksa apakah batas rangkaian terlihat. */
 const VISIBLE_TOLERANCE_PX = 2;
+
+/**
+ * Lebar layar di kiri meja yang tidak dipakai rangkaian: bilah alat, ditambah panel skenario bila
+ * tampil. Pada meja sempit panel diabaikan supaya rangkaian tidak menjadi terlalu kecil.
+ */
+export function fitLeftInsetPx(workbenchWidthPx: number, hasScenarioPanel: boolean): number {
+  if (hasScenarioPanel && workbenchWidthPx - SCENARIO_PANEL_INSET_PX >= MIN_FREE_WIDTH_PX)
+    return SCENARIO_PANEL_INSET_PX;
+  return FIT_TOOLBAR_WIDTH_PX;
+}
 
 /** Kotak yang memuat semua komponen beserta ruang di luarnya; kosong bila meja kosong. */
 export function fitBounds(boxes: readonly BoxPx[]): BoxPx | undefined {
@@ -37,20 +55,21 @@ export interface ViewTransform {
 
 /**
  * `true` bila seluruh `bounds` terlihat di meja kerja selebar `widthPx` dan setinggi `heightPx`,
- * di kanan bilah alat. Hasil tombol "paskan" selalu memenuhi ini.
+ * di kanan `leftInsetPx` (bawaan: bilah alat). Hasil tombol "paskan" selalu memenuhi ini.
  */
 export function isFullyVisible(
   bounds: BoxPx,
   view: ViewTransform,
   widthPx: number,
   heightPx: number,
+  leftInsetPx = FIT_TOOLBAR_WIDTH_PX,
 ): boolean {
   const left = bounds.xPx * view.zoom + view.xPx;
   const top = bounds.yPx * view.zoom + view.yPx;
   const right = (bounds.xPx + bounds.widthPx) * view.zoom + view.xPx;
   const bottom = (bounds.yPx + bounds.heightPx) * view.zoom + view.yPx;
   return (
-    left >= FIT_TOOLBAR_WIDTH_PX - VISIBLE_TOLERANCE_PX &&
+    left >= leftInsetPx - VISIBLE_TOLERANCE_PX &&
     top >= -VISIBLE_TOLERANCE_PX &&
     right <= widthPx + VISIBLE_TOLERANCE_PX &&
     bottom <= heightPx + VISIBLE_TOLERANCE_PX

@@ -22,6 +22,24 @@ export async function place(page: Page, ...names: string[]) {
   await expect(page.locator('.react-flow__node')).toHaveCount(names.length);
 }
 
+/** Titik tengah elemen di layar. */
+export async function center(locator: Locator) {
+  const box = await locator.boundingBox();
+  if (!box) throw new Error('elemen tidak terlihat');
+  return { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+}
+
+/** Seret ubin baki dengan tetikus lalu lepas di titik layar `drop`. */
+export async function dragTile(page: Page, name: string, drop: { x: number; y: number }) {
+  await tile(page, name).scrollIntoViewIfNeeded();
+  const from = await center(tile(page, name));
+  await page.mouse.move(from.x, from.y);
+  await page.mouse.down();
+  await page.mouse.move((from.x + drop.x) / 2, (from.y + drop.y) / 2, { steps: 5 });
+  await page.mouse.move(drop.x, drop.y, { steps: 5 });
+  await page.mouse.up();
+}
+
 /** Klik terminal asal lalu terminal tujuan; `a.b` = komponen.terminal. */
 export async function connect(page: Page, ...links: [string, string][]) {
   for (const [from, to] of links) {

@@ -4,5 +4,7 @@ export * from './component-image';
 export * from './component-size';
 export * from './ComponentPicture';
 export * from './picture-effect';
+export * from './radio-keys';
+export * from './SegmentedRadio';
 export * from './TerminalDot';
 export * from './terminal-style';

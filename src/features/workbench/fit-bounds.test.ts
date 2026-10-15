@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { FIT_MARGIN_PX, FIT_TOOLBAR_WIDTH_PX, fitBounds, isFullyVisible } from './fit-bounds';
+import {
+  FIT_MARGIN_PX,
+  FIT_TOOLBAR_WIDTH_PX,
+  SCENARIO_PANEL_INSET_PX,
+  fitBounds,
+  fitLeftInsetPx,
+  isFullyVisible,
+} from './fit-bounds';
 import type { BoxPx } from './placement';
 
 const box = (xPx: number, yPx: number, widthPx: number, heightPx: number): BoxPx => ({
@@ -52,5 +59,29 @@ describe('isFullyVisible', () => {
 
   it('selisih pembulatan satu-dua piksel tetap dianggap terlihat', () => {
     expect(isFullyVisible(bounds, { ...view, xPx: view.xPx - 1.5 }, 880, 400)).toBe(true);
+  });
+});
+
+describe('fitLeftInsetPx', () => {
+  it('tanpa skenario hanya bilah alat yang disisihkan', () => {
+    expect(fitLeftInsetPx(1150, false)).toBe(FIT_TOOLBAR_WIDTH_PX);
+  });
+
+  it('panel skenario disisihkan bila sisa meja masih cukup lebar', () => {
+    expect(fitLeftInsetPx(1150, true)).toBe(SCENARIO_PANEL_INSET_PX);
+    expect(fitLeftInsetPx(SCENARIO_PANEL_INSET_PX + 400, true)).toBe(SCENARIO_PANEL_INSET_PX);
+  });
+
+  it('meja sempit mengabaikan panel supaya rangkaian tidak terlalu kecil', () => {
+    expect(fitLeftInsetPx(SCENARIO_PANEL_INSET_PX + 399, true)).toBe(FIT_TOOLBAR_WIDTH_PX);
+  });
+
+  it('batas yang tertutup panel skenario tidak dihitung terlihat', () => {
+    const view = { xPx: FIT_TOOLBAR_WIDTH_PX, yPx: 0, zoom: 1 };
+    const bounds = box(0, 0, 400, 300);
+    expect(isFullyVisible(bounds, view, 1150, 640)).toBe(true);
+    expect(isFullyVisible(bounds, view, 1150, 640, SCENARIO_PANEL_INSET_PX)).toBe(false);
+    const shifted = { ...view, xPx: SCENARIO_PANEL_INSET_PX };
+    expect(isFullyVisible(bounds, shifted, 1150, 640, SCENARIO_PANEL_INSET_PX)).toBe(true);
   });
 });
