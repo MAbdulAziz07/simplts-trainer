@@ -84,7 +84,7 @@ Kurva dan tabel ditulis sebagai larik pasangan `[x, y]` atau dua larik sejajar; 
 | `kind` | teks | – | Jenis terminal: `pv+`, `pv-`, `dc+`, `dc-`, `acL`, `acN`, `pe`, `data` (tabel di bawah). |
 | `xPct` | bilangan | % lebar gambar | Posisi horizontal pusat terminal terhadap gambar, 0–100. Diisi lewat editor terminal (`/dev/terminal-editor`, hanya saat pengembangan). |
 | `yPct` | bilangan | % tinggi gambar | Posisi vertikal, 0–100. Terminal yang masih (0, 0) dianggap belum ditandai dan dijajarkan di bawah gambar. |
-| `maxWires` | bilangan bulat | kabel | Kapasitas sambungan per terminal (PRD §2): sambungan ke terminal penuh ditolak. Nilai ini rancangan trainer (1 kabel per terminal; 2 untuk baut baterai), bukan angka datasheet. [PERLU VERIFIKASI] |
+| `maxWires` | bilangan bulat | kabel | Kapasitas sambungan per terminal (PRD §2): sambungan ke terminal penuh ditolak. Nilai ini rancangan trainer (1 kabel per terminal; 4 untuk terminal daya modul PV dan baterai agar seri/paralel bisa langsung dari terminal; 2 untuk BMS; 6 untuk elektroda pentanahan), bukan angka datasheet. [PERLU VERIFIKASI] |
 
 | `kind` | Arti | Kutub |
 |---|---|---|
@@ -344,8 +344,8 @@ Setelan daya tiap beban disimpan di berkas rangkaian (`powerSettingW`), bukan di
     "tempOpMaxC": 85
   },
   "terminals": [
-    {"id": "pos", "label": "+", "kind": "pv+", "xPct": 23.1, "yPct": 97.4, "maxWires": 1},
-    {"id": "neg", "label": "−", "kind": "pv-", "xPct": 80.9, "yPct": 97.8, "maxWires": 1}
+    {"id": "pos", "label": "+", "kind": "pv+", "xPct": 23.1, "yPct": 97.4, "maxWires": 4},
+    {"id": "neg", "label": "−", "kind": "pv-", "xPct": 80.9, "yPct": 97.8, "maxWires": 4}
   ],
   "protection": {"seriesFuseMaxA": 20, "reverseCurrentMaxA": 20},
   "image": "src/assets/components/pv-module.webp",

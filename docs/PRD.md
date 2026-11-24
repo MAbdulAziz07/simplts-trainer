@@ -31,7 +31,7 @@ Kondisi lab (batasan desain):
 Rilis: **R1** = rilis awal; R2-R4 dikerjakan bertahap setelah R1 lolos validasi. Preset menyediakan daftar komponen dan skenario awal; peserta tetap merangkai sendiri.
 
 Aturan terminal (berlaku semua paket):
-- Katalog menetapkan **kapasitas sambungan per terminal** (jumlah kabel maksimum). Percabangan dilakukan lewat busbar/terminal distribusi (ada di baki Minimum).
+- Katalog menetapkan **kapasitas sambungan per terminal** (jumlah kabel maksimum). Percabangan dilakukan lewat busbar/terminal distribusi (ada di baki Minimum); pengecualian: terminal daya modul PV dan baterai menerima hingga 4 kabel agar seri/paralel bisa langsung dirangkai.
 - Penolakan **mekanis** (terminal penuh, kabel ke diri sendiri) beda dengan kesalahan **elektris** (polaritas terbalik, tegangan melebihi rating). Kesalahan elektris diizinkan di Rakit Bebas dan ditangani simulasi (trip, galat, rusak); di Praktik Terpandu bisa dicegah per langkah.
 - Panjang kabel menyatakan satu konduktor; resistansi lintasan = pergi + pulang.
 
