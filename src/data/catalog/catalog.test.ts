@@ -55,6 +55,21 @@ describe('berkas katalog', () => {
   });
 });
 
+describe('kapasitas terminal', () => {
+  // Modul PV dan baterai dirangkai seri/paralel langsung dari terminalnya (lebih dari satu kabel).
+  const POWER_KINDS = ['pv+', 'pv-', 'dc+', 'dc-'];
+  const items = loadCatalog().filter((item) => ['pv-module', 'battery'].includes(item.category));
+
+  it.each(items.map((item) => [item.id, item] as const))(
+    '%s: terminal daya menerima 4 kabel',
+    (_id, item) => {
+      const power = item.terminals.filter((terminal) => POWER_KINDS.includes(terminal.kind));
+      expect(power.length).toBeGreaterThanOrEqual(2);
+      for (const terminal of power) expect(terminal.maxWires).toBe(4);
+    },
+  );
+});
+
 describe('skema item menolak data yang salah', () => {
   const reject = (change: (item: Record<string, unknown>) => void) => {
     const item = sample();

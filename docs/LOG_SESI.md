@@ -2,6 +2,13 @@
 
 Entri terbaru di atas.
 
+## 2026-11-24 — Terminal modul PV dan baterai menerima beberapa kabel
+
+- Permintaan: satu terminal bisa memuat lebih dari satu kabel agar seri/paralel lebih mudah. Pengguna memilih "hanya panel & baterai"; komponen lain tetap (percabangan lewat busbar, PRD §2).
+- Diubah: src/data/catalog/pv-modules.json (terminal `pv+`/`pv-` 1 → 4 kabel, 7 item), src/data/catalog/batteries.json (terminal `dc+`/`dc-` 2 → 4 kabel, 4 item; terminal data BMS/CAN tetap 1), src/data/catalog/catalog.test.ts (uji kapasitas terminal daya PV dan baterai), docs/KATALOG.md, docs/PRD.md, docs/LOG_SESI.md.
+- Catatan: angka 4 rancangan trainer, bukan datasheet; di lapangan paralel modul PV memakai konektor cabang MC4 [PERLU VERIFIKASI].
+- Pemeriksaan: npm run check lulus (1273 unit test). Uji alur e2e/terminals.spec.ts dan e2e/main-flows.spec.ts: 8 lulus (dijalankan dengan Chromium bawaan kontainer, karena versi browser Playwright proyek tidak terpasang).
+
 ## 2026-11-24 — Persiapan terbit ke GitHub Pages
 
 - Dibuat: .github/workflows/deploy.yml (push ke master → npm ci, npm run check, terbitkan dist/ ke GitHub Pages).
