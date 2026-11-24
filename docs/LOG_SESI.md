@@ -2,6 +2,18 @@
 
 Entri terbaru di atas.
 
+## 2026-11-24 — Persiapan terbit ke GitHub Pages
+
+- Dibuat: .github/workflows/deploy.yml (push ke master → npm ci, npm run check, terbitkan dist/ ke GitHub Pages).
+- Diubah: vite.config.ts (`base: './'` agar build jalan dari subfolder, mis. /SimPLTS/), docs/LOG_SESI.md.
+- Terbit: atas permintaan pengguna dibuat repo public MAbdulAziz07/simplts-trainer (repo private lama MAbdulAziz07/SimPLTS berisi prototipe lain, tidak disentuh), master di-push, Pages memakai sumber GitHub Actions. Laporan di docs/review/ yang belum di-commit tidak ikut. Aplikasi belum PWA, jadi belum bisa offline.
+- Pemeriksaan: npm run check lulus; dist/ disajikan dari /SimPLTS/ termuat tanpa galat dan semua gambar tampil.
+
+## 2026-11-23 — Diagnosis terminal BEBAN SCC PWM
+
+- Menelusuri katalog RBL-20A, pengenalan rangkaian, dan proteksi terminal BEBAN. Uji proyek mencakup beban DC 100 W dan 200 W serta inverter tanpa beban AC. Penyebab pada rangkaian pengguna belum dapat dipastikan tanpa berkas rangkaian atau hasil ukur.
+
+
 ## 2026-10-15 — Badan komponen kecil tidak lagi tertutup area sentuh terminal
 - Sumber: temuan sesi sebelumnya (fuse di skenario Cari Gangguan hanya bisa dipilih setelah kanvas diperbesar); usulan 4 poin disetujui pengguna.
 - Commit: satu commit di master atas permintaan pengguna, tanpa push.

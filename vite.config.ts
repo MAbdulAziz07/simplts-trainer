@@ -5,6 +5,8 @@ import { defineConfig } from 'vitest/config';
 import { terminalEditorPlugin } from './vite-plugins/terminal-editor.ts';
 
 export default defineConfig({
+  // Alamat relatif: hasil build bisa disajikan dari subfolder, mis. GitHub Pages /SimPLTS/.
+  base: './',
   plugins: [react(), tailwindcss(), terminalEditorPlugin()],
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
